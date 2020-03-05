@@ -15,4 +15,8 @@ export class MilestoneService {
   getMilestones(owner,repo){
     return this.http.get(SERVER_URL + 'repos/'+owner+'/'+repo+'/milestones');
   }
+  
+  addMilestones(owner,repo, data){
+    return this.http.post(SERVER_URL + 'repos/'+owner+'/'+repo+'/milestones/create',data);
+  }
 }

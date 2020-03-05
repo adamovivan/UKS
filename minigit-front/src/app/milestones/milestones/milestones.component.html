@@ -5,7 +5,7 @@
     
     
 <!--  sdddddddddddddddddddddddddd -->
-<div class="row">
+<div class="row mt-5">
     <div class="col"></div>
     <div class="repository-content col">
         <div class="js-check-all-container" data-pjax="">
@@ -72,7 +72,7 @@
                     </div>
                  </div>
                  <div class="table-list-cell milestone-progress">
-                    <span class="progress-bar progress-bar-small"><span class="progress" style="width: milestone.closed_issues%">&nbsp;</span></span>
+                    <span class="progress-bar progress-bar-small"><span class="progress" [ngStyle]="{'width': (100/(milestone.open_issues+milestone.closed_issues))*milestone.closed_issues + '%'}">&nbsp;</span></span>
                     <div class="stats">
                        <div class="stat">
                           <span class="progress-percent">{{(100/(milestone.open_issues+milestone.closed_issues))*milestone.closed_issues}}%</span>

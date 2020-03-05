@@ -1,42 +1,65 @@
-<div class="container-lg clearfix new-discussion-timeline  px-3">
-    <div class="repository-content ">
-       <div class="js-check-all-container" data-pjax="">
-          <div class="Subhead">
-             <h2 class="Subhead-heading">New milestone</h2>
-             <p class="Subhead-description">Create a new milestone to help organize your issues and pull requests.</p>
-          </div>
-          <!-- '"` --><!-- </textarea></xmp> -->
-          <form class="new_milestone" id="new_milestone" action="/adamovivan/UKS/milestones" accept-charset="UTF-8" method="post">
-             <input name="utf8" type="hidden" value="✓"><input type="hidden" name="authenticity_token" value="KvEuY9ZU2ey15tupwdDwsuMkv4bYz//VkN1TwurJO+fPka9xBYqiaILKKitKRc4VP5vBka8HrhH2SK2DGRWwzg==">
-             <div>
-                <div class="col-8">
-                   <dl class="form-group">
-                      <dt class="input-label"><label placeholder="Title" autofocus="autofocus" for="milestone_title">Title</label></dt>
-                      <dd><input class="form-control input-lg input-block js-quick-submit" placeholder="Title" autofocus="autofocus" type="text" name="milestone[title]" id="milestone_title"></dd>
-                   </dl>
-                   <dl class="form-group">
-                      <dt class="input-label">
-                         <label for="milestone_due_on">Due date (optional)</label>
-                      </dt>
-                      <dd class="write-content">
-                         <input type="date" pattern="\d\d\d\d-\d\d-\d\d" placeholder="yyyy-mm-dd" class="form-control" id="milestone_due_on" name="milestone[due_on]">
-                      </dd>
-                   </dl>
-                   <dl class="form-group">
-                      <dt class="input-label">
-                         <label for="milestone_description">Description</label>
-                      </dt>
-                      <dd class="write-content">
-                        <input class="form-control input-lg input-block js-quick-submit" placeholder="Description" type="text" name="milestone[description]" id="milestone_description">
-                      </dd>
-                   </dl>
-                </div>
-             </div>
-             <hr>
-             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Create milestone</button>
-             </div>
-          </form>
-       </div>
-    </div>
- </div>
+<div class="row">
+   <div class="col-md-4"></div>
+   <div class="col-4">
+       <h1 class="h3 mb-3 font-weight-normal mt-3">Create Milestone</h1>
+       Create a new milestone to help organize your issues and pull requests.
+       <form class="mt-4" [formGroup]="SingIn" (ngSubmit)="onSubmit($event)" novalidate>
+           <div class="form-group">
+               <div class="row">
+                   <div class="col-4">
+                       <label>Title</label>
+                   </div>
+                   <div class="col-8">
+                       <input type="text" placeholder="Title" formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }" />
+
+                       <div *ngIf="submitted && f.title.errors">
+                           <div style="color:red;">Title is incorect!</div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="form-group">
+               <div class="row">
+                   <div class="col-4">
+                       <label>Due date (optional)</label>
+                   </div>
+                   <div class="col-8">
+                       <input type="date" pattern="\d\d\d\d-\d\d-\d\d" placeholder="yyyy-mm-dd" class="form-control" formControlName="dueData" [ngClass]="{ 'is-invalid': submitted && f.dueData.errors }">
+
+                       <div *ngIf="submitted && f.dueData.errors">
+                           <div style="color:red;">Due data is incorect!</div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+           <div class="form-group">
+               <div class="row">
+                   <div class="col-4">
+                       <label>Description</label>
+                   </div>
+                   <div class="col-8">
+                       <input type="text" placeholder="Description" formControlName="description" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.description.errors }" />
+
+                       <div *ngIf="submitted && f.description.errors">
+                           <div style="color:red;">Description name is incorect!</div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+
+           <div class="form-group">
+               <div class="row">
+                   <div class="col-6">
+                   </div>
+                   <div class="col-6">
+                       <button class="btn btn-primary" type="submit" style="float: right;">
+                           Register
+                       </button>
+                   </div>
+               </div>
+           </div>
+
+       </form>
+   </div>
+   <div class="col-md-4"></div>
+</div>

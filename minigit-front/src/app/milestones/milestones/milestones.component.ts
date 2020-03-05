@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { MilestoneService } from 'src/app/services/milestone-services';
+import { SERVER_URL, SERVER_URL_FRONT } from 'src/app/app.constant';
 
 @Component({
   selector: 'app-milestones',
@@ -49,7 +50,7 @@ export class MilestonesComponent implements OnInit {
   }
 
   newMilestone(){
-    window.location.href = "http://localhost:4200/adamovivan/UKS/milestones/create";
+    window.location.href = SERVER_URL_FRONT + + this.owner + "/" + this.repo + "/milestones/create";
   }
 
 }
