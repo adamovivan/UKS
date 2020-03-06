@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 import requests
 from django.views.decorators.csrf import csrf_exempt
 from ..models import *
+from django.core import serializers
 
 API = 'https://api.github.com/'
 
@@ -45,9 +46,47 @@ def get_comments_in_repo(request, owner=None, repo=None):
         API + 'repos/{0}/{1}/issues/comments'.format(owner, repo))
     return HttpResponse(comments)
 
+
+
+@api_view(['GET'])
+def getLabeles(request):
+    labels = Label.objects.all()
+    data = serializers.serialize("json", labels)
+    return HttpResponse(data, content_type="json")
+
 @api_view(['POST'])
 def create_issue(request, owner=None, repo=None):
-    r = requests.post(API + 'repos/{0}/{1}/issues'.format(owner, repo), params = request.POST)
-    if r.status_code == 200:
-        return HttpResponse('Data is saved')
-    return HttpResponse('Could not save data')
+    data = request.data
+    print("title issue ", data)
+
+    repo1 = "https://github.com/" + owner + "/"+ repo
+    project = Project.objects.get(git_repo=repo1)
+    print(project)
+
+    new_issue = Issue.objects.create(project=project)
+    new_issue.title = data["title"]
+    new_issue.state = STATES[0][0]
+    #ovako; pronadjemo usera, projekat i labelu u bazi
+    users = data["assignee"] #ovo je neki niz pa cemo proci kroz njega i izvuci sve usere
+    user_list = []
+    for u in users:
+        user = User.objects.get(name=u)
+        print(user)
+        new_issue.assignees.add(user)
+
+
+    #izvucemo labele na osnovu naziva
+    labels = data["labels"]
+    labels_list = []
+    for l in labels:
+        label = Label.objects.get(name=l)
+        print(label)
+        new_issue.labels.add(label)
+
+
+
+
+    new_issue.save()
+
+    return HttpResponse("OK")
+

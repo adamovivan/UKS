@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { IssueService } from 'src/app/services/issue.service';
+import { isUndefined } from 'util';
 
 @Component({
   selector: 'app-add-issue',
@@ -7,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddIssueComponent implements OnInit {
 
-  constructor() { }
+  labels;
+
+  constructor(private issueService : IssueService) { }
 
   ngOnInit(): void {
+    this.issueService.getLabels().subscribe(
+      data => {
+        alert(data);
+        this.labels = data;
+        alert(this.labels);
+      }
+    )
   }
 
 }

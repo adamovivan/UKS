@@ -5,6 +5,8 @@ import { SignInComponent } from './main pages/sign-in/sign-in.component';
 import { AuthGuard } from './helpers/auth.guard';
 import { ProfileComponent } from './main pages/profile/profile.component';
 import { ShowIssuesComponent } from './issue/show-issues/show-issues.component';
+import { MilestonesComponent } from './milestones/milestones/milestones.component';
+import { MilestonesAddComponent } from './milestones/milestones-add/milestones-add.component';
 
 
 const routes: Routes = [
@@ -23,6 +25,16 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
+    canActivate: [AuthGuard] 
+  },
+  {
+    path: ':owner/:repo/milestones',
+    component: MilestonesComponent,
+    canActivate: [AuthGuard] 
+  },
+  {
+    path: ':owner/:repo/milestones/create',
+    component: MilestonesAddComponent,
     canActivate: [AuthGuard] 
   },
 ];

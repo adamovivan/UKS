@@ -48,7 +48,12 @@
                     </tr>
                     <tr>
                         <td scope="row">
-                            Labels <i class="material-icons float-right">settings</i>
+                            <label> Label </label>
+                           <select multiple class="form-control"> 
+                            <option *ngFor="let l of labels" value="l.fields.name">
+                                    {{l.fields.name}}
+                            </option>         
+                        </select>
                             <br>
                             <p> None yet </p>
                         </td>
