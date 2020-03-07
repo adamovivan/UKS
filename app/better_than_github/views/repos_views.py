@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -45,3 +45,9 @@ def get_label(request, owner=None, repo=None, name=None):
     label = requests.get(
         API + 'repos/{0}/{1}/labels/{2}'.format(owner, repo, name))
     return HttpResponse(label)
+
+@api_view(['GET'])
+def get_all_repo(request, owner=None):
+    print("get all repo")
+    repos =requests.get(API + 'users/{0}/repos'.format(owner))
+    return HttpResponse(repos)
