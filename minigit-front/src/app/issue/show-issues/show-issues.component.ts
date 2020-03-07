@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { IssueService } from 'src/app/services/issue.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-show-issues',
@@ -6,10 +9,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./show-issues.component.css']
 })
 export class ShowIssuesComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
+  currentUser;
+  showIssues;
+  constructor( private issueService: IssueService, private authService: AuthService) { 
+    this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
 
+  ngOnInit(): void {
+    this.issueService.getCreateIssues(this.currentUser.alias).subscribe(
+      data => {
+        this.showIssues = data;
+      }
+    )
+  }
 }

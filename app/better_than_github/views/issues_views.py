@@ -6,6 +6,7 @@ import requests
 from django.views.decorators.csrf import csrf_exempt
 from ..models import *
 from django.core import serializers
+from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
 
 API = 'https://api.github.com/'
 
@@ -28,9 +29,11 @@ def get_issue(request, owner=None, repo=None, number=None):
     return HttpResponse(issue)
 
 @api_view(['GET'])
-def get_issues(request, owner=None, repo=None):
-    issues = requests.get(API + 'user/issues')
-    return HttpResponse(issues)
+def get_mycreate_issues(request, owner=None):
+    issues = Issue.objects.filter(creator=owner)
+
+    data=serializers.serialize("json", issues)
+    return HttpResponse(data)
 
 
 
@@ -59,34 +62,49 @@ def create_issue(request, owner=None, repo=None):
     data = request.data
     print("title issue ", data)
 
-    repo1 = "https://github.com/" + owner + "/"+ repo
-    project = Project.objects.get(git_repo=repo1)
-    print(project)
+    try:
+        repo1 = "https://github.com/" + owner + "/"+ repo
+        project = Project.objects.get(git_repo=repo1)
+        print(project)
 
-    new_issue = Issue.objects.create(project=project)
-    new_issue.title = data["title"]
-    new_issue.state = STATES[0][0]
-    #ovako; pronadjemo usera, projekat i labelu u bazi
-    users = data["assignee"] #ovo je neki niz pa cemo proci kroz njega i izvuci sve usere
-    user_list = []
-    for u in users:
-        user = User.objects.get(name=u)
-        print(user)
-        new_issue.assignees.add(user)
+        new_issue = Issue.objects.create(project=project)
 
+        creator = User.objects.get(name=owner)
+        new_issue.creator = creator.name
 
-    #izvucemo labele na osnovu naziva
-    labels = data["labels"]
-    labels_list = []
-    for l in labels:
-        label = Label.objects.get(name=l)
-        print(label)
-        new_issue.labels.add(label)
+        new_issue.title = data["title"]
+        new_issue.state = STATES[0][0]
+        #ovako; pronadjemo usera, projekat i labelu u bazi
+        users = data["assignees"] #ovo je neki niz pa cemo proci kroz njega i izvuci sve usere
+        user_list = []
+        if users != None:
+            for u in users:
+                user = User.objects.get(name=u)
+                print(user)
+                new_issue.assignees.add(user)
 
 
+        #izvucemo labele na osnovu naziva
+        labels = data["labels"]
+        labels_list = []
+        if labels != None:
+            for l in labels:
+                label = Label.objects.get(name=l)
+                print(label)
+                new_issue.labels.add(label)
+
+        milestone = data['milestone']
+        if milestone != '':
+            new_issue.milestone= Milestone.objects.get(title=milestone)
+
+        new_issue.save()
+
+        return HttpResponse("OK", status=HTTP_201_CREATED)
+    except:
+        return HttpResponse(status=HTTP_400_BAD_REQUEST)
 
 
-    new_issue.save()
 
-    return HttpResponse("OK")
+
+
 
