@@ -24,9 +24,8 @@ def get_issues(request, owner=None, repo=None):
 
 @api_view(['GET'])
 def get_milestones(request, owner=None, repo=None):
-    milestones = requests.get(
-        API + 'repos/{0}/{1}/milestones'.format(owner, repo))
-    return HttpResponse(milestones)
+
+    return HttpResponse({})
 
 @api_view(['GET'])
 def get_assignees(request, owner=None, repo=None):
