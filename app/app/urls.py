@@ -18,5 +18,5 @@ from django.conf.urls import url, include
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('better_than_github.urls')),
+    url(r'^', include('better_than_github.urls.urls')),
 ]
