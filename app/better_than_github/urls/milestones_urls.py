@@ -7,5 +7,4 @@ urlpatterns = [
     path('<owner>/<repo>/milestones/<number>/labels', milestones_views.get_labels_in_milestone),
     path('<owner>/<repo>/milestones/<number>/update', milestones_views.update_milestone),
     path('<owner>/<repo>/milestones/<number>/delete', milestones_views.delete_milestone)
-
 ]
