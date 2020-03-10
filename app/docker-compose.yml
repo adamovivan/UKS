@@ -3,6 +3,10 @@ version: '3'
 services:
   db:
     image: postgres
+    restart: always
+    container_name: myapp_db
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
     environment:
       - POSTGRES_HOST_AUTH_METHOD=trust
   web:

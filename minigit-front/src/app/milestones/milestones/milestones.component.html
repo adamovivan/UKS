@@ -45,7 +45,7 @@
               <li class="table-list-item milestone pastdue">
                  <div class="table-list-cell milestone-title">
                     <h2 class="milestone-title-link">
-                       <a href="/adamovivan/UKS/milestone/3">{{milestone.title}} <p *ngIf="milestone.closed_at != null" style="color: red;"> CLOSED </p></a>
+                       <a href="/adamovivan/UKS/milestone/3">{{milestone.fields.title}} <p *ngIf="milestone.fields.state == 'CLOSED'" style="color: red;"> CLOSED </p></a>
                     </h2>
                     <div class="milestone-meta">
                        <span class="milestone-meta-item">
@@ -55,46 +55,48 @@
                                    <path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path>
                                 </svg>
                              </span>
-                             Due on {{milestone.due_on}}
+                             Due on {{milestone.fields.due_date}}
                           </strong>
                        </span>
-                       <span class="milestone-meta-item">
+                       <!--span class="milestone-meta-item">
                           <svg class="octicon octicon-clock" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
                              <path fill-rule="evenodd" d="M8 8h3v2H7c-.55 0-1-.45-1-1V4h2v4zM7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 011.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7z"></path>
                           </svg>
-                          Last updated <span title="2020-02-18 13:45:24 +0100">{{milestone.updated_at}}</span>
-                       </span>
+                          Last updated <span title="2020-02-18 13:45:24 +0100">{{milestone.fields.last_update}}</span>
+                       </span-->
                     </div>
                     <div class="milestone-description js-details-container Details open">
                        <div class="milestone-description-html markdown-body">
-                          <p>{{milestone.description}}</p>
+                          <p>{{milestone.fields.description}}</p>
                        </div>
                     </div>
                  </div>
                  <div class="table-list-cell milestone-progress">
-                    <span class="progress-bar progress-bar-small"><span class="progress" [ngStyle]="{'width': (100/(milestone.open_issues+milestone.closed_issues))*milestone.closed_issues + '%'}">&nbsp;</span></span>
+                    <span *ngIf="milestone.fields.open_issues != 0 || milestone.fields.closed_issues != 0" class="progress-bar progress-bar-small"><span class="progress" [ngStyle]="{'width': (100/(milestone.fields.open_issues+milestone.fields.closed_issues))*milestone.fields.closed_issues + '%'}">&nbsp;</span></span>
+                    <span *ngIf="milestone.fields.open_issues == 0 || milestone.fields.closed_issues == 0" class="progress-bar progress-bar-small"><span class="progress" [ngStyle]="{'width': 0 + '%'}">&nbsp;</span></span>
                     <div class="stats">
                        <div class="stat">
-                          <span class="progress-percent">{{(100/(milestone.open_issues+milestone.closed_issues))*milestone.closed_issues}}%</span>
+                          <span *ngIf="milestone.fields.open_issues != 0 || milestone.fields.closed_issues != 0"  class="progress-percent">{{(100/(milestone.fields.open_issues+milestone.fields.closed_issues))*milestone.fields.closed_issues}} %</span>
+                          <span *ngIf="milestone.fields.open_issues == 0 || milestone.fields.closed_issues == 0"  class="progress-percent">0% </span>
                           <span class="stat-label">complete</span>
                        </div>
                        <div class="stat">
                           <a href="/adamovivan/UKS/issues?q=is%3Aopen+milestone%3A%22Connect+with+github+api%22">
-                           {{milestone.open_issues}}
+                           {{milestone.fields.open_issues}}
                           <span class="stat-label">open</span>
                           </a>      
                        </div>
                        <div class="stat">
                           <a href="/adamovivan/UKS/issues?q=is%3Aclosed+milestone%3A%22Connect+with+github+api%22">
-                           {{milestone.closed_issues}}
+                           {{milestone.fields.closed_issues}}
                           <span class="stat-label">closed</span>
                           </a>      
                        </div>
                     </div>
                     <div class="f5 mt-2 text-gray-dark">
                        <a class="d-inline-block mr-2" href="#">Edit</a>
-                       <button type="submit" class="btn-link mr-2">Close</button>
-                       <button type="submit" class="btn-link" style="color: red;">Delete</button>
+                       <a style="color: blue;" class="btn-link mr-2" (click)="close(milestone.pk)">Close</a>
+                       <a style="color: red;" class="btn-link mr-2" (click)="delete(milestone.pk)">Delete</a>
                     </div>
                  </div>
               </li>

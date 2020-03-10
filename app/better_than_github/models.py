@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.timezone import now
 
 STATES = (
     ('OPEN', 'Open'),
@@ -23,6 +24,8 @@ class Milestone(models.Model):
     due_date = models.DateField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     state = models.CharField(choices=STATES, max_length=200)
+    open_issues = models.IntegerField()
+    closed_issues = models.IntegerField()
 
 class Issue(models.Model):
     title = models.CharField(max_length=200)
@@ -30,7 +33,8 @@ class Issue(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     milestone = models.ForeignKey(Milestone, on_delete=models.SET_NULL, null=True)
     assignees = models.ManyToManyField(User)
-    state = models.CharField(choices=STATES, max_length=200)   
+    state = models.CharField(choices=STATES, max_length=200)
+
 
 class Event(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
