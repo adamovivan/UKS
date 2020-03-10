@@ -3,10 +3,12 @@ ENV PYTHONUNBUFFERED 1
 
 RUN mkdir /code
 WORKDIR /code
-ADD . /code
+ADD requirements.txt /code
 
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
+
+ADD . /code
 
 RUN ["chmod", "+x", "wait_for_postgres.sh"]
 RUN ["chmod", "+x", "start.sh"]
