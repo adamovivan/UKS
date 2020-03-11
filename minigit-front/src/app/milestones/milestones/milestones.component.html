@@ -94,7 +94,7 @@
                        </div>
                     </div>
                     <div class="f5 mt-2 text-gray-dark">
-                       <a class="d-inline-block mr-2" href="#">Edit</a>
+                       <a style="color: blue;" class="btn-link mr-2" (click)="update(milestone.pk)">Edit</a>
                        <a style="color: blue;" class="btn-link mr-2" (click)="close(milestone.pk)">Close</a>
                        <a style="color: red;" class="btn-link mr-2" (click)="delete(milestone.pk)">Delete</a>
                     </div>

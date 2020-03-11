@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ProfileComponent } from './main pages/profile/profile.component';
 import { MilestonesComponent } from './milestones/milestones/milestones.component';
 import { MilestonesAddComponent } from './milestones/milestones-add/milestones-add.component';
+import { MilestonesUpdateComponent } from './milestones/milestones-update/milestones-update.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { MilestonesAddComponent } from './milestones/milestones-add/milestones-a
     SignInComponent,
     ProfileComponent,
     MilestonesComponent,
-    MilestonesAddComponent
+    MilestonesAddComponent,
+    MilestonesUpdateComponent
   ],
   imports: [
     BrowserModule,

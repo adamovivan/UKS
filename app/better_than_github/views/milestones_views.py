@@ -2,6 +2,17 @@
 from django.http import HttpResponse
 from ..models import *
 from rest_framework.decorators import api_view
+from django.core import serializers
+
+
+@api_view(['GET'])
+def get_milestone(request, id=None):
+    try:
+        milestone = Milestone.objects.filter(pk=id)
+        data = serializers.serialize("json", milestone)
+        return HttpResponse(data)
+    except :
+        return HttpResponse("Milestone does not exist")
 
 @api_view(['POST'])
 def create_milestone(request, owner=None, repo=None):

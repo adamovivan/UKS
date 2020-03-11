@@ -71,4 +71,8 @@ export class MilestonesComponent implements OnInit {
       });
   }
 
+  update(pk:any){
+    window.location.href = SERVER_URL_FRONT +  this.owner + "/" + this.repo + "/milestones/update/" + pk;
+  }
+
 }
