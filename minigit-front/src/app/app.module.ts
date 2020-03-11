@@ -19,6 +19,7 @@ import { ShowIssueComponent } from './issue/show-issue/show-issue.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
+import { MilestonesUpdateComponent } from './milestones/milestones-update/milestones-update.component';
 
 
 @NgModule({
@@ -32,7 +33,9 @@ import {MatButtonModule} from '@angular/material/button';
     ShowIssuesComponent,
     MilestonesComponent,
     MilestonesAddComponent,
-    ShowIssueComponent
+    ShowIssueComponent,
+    MilestonesAddComponent,
+    MilestonesUpdateComponent
   ],
   imports: [
     BrowserModule,

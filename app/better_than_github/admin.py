@@ -10,8 +10,3 @@ admin.site.register(Milestone)
 admin.site.register(Label)
 admin.site.register(User)
 admin.site.register(Comment)
-
-
-
-
-

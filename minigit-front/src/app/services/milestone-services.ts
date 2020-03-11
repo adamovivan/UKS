@@ -12,11 +12,28 @@ export class MilestoneService {
 
   }
 
+  getMilestone(id){
+    return this.http.get(SERVER_URL + 'repos/milestones/get/' + id);
+  }
+
   getMilestones(owner,repo){
     return this.http.get(SERVER_URL + 'repos/'+owner+'/'+repo+'/milestones');
   }
   
-  addMilestones(owner,repo, data){
-    return this.http.post(SERVER_URL + 'repos/'+owner+'/'+repo+'/milestones/create',data);
+  addMilestones(owner,repo, data): Observable<string>{
+    return this.http.post(SERVER_URL + 'repos/'+owner+'/'+repo+'/milestones/create',data,{responseType:'text'});
   }
+
+  closeMilestones(id): Observable<string>{
+    return this.http.patch(SERVER_URL + 'repos/milestones/close/' + id,{},{responseType:'text'});
+  }
+
+  deleteMilestones(id): Observable<string>{
+    return this.http.delete(SERVER_URL + 'repos/milestones/delete/' + id,{responseType:'text'});
+  }
+
+  updateMilestones(id,data): Observable<string>{
+    return this.http.put(SERVER_URL + 'repos/milestones/update/' + id,data,{responseType:'text'});
+  }
+
 }

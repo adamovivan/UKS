@@ -5,6 +5,8 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from ..models import *
+from django.core import serializers
 import requests
 
 API = 'https://api.github.com/'
@@ -24,9 +26,14 @@ def get_issues(request, owner=None, repo=None):
 
 @api_view(['GET'])
 def get_milestones(request, owner=None, repo=None):
-    milestones = requests.get(
-        API + 'repos/{0}/{1}/milestones'.format(owner, repo))
-    return HttpResponse(milestones)
+    repo1 = "https://github.com/" + owner + "/" + repo
+    try:
+        projectG = Project.objects.get(git_repo=repo1)
+    except Project.DoesNotExist:
+        projectG = None
+    milestone = Milestone.objects.filter(project=projectG)
+    data = serializers.serialize("json", milestone)
+    return HttpResponse(data)
 
 @api_view(['GET'])
 def get_assignees(request, owner=None, repo=None):
