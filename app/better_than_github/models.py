@@ -19,6 +19,7 @@ class Project(models.Model):
 
 class Milestone(models.Model):
     title = models.CharField(max_length=200)
+    description = models.CharField(max_length=500)
     due_date = models.DateField()
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     state = models.CharField(choices=STATES, max_length=200)
@@ -29,7 +30,8 @@ class Issue(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     milestone = models.ForeignKey(Milestone, on_delete=models.SET_NULL, null=True)
     assignees = models.ManyToManyField(User)
-    state = models.CharField(choices=STATES, max_length=200)   
+    state = models.CharField(choices=STATES, max_length=200)
+    creator = models.CharField(max_length=200)
 
 class Event(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
