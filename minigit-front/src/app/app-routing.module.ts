@@ -7,6 +7,7 @@ import { ProfileComponent } from './main pages/profile/profile.component';
 import { ShowIssuesComponent } from './issue/show-issues/show-issues.component';
 import { MilestonesComponent } from './milestones/milestones/milestones.component';
 import { MilestonesAddComponent } from './milestones/milestones-add/milestones-add.component';
+import { MilestonesUpdateComponent } from './milestones/milestones-update/milestones-update.component';
 
 
 const routes: Routes = [
@@ -35,6 +36,11 @@ const routes: Routes = [
   {
     path: ':owner/:repo/milestones/create',
     component: MilestonesAddComponent,
+    canActivate: [AuthGuard] 
+  },
+  {
+    path: ':owner/:repo/milestones/update/:id',
+    component: MilestonesUpdateComponent,
     canActivate: [AuthGuard] 
   },
 ];

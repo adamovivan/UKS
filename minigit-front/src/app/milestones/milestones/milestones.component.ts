@@ -36,7 +36,7 @@ export class MilestonesComponent implements OnInit {
                     this.milestones = data;
                     this.milestones.forEach(element => {
                       
-                      if(element.closed_at == null){
+                      if(element.fields.state == "OPEN"){
                         this.open = this.open+1;
                         console.log(this.open);
                       }
@@ -50,7 +50,29 @@ export class MilestonesComponent implements OnInit {
   }
 
   newMilestone(){
-    window.location.href = SERVER_URL_FRONT + + this.owner + "/" + this.repo + "/milestones/create";
+    window.location.href = SERVER_URL_FRONT +  this.owner + "/" + this.repo + "/milestones/create";
+  }
+
+  close(pk:any){
+    this.service.closeMilestones(pk).subscribe(
+      data => {
+        window.location.reload();
+    },
+    (err) => {
+      });
+  }
+
+  delete(pk:any){
+    this.service.deleteMilestones(pk).subscribe(
+      data => {
+        window.location.reload();
+    },
+    (err) => {
+      });
+  }
+
+  update(pk:any){
+    window.location.href = SERVER_URL_FRONT +  this.owner + "/" + this.repo + "/milestones/update/" + pk;
   }
 
 }
