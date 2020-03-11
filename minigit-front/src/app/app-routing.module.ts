@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MainComponent } from './main pages/main/main.component';
+import { AddIssueComponent } from './issue/add-issue/add-issue.component';
 import { SignInComponent } from './main pages/sign-in/sign-in.component';
 import { AuthGuard } from './helpers/auth.guard';
 import { ProfileComponent } from './main pages/profile/profile.component';
+import { ShowIssuesComponent } from './issue/show-issues/show-issues.component';
 import { MilestonesComponent } from './milestones/milestones/milestones.component';
 import { MilestonesAddComponent } from './milestones/milestones-add/milestones-add.component';
 import { MilestonesUpdateComponent } from './milestones/milestones-update/milestones-update.component';
@@ -11,8 +12,12 @@ import { MilestonesUpdateComponent } from './milestones/milestones-update/milest
 
 const routes: Routes = [
   {
-    path: '',
-    component: MainComponent
+    path: 'issues', 
+    component: ShowIssuesComponent
+  },
+  {
+    path : 'addIssue', 
+    component : AddIssueComponent
   },
   {
     path: 'signIn',

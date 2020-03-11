@@ -1,0 +1,41 @@
+<div class="container">
+    <div class="row">
+        <div class="col-1">
+            <!--ovde cemo isctati sliku ulogovanog korisnika -->
+            <div style="height: 20px">
+
+            </div>
+            <img src="{{currentUser.avatar}}" class="rounded float-right" style="width: 50px; height: 50px;">
+        </div>
+        <div class="col-8">
+            <div style="height: 20px">
+
+            </div>
+            <div class="card">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <form [formGroup]="issueForm" (ngSubmit)="createIssue()">
+                            <input type="text" formControlName="title" class="form-control" id="inputEmail3" placeholder="Title">
+                            <br> 
+                            <div> <label> Assignees: </label>
+                                <mat-select formControlName="assignees" class="form-control float-right" style="width: 80%;" multiple> 
+                                    <mat-option *ngFor="let u of users" [value]="u.fields.name"> {{u.fields.name}} </mat-option>
+                                </mat-select> </div>
+                            <br>
+                            <div> <label> Labels: </label> <mat-select formControlName="labels"  class="form-control float-right"  style="width: 80%;" multiple> 
+                                    <mat-option *ngFor="let l of labels" [value]="l.fields.name">{{l.fields.name}}</mat-option>
+                             </mat-select> </div>
+                            <br>
+                            <div> <label> Milestone: </label> <mat-select formControlName="milestone" class="form-control float-right" style="width: 80%;"><mat-option> </mat-option></mat-select>  </div>
+                            <br>
+                            <button type="submit" class="btn btn-success float-right"> Submit new issue </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-3">
+           
+        </div>
+    </div>
+</div>

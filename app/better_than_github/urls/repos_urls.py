@@ -9,4 +9,5 @@ urlpatterns = [
     path('<owner>/<repo>/assignees', repos_views.get_assignees),
     path('<owner>/<repo>/labels/<name>', repos_views.get_label),
     path('<owner>/<repo>/labels', repos_views.get_labels),
+    path('<owner>', repos_views.get_all_repo)
 ]

@@ -34,7 +34,7 @@ class Issue(models.Model):
     milestone = models.ForeignKey(Milestone, on_delete=models.SET_NULL, null=True)
     assignees = models.ManyToManyField(User)
     state = models.CharField(choices=STATES, max_length=200)
-
+    creator = models.CharField(max_length=200)
 
 class Event(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
