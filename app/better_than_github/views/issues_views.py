@@ -23,10 +23,17 @@ def get_labels_on_issue(request, owner=None, repo=None, number=None):
     return HttpResponse(labels)
 
 @api_view(['GET'])
-def get_issue(request, owner=None, repo=None, number=None):
+def get_issueGITHUB(request, owner=None, repo=None, number=None):
     issue = requests.get(
         API + 'repos/{0}/{1}/issues/{2}'.format(owner, repo, number))
     return HttpResponse(issue)
+
+@api_view(['GET'])
+def get_issue(request, id):
+    issue = Issue.objects.get(pk=id)
+    data = serializers.serialize("json", [issue])[1:-1]
+
+    return HttpResponse(data)
 
 @api_view(['GET'])
 def get_mycreate_issues(request, owner=None):
@@ -34,7 +41,6 @@ def get_mycreate_issues(request, owner=None):
 
     data=serializers.serialize("json", issues)
     return HttpResponse(data)
-
 
 
 @api_view(['GET'])
@@ -49,8 +55,6 @@ def get_comments_in_repo(request, owner=None, repo=None):
         API + 'repos/{0}/{1}/issues/comments'.format(owner, repo))
     return HttpResponse(comments)
 
-
-
 @api_view(['GET'])
 def getLabeles(request):
     labels = Label.objects.all()
@@ -63,7 +67,7 @@ def create_issue(request, owner=None, repo=None):
     print("title issue ", data)
 
     try:
-        repo1 = "https://github.com/" + owner + "/"+ repo
+        repo1 = "https://github.com/" + owner + "/" + repo
         project = Project.objects.get(git_repo=repo1)
         print(project)
 

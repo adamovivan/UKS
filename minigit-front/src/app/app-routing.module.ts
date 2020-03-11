@@ -7,12 +7,17 @@ import { ProfileComponent } from './main pages/profile/profile.component';
 import { ShowIssuesComponent } from './issue/show-issues/show-issues.component';
 import { MilestonesComponent } from './milestones/milestones/milestones.component';
 import { MilestonesAddComponent } from './milestones/milestones-add/milestones-add.component';
+import { ShowIssueComponent } from './issue/show-issue/show-issue.component';
 
 
 const routes: Routes = [
   {
     path: 'issues', 
     component: ShowIssuesComponent
+  },
+  {
+    path: 'issue/:id',
+    component: ShowIssueComponent
   },
   {
     path : 'addIssue', 
