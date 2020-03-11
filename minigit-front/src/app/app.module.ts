@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormField, MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +15,10 @@ import { ProfileComponent } from './main pages/profile/profile.component';
 import { ShowIssuesComponent } from './issue/show-issues/show-issues.component';
 import { MilestonesComponent } from './milestones/milestones/milestones.component';
 import { MilestonesAddComponent } from './milestones/milestones-add/milestones-add.component';
+import { ShowIssueComponent } from './issue/show-issue/show-issue.component';
+import {MatInputModule} from '@angular/material/input';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatButtonModule} from '@angular/material/button';
 import { MilestonesUpdateComponent } from './milestones/milestones-update/milestones-update.component';
 
 
@@ -29,6 +33,8 @@ import { MilestonesUpdateComponent } from './milestones/milestones-update/milest
     ShowIssuesComponent,
     MilestonesComponent,
     MilestonesAddComponent,
+    ShowIssueComponent,
+    MilestonesAddComponent,
     MilestonesUpdateComponent
   ],
   imports: [
@@ -38,7 +44,11 @@ import { MilestonesUpdateComponent } from './milestones/milestones-update/milest
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    MatSelectModule
+    MatSelectModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatDividerModule,
+    MatButtonModule
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}}

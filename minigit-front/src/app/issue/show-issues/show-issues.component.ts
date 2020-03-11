@@ -18,6 +18,7 @@ export class ShowIssuesComponent implements OnInit {
   ngOnInit(): void {
     this.issueService.getCreateIssues(this.currentUser.alias).subscribe(
       data => {
+        console.log(data)
         this.showIssues = data;
       }
     )

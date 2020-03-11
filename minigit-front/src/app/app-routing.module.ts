@@ -7,16 +7,21 @@ import { ProfileComponent } from './main pages/profile/profile.component';
 import { ShowIssuesComponent } from './issue/show-issues/show-issues.component';
 import { MilestonesComponent } from './milestones/milestones/milestones.component';
 import { MilestonesAddComponent } from './milestones/milestones-add/milestones-add.component';
+import { ShowIssueComponent } from './issue/show-issue/show-issue.component';
 import { MilestonesUpdateComponent } from './milestones/milestones-update/milestones-update.component';
 
 
 const routes: Routes = [
   {
-    path: 'issues', 
+    path: 'issues',
     component: ShowIssuesComponent
   },
   {
-    path : 'addIssue', 
+    path: 'issue/:id',
+    component: ShowIssueComponent
+  },
+  {
+    path : 'addIssue',
     component : AddIssueComponent
   },
   {
@@ -26,23 +31,23 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent,
-    canActivate: [AuthGuard] 
+    canActivate: [AuthGuard]
   },
   {
     path: ':owner/:repo/milestones',
     component: MilestonesComponent,
-    canActivate: [AuthGuard] 
+    canActivate: [AuthGuard]
   },
   {
     path: ':owner/:repo/milestones/create',
     component: MilestonesAddComponent,
-    canActivate: [AuthGuard] 
+    canActivate: [AuthGuard]
   },
   {
     path: ':owner/:repo/milestones/update/:id',
     component: MilestonesUpdateComponent,
-    canActivate: [AuthGuard] 
-  },
+    canActivate: [AuthGuard]
+  }
 ];
 
 @NgModule({

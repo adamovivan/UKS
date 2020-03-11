@@ -45,6 +45,7 @@ export class AddIssueComponent implements OnInit {
   createIssue(){
     alert(JSON.stringify(this.issueForm.value));
     var repo = 'upp_nc';
+    repo = 'SEP'
   //  alert(JSON.stringify(this.currentUser));
     
     this.issueService.createIssue(this.issueForm.value, this.currentUser.alias, repo).subscribe(

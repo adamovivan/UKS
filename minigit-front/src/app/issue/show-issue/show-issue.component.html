@@ -1,0 +1,42 @@
+<div *ngIf="issue != undefined" class="mainDiv">
+    <h2>{{issue.fields.title}}</h2>
+    <div class="state" [ngStyle]="{'background-color': issue.fields.state === 'OPEN' ? 'green' : 'red'}">
+        <b>
+            <span style="color: white;">{{issue.fields.state}}</span>
+        </b>
+    </div>
+    <div class="creator">
+        <b>{{issue.fields.creator}}</b> opened this issue on {{issue.fields.open_date_time | date: 'mediumDate' }}
+    </div>
+    <br>
+    <br>
+    <mat-divider class="divider"></mat-divider>
+    <br>
+    <div *ngFor="let comment of comments" class="comments">
+        <br>
+        <b>{{comment.fields.user[1]}} </b> 
+        <span class="grey-text">
+            commented {{comment.fields.timestamp | date: 'short'}}
+        </span>
+        <br>
+        <mat-form-field class="commentedComment">
+            <textarea matInput value="{{comment.fields.description}}" disabled></textarea>
+        </mat-form-field>
+        <mat-divider class="comments-divider"></mat-divider>
+    </div>
+    <div class="newCommentDiv">
+        <mat-form-field class="newComment">
+            <input matInput placeholder="Comment ..." [(ngModel)]="commentText">
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-raised-button (click)="toggleIssueState()" class="open-closeBtn">
+            {{openCloseBtnName}}
+        </button>
+        <button mat-raised-button (click)="submitComment()" class="commentBtn" [disabled]="commentDisabled">Comment</button>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>

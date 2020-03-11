@@ -73,24 +73,6 @@ services:
 # Django application
   web:
     container_name: uks_web
-    labels:
-      com.example.service: "web"
-      com.example.description: "Use for the main web process"
-    build: .
-    command: ["./wait_for_postgres.sh"]
-    expose:
-      - 8000
-#    volumes:
-#      - ./static:/code/app/static #must be same as nginx!
-    logging:
-      driver: "json-file"
-    depends_on:
-      - db
-#      - es
-#      - kibana
-#    links:
-#      - redis
-    ports:
       - "8000:8000"
 
 # Angular application

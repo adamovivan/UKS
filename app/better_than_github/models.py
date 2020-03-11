@@ -8,7 +8,10 @@ STATES = (
 
 class User(models.Model):
     name = models.CharField(max_length=200)
-    email = models.EmailField(max_length=254) 
+    email = models.EmailField(max_length=254)
+
+    def natural_key(self):
+        return self.email, self.name
 
 class Label(models.Model):
     name = models.CharField(max_length=200)
@@ -35,6 +38,7 @@ class Issue(models.Model):
     assignees = models.ManyToManyField(User)
     state = models.CharField(choices=STATES, max_length=200)
     creator = models.CharField(max_length=200)
+    open_date_time = models.DateTimeField(auto_now_add=True, blank=True)
 
 class Event(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
