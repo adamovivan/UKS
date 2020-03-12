@@ -3,6 +3,10 @@ import { ActivatedRoute } from '@angular/router';
 import { IssueService } from 'src/app/services/issue.service';
 import { CommentDto } from 'src/app/dto/comment.dto';
 import { AuthService } from 'src/app/services/auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditCommentDialogComponent } from '../edit-comment-dialog/edit-comment-dialog.component';
+import { CommentHistoryDialogComponent } from '../comment-history-dialog/comment-history-dialog.component';
+
 
 @Component({
   selector: 'app-show-issue',
@@ -22,12 +26,13 @@ export class ShowIssueComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private issueService: IssueService,
-    private authService: AuthService) { }
+    private authService: AuthService,
+    public dialog: MatDialog) { }
 
   ngOnInit(): void {
-
+    
     this.authService.currentUser.subscribe(x => this.currentUser = x);
-
+ 
     this.route.params.subscribe(params => {
       console.log(params) //log the entire params object
       this.issueId = params['id'];
@@ -49,6 +54,36 @@ export class ShowIssueComponent implements OnInit {
     });
   }
 
+  getCommentChanges(){
+    for(let comment of this.comments){
+      this.issueService.getCommentChanges(comment.pk).subscribe(res => {
+        comment["edits"] = res;
+      });
+    }
+
+  }
+
+  showEditHistory(comment){
+    let dialogRef = this.dialog.open(CommentHistoryDialogComponent, {
+      width: '45pc',
+      data: comment,
+      maxHeight: '90vh'
+    });
+
+    dialogRef.afterClosed().subscribe(() => {});
+  }
+
+  editCommentDialog(comment){
+    let dialogRef = this.dialog.open(EditCommentDialogComponent, {
+      width: '45pc',
+      data: comment
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.getCommentChanges();
+    });
+  }
+
   toggleIssueState(){
     if(this.issue.fields.state === 'OPEN'){
       this.issue.fields.state = 'CLOSED';
@@ -67,6 +102,7 @@ export class ShowIssueComponent implements OnInit {
     this.issueService.getIssueEvents(this.issueId).subscribe(res => {
       console.log(res);
       this.comments = res;
+      this.getCommentChanges();
     });
   }
 

@@ -1,0 +1,25 @@
+
+<div class="comments">
+    <br>
+    <b>{{comment.fields.user[1]}} </b> 
+    <span class="grey-text">
+        commented {{comment.fields.timestamp | date: 'short'}}
+    </span>
+    <br>
+    <mat-form-field class="commentedComment">
+        <textarea matInput value="{{comment.fields.description}}" disabled></textarea>
+    </mat-form-field>
+    <mat-divider class="comments-divider"></mat-divider>
+</div>
+<div *ngFor="let edit of comment.edits" class="comments">
+    <br>
+    <b>{{edit.fields.user[1]}} </b> 
+    <span class="grey-text">
+        commented {{edit.fields.timestamp | date: 'short'}}
+    </span>
+    <br>
+    <mat-form-field class="commentedComment">
+        <textarea matInput value="{{edit.fields.description}}" disabled></textarea>
+    </mat-form-field>
+    <mat-divider class="comments-divider"></mat-divider>
+</div>
