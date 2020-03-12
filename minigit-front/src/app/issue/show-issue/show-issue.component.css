@@ -11,11 +11,19 @@
     padding-top: 0.4pc;
 }
 
+.edit-comment {
+    margin-left: 1pc;
+}
+
 .creator {
     color: grey;
     display: inline-block;
     margin-left: 1pc;
     margin-top: 0.4pc;
+}
+
+.edit-history{
+    margin-left: 1pc;
 }
 
 .newComment{
