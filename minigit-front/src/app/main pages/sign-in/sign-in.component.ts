@@ -40,7 +40,6 @@ export class SignInComponent implements OnInit {
       // Check console logs for additional User info
       provider.me().then((data) => {
         console.log('data: ', data);
-        alert('Welcome ' + data.name + '!');
         this.authService.saveUserInLocalStorage(data);
       });
 
