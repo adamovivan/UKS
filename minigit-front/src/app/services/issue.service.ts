@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { CommentDto } from '../dto/comment.dto';
+import { CommentEditDto } from '../dto/comment-edit.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -42,5 +43,13 @@ export class IssueService {
 
   addComment(comment: CommentDto){
     return this.http.post(SERVER_URL + 'repos/comment', comment, {headers: this.headers});
+  }
+
+  editComment(commentEdit: CommentEditDto){
+    return this.http.post(SERVER_URL + 'repos/comment/edit', commentEdit, {headers: this.headers});
+  }
+
+  getCommentChanges(commentId){
+    return this.http.get(SERVER_URL + 'repos/comment/changes/'.concat(commentId));
   }
 }

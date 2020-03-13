@@ -13,20 +13,54 @@
     <mat-divider class="divider"></mat-divider>
     <br>
     <div *ngFor="let comment of comments" class="comments">
-        <br>
-        <b>{{comment.fields.user[1]}} </b> 
-        <span class="grey-text">
-            commented {{comment.fields.timestamp | date: 'short'}}
+        
+        
+        <span *ngIf="comment.edits !== undefined && comment.edits.length === 0">
+            <br>
+            <b>{{comment.fields.user[1]}} </b> 
+            <span class="grey-text">
+                commented {{comment.fields.timestamp | date: 'short'}}
+            </span>
+        </span>
+
+        <span *ngIf="comment.edits !== undefined && comment.edits.length !== 0">
+            <br>
+            <b>{{comment.edits[comment.edits.length - 1].fields.user[1]}}</b> 
+            <span class="grey-text">
+                commented {{comment.edits[comment.edits.length - 1].fields.timestamp | date: 'short'}}
+            </span>
+        </span>
+
+        <span class="edit-comment" *ngIf="currentUser.alias === comment.fields.user[1]">
+            <a class="grey-text" href="javascript:void(0)" (click)="editCommentDialog(comment)">Edit</a>
+        </span>
+
+        <span *ngIf="comment.edits !== undefined && comment.edits.length !== 0">
+            <a class="grey-text edit-history" href="javascript:void(0)" (click)="showEditHistory(comment)">
+                <i>History</i>
+            </a>
         </span>
         <br>
-        <mat-form-field class="commentedComment">
-            <textarea matInput value="{{comment.fields.description}}" disabled></textarea>
-        </mat-form-field>
+
+
+        <span *ngIf="comment.edits !== undefined && comment.edits.length === 0">
+            <mat-form-field class="commentedComment">
+                <textarea matInput value="{{comment.fields.description}}" disabled></textarea>
+            </mat-form-field>
+        </span>
+
+        <span *ngIf="comment.edits !== undefined && comment.edits.length !== 0">
+            <mat-form-field class="commentedComment">
+                <textarea matInput value="{{comment.edits[comment.edits.length - 1].fields.description}}" disabled></textarea>
+            </mat-form-field>
+        </span>
+
+
         <mat-divider class="comments-divider"></mat-divider>
     </div>
     <div class="newCommentDiv">
         <mat-form-field class="newComment">
-            <input matInput placeholder="Comment ..." [(ngModel)]="commentText">
+            <input matInput placeholder="Comment ..." [(ngModel)]="commentText" [disabled]="commentDisabled">
         </mat-form-field>
     </div>
     <div>

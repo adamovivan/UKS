@@ -1,0 +1,9 @@
+<div mat-dialog-content>
+    <h4>Edit comment</h4>
+        <mat-form-field class="newComment">
+            <input matInput placeholder="Comment ..." [(ngModel)]="commentText">
+        </mat-form-field>
+
+        <button mat-raised-button (click)="submitComment()" class="commentBtn">Update Comment</button>
+
+</div>
