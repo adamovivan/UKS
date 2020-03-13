@@ -95,14 +95,14 @@
     </div>
     <div class="newCommentDiv">
         <mat-form-field class="newComment">
-            <input matInput placeholder="Comment ..." [(ngModel)]="commentText" [disabled]="commentDisabled">
+            <input matInput placeholder="Comment ..." [(ngModel)]="commentText" >
         </mat-form-field>
     </div>
     <div>
         <button mat-raised-button (click)="toggleIssueState()" class="open-closeBtn">
             {{openCloseBtnName}}
         </button>
-        <button mat-raised-button (click)="submitComment()" class="commentBtn" [disabled]="commentDisabled">Comment</button>
+        <button mat-raised-button (click)="submitComment()" class="commentBtn" >Comment</button>
     </div>
 </div>
 <br>
