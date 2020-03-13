@@ -10,7 +10,7 @@ export class CommonService {
 
   somethingWentWrong(){
     const config = new MatSnackBarConfig();
-    config.panelClass = ['background-snack'];
+    config.panelClass = ['red-snackbar', 'snack-font'];
     config.duration = 4000;
 
     this.snackBar.open('Something went wrong, please try again.', null, config);
@@ -18,7 +18,7 @@ export class CommonService {
 
   errorMessage(message: string){
     const config = new MatSnackBarConfig();
-    config.panelClass = ['background-snack'];
+    config.panelClass = ['red-snackbar', 'snack-font'];
     config.duration = 4000;
 
     this.snackBar.open("Error: " + message, null, config);
@@ -26,7 +26,7 @@ export class CommonService {
 
   showMessage(message: string){
     const config = new MatSnackBarConfig();
-    config.panelClass = ['background-snack'];
+    config.panelClass = ['green-snackbar', 'snack-font'];
     config.duration = 4000;
 
     this.snackBar.open(message, null, config);

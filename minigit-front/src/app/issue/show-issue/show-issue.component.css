@@ -16,7 +16,7 @@
 }
 
 .creator {
-    color: grey;
+    /* color: grey; */
     display: inline-block;
     margin-left: 1pc;
     margin-top: 0.4pc;
@@ -53,6 +53,26 @@
 
 .commentedComment{
     width: 40pc;
+}
+
+.reopened {
+    color: green
+}
+
+.closed {
+    color: red;
+}
+
+.state-change {
+    margin-left: 4pc;
+}
+
+.state-divider {
+    width: 54pc;
+}
+
+.state-text{
+    margin-left: 1pc;
 }
 
 textarea:disabled {

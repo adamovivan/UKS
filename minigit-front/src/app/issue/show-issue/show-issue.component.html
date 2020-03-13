@@ -6,57 +6,92 @@
         </b>
     </div>
     <div class="creator">
-        <b>{{issue.fields.creator}}</b> opened this issue on {{issue.fields.open_date_time | date: 'mediumDate' }}
+        <b>{{issue.fields.creator}}</b><span class="grey-text">
+             opened this issue on {{issue.fields.open_date_time | date: 'mediumDate' }}
+            </span>
     </div>
     <br>
     <br>
     <mat-divider class="divider"></mat-divider>
     <br>
-    <div *ngFor="let comment of comments" class="comments">
+    <div *ngFor="let event of issueEvents" class="comments">
         
-        
-        <span *ngIf="comment.edits !== undefined && comment.edits.length === 0">
-            <br>
-            <b>{{comment.fields.user[1]}} </b> 
-            <span class="grey-text">
-                commented {{comment.fields.timestamp | date: 'short'}}
+        <div *ngIf="event.model === 'better_than_github.comment'">
+            <span *ngIf="event.edits !== undefined && event.edits.length === 0">
+                <br>
+                <b>{{event.fields.user[1]}} </b> 
+                <span class="grey-text">
+                    commented {{event.fields.timestamp | date: 'short'}}
+                </span>
             </span>
-        </span>
 
-        <span *ngIf="comment.edits !== undefined && comment.edits.length !== 0">
-            <br>
-            <b>{{comment.edits[comment.edits.length - 1].fields.user[1]}}</b> 
-            <span class="grey-text">
-                commented {{comment.edits[comment.edits.length - 1].fields.timestamp | date: 'short'}}
+            <span *ngIf="event.edits !== undefined && event.edits.length !== 0">
+                <br>
+                <b>{{event.edits[event.edits.length - 1].fields.user[1]}}</b> 
+                <span class="grey-text">
+                    commented {{event.edits[event.edits.length - 1].fields.timestamp | date: 'short'}}
+                </span>
             </span>
-        </span>
 
-        <span class="edit-comment" *ngIf="currentUser.alias === comment.fields.user[1]">
-            <a class="grey-text" href="javascript:void(0)" (click)="editCommentDialog(comment)">Edit</a>
-        </span>
+            <span class="edit-comment" *ngIf="currentUser.alias === event.fields.user[1]">
+                <a class="grey-text" href="javascript:void(0)" (click)="editCommentDialog(event)">Edit</a>
+            </span>
 
-        <span *ngIf="comment.edits !== undefined && comment.edits.length !== 0">
-            <a class="grey-text edit-history" href="javascript:void(0)" (click)="showEditHistory(comment)">
-                <i>History</i>
-            </a>
-        </span>
-        <br>
-
-
-        <span *ngIf="comment.edits !== undefined && comment.edits.length === 0">
-            <mat-form-field class="commentedComment">
-                <textarea matInput value="{{comment.fields.description}}" disabled></textarea>
-            </mat-form-field>
-        </span>
-
-        <span *ngIf="comment.edits !== undefined && comment.edits.length !== 0">
-            <mat-form-field class="commentedComment">
-                <textarea matInput value="{{comment.edits[comment.edits.length - 1].fields.description}}" disabled></textarea>
-            </mat-form-field>
-        </span>
+            <span *ngIf="event.edits !== undefined && event.edits.length !== 0">
+                <a class="grey-text edit-history" href="javascript:void(0)" (click)="showEditHistory(event)">
+                    History
+                </a>
+            </span>
+            <br>
 
 
-        <mat-divider class="comments-divider"></mat-divider>
+            <span *ngIf="event.edits !== undefined && event.edits.length === 0">
+                <mat-form-field class="commentedComment">
+                    <textarea matInput value="{{event.fields.description}}" disabled></textarea>
+                </mat-form-field>
+            </span>
+
+            <span *ngIf="event.edits !== undefined && event.edits.length !== 0">
+                <mat-form-field class="commentedComment">
+                    <textarea matInput value="{{event.edits[event.edits.length - 1].fields.description}}" disabled></textarea>
+                </mat-form-field>
+            </span>
+
+
+            <mat-divider class="comments-divider"></mat-divider>
+
+        </div>
+
+        <div *ngIf="event.model === 'better_than_github.statechange'" class="state-change">
+            <br>
+                 
+                <span >
+                    <div *ngIf="event.fields.new_state === 'OPEN'">
+                        <i class="material-icons reopened">
+                            fiber_manual_record
+                            </i>
+                            <span class="state-text">
+
+                             <b>{{event.fields.user[1]}} </b><span class="grey-text">reopened 
+                            {{event.fields.timestamp | date: 'short'}}</span>
+                        </span>
+                    </div>
+                    <div *ngIf="event.fields.new_state === 'CLOSED'">
+                        <i class="material-icons closed">
+                            cancel
+                            </i> 
+                            <span class="state-text">
+                            <b>{{event.fields.user[1]}} </b><span class="grey-text">closed 
+                            {{event.fields.timestamp | date: 'short'}}
+                        </span>
+                            </span>
+                    </div>
+                    
+                </span>
+            <br>
+            <mat-divider class="state-divider"></mat-divider>
+        </div>
+
     </div>
     <div class="newCommentDiv">
         <mat-form-field class="newComment">

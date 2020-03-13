@@ -37,19 +37,31 @@ export class IssueService {
     return this.http.get(SERVER_URL + 'repos/issue/'.concat(id));
   }
 
-  getIssueEvents(issueId){
+  getIssueComments(issueId){
     return this.http.get(SERVER_URL + 'repos/issue/'.concat(issueId).concat('/comments'));
   }
 
   addComment(comment: CommentDto){
-    return this.http.post(SERVER_URL + 'repos/comment', comment, {headers: this.headers});
+    return this.http.post(SERVER_URL + 'repos/comment', comment);
   }
 
   editComment(commentEdit: CommentEditDto){
-    return this.http.post(SERVER_URL + 'repos/comment/edit', commentEdit, {headers: this.headers});
+    return this.http.post(SERVER_URL + 'repos/comment/edit', commentEdit);
   }
 
   getCommentChanges(commentId){
     return this.http.get(SERVER_URL + 'repos/comment/changes/'.concat(commentId));
+  }
+
+  changeState(issueId, userAlias){
+    return this.http.put(SERVER_URL + 'repos/issue/change/state/'.concat(issueId).concat('/').concat(userAlias), {});
+  }
+
+  getStateChanges(issueId){
+    return this.http.get(SERVER_URL + 'repos/issue/state/changes/'.concat(issueId));
+  }
+
+  getIssueEvents(issueId){
+    return this.http.get(SERVER_URL + 'repos/issue-events/'.concat(issueId));
   }
 }
