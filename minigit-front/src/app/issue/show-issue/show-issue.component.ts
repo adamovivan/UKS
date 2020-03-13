@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditCommentDialogComponent } from '../edit-comment-dialog/edit-comment-dialog.component';
 import { CommentHistoryDialogComponent } from '../comment-history-dialog/comment-history-dialog.component';
+import { CommonService } from 'src/app/services/common.service';
 
 
 @Component({
@@ -24,15 +25,18 @@ export class ShowIssueComponent implements OnInit {
   comments: any = [];
   commentDisabled = false;
 
+  issueEvents: any = [];
+
   constructor(private route: ActivatedRoute,
     private issueService: IssueService,
     private authService: AuthService,
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private commonService: CommonService) { }
 
   ngOnInit(): void {
     
     this.authService.currentUser.subscribe(x => this.currentUser = x);
- 
+    console.log(this.currentUser)
     this.route.params.subscribe(params => {
       console.log(params) //log the entire params object
       this.issueId = params['id'];
@@ -48,7 +52,9 @@ export class ShowIssueComponent implements OnInit {
           this.openCloseBtnName = "Reopen Issue";
           this.commentDisabled = true;
         }
-
+        
+        
+        // this.getIssueComments();
         this.getIssueEvents();
       });
     });
@@ -60,7 +66,29 @@ export class ShowIssueComponent implements OnInit {
         comment["edits"] = res;
       });
     }
+  }
 
+  getIssueEvents(){
+    this.issueService.getIssueEvents(this.issue.pk).subscribe(res => {
+      console.log(res);
+      this.issueEvents = res;
+
+      
+      for(let event of this.issueEvents){
+        if(event.model === 'better_than_github.comment'){
+          this.issueService.getCommentChanges(event.pk).subscribe(res => {
+            event["edits"] = res;
+          });
+        }
+        
+      }
+    });
+  }
+
+  getStateChanges(){
+    this.issueService.getStateChanges(this.issue.pk).subscribe(res => {
+      console.log(res);
+    });
   }
 
   showEditHistory(comment){
@@ -80,31 +108,34 @@ export class ShowIssueComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      this.getCommentChanges();
+      this.getIssueEvents();
     });
   }
 
-  toggleIssueState(){
-    if(this.issue.fields.state === 'OPEN'){
-      this.issue.fields.state = 'CLOSED';
-      this.openCloseBtnName = "Reopen Issue";
-      this.commentDisabled = true;
-    }
-    else{
-      this.issue.fields.state = 'OPEN';
-      this.openCloseBtnName = "Close Issue";
-      this.commentDisabled = false;
-    }
-    
-  }
-
-  getIssueEvents(){
-    this.issueService.getIssueEvents(this.issueId).subscribe(res => {
+  toggleIssueState(){  
+    this.issueService.changeState(this.issue.pk, this.currentUser.alias).subscribe(res => {
       console.log(res);
-      this.comments = res;
-      this.getCommentChanges();
+      this.issue = res;
+
+      if(this.issue.fields.state === 'OPEN'){
+        this.openCloseBtnName = "Close Issue";
+        this.commentDisabled = false;
+        this.commonService.showMessage('Issue re-opened');
+      }
+      else{
+        this.openCloseBtnName = "Reopen Issue";
+        this.commentDisabled = true;
+        this.commonService.showMessage('Issue closed');
+      }
+
+      this.getIssueEvents();
+    },
+    () => {
+      this.commonService.somethingWentWrong();
     });
   }
+
+  
 
   submitComment(){
     if(this.commentText === undefined || this.commentText === ''){
@@ -121,7 +152,6 @@ export class ShowIssueComponent implements OnInit {
       this.newComment = res;
       this.commentText = '';
       this.getIssueEvents();
-
     });
   }
 
