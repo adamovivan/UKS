@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 function _window(): any {
   // return the global native browser window object
@@ -14,7 +15,7 @@ function _window(): any {
 })
 export class SignInComponent implements OnInit {
 
-  constructor(private authService: AuthService, private router: Router) { 
+  constructor(private authService: AuthService, private router: Router, private userService: UserService) { 
     // redirect to home if already logged in
     if (this.authService.currentUserValue) { 
       this.router.navigate(['/']);
@@ -39,15 +40,25 @@ export class SignInComponent implements OnInit {
       // Prompts 'welcome' message with User's name on successful login
       // Check console logs for additional User info
       provider.me().then((data) => {
-        console.log('data: ', data);
-        alert('Welcome ' + data.name + '!');
-        this.authService.saveUserInLocalStorage(data);
+        this.userService.loginUser(data.alias).subscribe(
+          data => {
+            console.log('data: ', data);
+            this.authService.saveUserInLocalStorage(data);
+
+            // You can also call Github's API using .get()
+            provider.get('/user').then((data) => {
+              console.log('self data:', data);
+            });
+          },
+          error => {
+            alert(error.message);
+            this.router.navigate(['signUp']);
+          }
+          
+        )
+        
       });
 
-      // You can also call Github's API using .get()
-      provider.get('/user').then((data) => {
-        console.log('self data:', data);
-      });
     });
   }
 

@@ -69,3 +69,4 @@ class CodeChange(Event):
 
 class CommentChange(Event):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    description = models.CharField(max_length=200, default="")

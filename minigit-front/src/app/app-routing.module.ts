@@ -9,12 +9,20 @@ import { MilestonesComponent } from './milestones/milestones/milestones.componen
 import { MilestonesAddComponent } from './milestones/milestones-add/milestones-add.component';
 import { ShowIssueComponent } from './issue/show-issue/show-issue.component';
 import { MilestonesUpdateComponent } from './milestones/milestones-update/milestones-update.component';
+import { HomeComponent } from './main pages/home/home.component';
+import { RepoShowComponent } from './repo/repo-show/repo-show.component';
+import { ShowIssueRepoComponent } from './issue/show-issue-repo/show-issue-repo.component';
+import { SignUpComponent } from './main pages/sign-up/sign-up.component';
 
 
 const routes: Routes = [
   {
     path: 'issues',
     component: ShowIssuesComponent
+  },
+  {
+    path: '',
+    component: HomeComponent
   },
   {
     path: 'issue/:id',
@@ -25,17 +33,31 @@ const routes: Routes = [
     component : AddIssueComponent
   },
   {
+    path: 'signUp', 
+    component: SignUpComponent
+   } /*,
+  {
     path: 'signIn',
     component: SignInComponent
-  },
+  }*/,
   {
     path: 'profile',
     component: ProfileComponent,
     canActivate: [AuthGuard]
   },
   {
+    path: ':owner/:repo/repo',
+    component: RepoShowComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: ':owner/:repo/milestones',
     component: MilestonesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: ':owner/:repo/issue',
+    component: ShowIssueRepoComponent,
     canActivate: [AuthGuard]
   },
   {

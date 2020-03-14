@@ -12,5 +12,7 @@ urlpatterns = [
     path('issue/<id>', issues_views.get_issue),
     path('<owner>/<repo>/issues/<number>/comments/<comment_id>', issues_views.get_comment),
     path('<owner>/<repo>/issues/comments', issues_views.get_comments_in_repo),
-    path('comment', issue_comment_views.add_comment)
+    path('comment', issue_comment_views.add_comment),
+    path('comment/changes/<id>', issue_comment_views.get_comment_changes),
+    path('comment/edit', issue_comment_views.edit_comment)
 ]
