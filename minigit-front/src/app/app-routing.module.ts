@@ -12,6 +12,7 @@ import { MilestonesUpdateComponent } from './milestones/milestones-update/milest
 import { HomeComponent } from './main pages/home/home.component';
 import { RepoShowComponent } from './repo/repo-show/repo-show.component';
 import { ShowIssueRepoComponent } from './issue/show-issue-repo/show-issue-repo.component';
+import { CommitComponent } from './repo/commit/commit.component';
 
 
 const routes: Routes = [
@@ -43,6 +44,11 @@ const routes: Routes = [
   {
     path: ':owner/:repo/repo',
     component: RepoShowComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: ':owner/:repo/commit',
+    component: CommitComponent,
     canActivate: [AuthGuard]
   },
   {
