@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
   //ovde ce se proslediti do kog repa a ownera imas gore i samo u urlu to uvezes ... za sad zakucano 
   repo(title){
       //window.location.href = SERVER_URL_FRONT + this.owner + "/" + this.repo + "/milestones" primer;
-      alert(title);
+      // alert(title);
       window.location.href = SERVER_URL_FRONT + this.currentUser.alias + "/" + title + "/repo";
   }
 

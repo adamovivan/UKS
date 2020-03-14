@@ -90,13 +90,13 @@ services:
       - "8000:8000"
 
 # Angular application
-  frontend:
-    container_name: uks_front
-    build: ./../minigit-front
-    expose:
-      - 4200
-    ports:
-      - 4200:4200
+#  frontend:
+#    container_name: uks_front
+#    build: ./../minigit-front
+#    expose:
+#      - 4200
+#    ports:
+#      - 4200:4200
 
 ## Nginx as a web server and reverse proxy
 #  nginx:

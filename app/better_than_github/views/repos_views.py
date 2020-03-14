@@ -58,3 +58,9 @@ def get_all_repo(request, owner=None):
     print("get all repo")
     repos =requests.get(API + 'users/{0}/repos'.format(owner))
     return HttpResponse(repos)
+
+@api_view(['GET'])
+def get_all_commits(request, owner=None, repo=None):
+    commit = requests.get(
+        API + 'repos/{0}/{1}/commits'.format(owner, repo))
+    return HttpResponse(commit)
