@@ -5,6 +5,7 @@ from django.conf.urls import url, include
 urlpatterns = [
     path('<owner>/<repo>/contributors', repos_views.get_contributors),
     path('<owner>/<repo>/milestones', repos_views.get_milestones),
+    path('<owner>/<repo>/commits', repos_views.get_all_commits),
     path('<owner>/<repo>/issues', repos_views.get_issues),
     path('<owner>/<repo>/assignees', repos_views.get_assignees),
     path('<owner>/<repo>/labels/<name>', repos_views.get_label),
