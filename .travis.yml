@@ -3,6 +3,5 @@ python:
   - "3.7"
 install:
   - pip install -r app/requirements.txt
-# command to run tests
 script:
-  - python app/manage.py test
+  - cd app && python manage.py test
