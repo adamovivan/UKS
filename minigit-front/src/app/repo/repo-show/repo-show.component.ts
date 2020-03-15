@@ -55,4 +55,8 @@ export class RepoShowComponent implements OnInit {
       });
   }
 
+  content(){
+    alert("usao")
+  }
+
 }
