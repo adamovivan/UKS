@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { IssueService } from 'src/app/services/issue.service';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -11,11 +11,12 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ShowIssuesComponent implements OnInit {
   currentUser;
   showIssues;
-  constructor( private issueService: IssueService, private authService: AuthService) { 
+  constructor( private issueService: IssueService, private authService: AuthService, private route: ActivatedRoute) { 
     this.authService.currentUser.subscribe(x => this.currentUser = x);
   }
 
   ngOnInit(): void {
+
     this.issueService.getCreateIssues(this.currentUser.alias).subscribe(
       data => {
         console.log(data)
