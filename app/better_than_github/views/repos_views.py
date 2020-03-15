@@ -20,9 +20,14 @@ def get_contributors(request, owner=None, repo=None):
 
 @api_view(['GET'])
 def get_issues(request, owner=None, repo=None):
-    issues = requests.get(
-        API + 'repos/{0}/{1}/issues'.format(owner, repo))
-    return HttpResponse(issues)
+    repo1 = "https://github.com/" + owner + "/" + repo
+    try:
+        projectG = Project.objects.get(git_repo=repo1)
+    except Project.DoesNotExist:
+        projectG = None
+    issues = Issue.objects.filter(project=projectG)
+    data = serializers.serialize("json", issues)
+    return HttpResponse(data)
 
 @api_view(['GET'])
 def get_milestones(request, owner=None, repo=None):

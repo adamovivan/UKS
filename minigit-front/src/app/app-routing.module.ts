@@ -30,8 +30,9 @@ const routes: Routes = [
     component: ShowIssueComponent
   },
   {
-    path : 'addIssue',
-    component : AddIssueComponent
+    path : ':user/:repo/addIssue',
+    component : AddIssueComponent, 
+    canActivate: [AuthGuard]
   },
   {
     path: 'signUp', 

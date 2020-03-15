@@ -19,6 +19,7 @@ export class UserService {
 
   loginUser(username){
     let user = {"username" : username};
+    alert("LOGIN")
     return this.http.post(SERVER_URL + 'users/login', user, {headers: this.headers, responseType: 'text' } );
 
   }

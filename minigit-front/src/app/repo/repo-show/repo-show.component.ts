@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IssueService } from 'src/app/services/issue.service';
 
 @Component({
   selector: 'app-repo-show',
@@ -8,14 +9,18 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class RepoShowComponent implements OnInit {
   repo = '';
-  user = '';
+  owner = '';
+  issues;
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private issueService: IssueService) { }
 
   ngOnInit(){
     this.route.paramMap.subscribe(params => {
       this.repo = params.get("repo");
-      this.user = params.get("owner")
+      this.owner = params.get("owner");
+      this.issueService.getIssues(this.owner, this.repo).subscribe(
+        data => this.issues = data
+      )
     })
   }
 
