@@ -69,3 +69,21 @@ def get_all_commits(request, owner=None, repo=None):
     commit = requests.get(
         API + 'repos/{0}/{1}/commits'.format(owner, repo))
     return HttpResponse(commit)
+
+@api_view(['GET'])
+def get_repo(request, owner=None, repo=None):
+    repo = requests.get(
+        API + 'repos/{0}/{1}'.format(owner, repo))
+    return HttpResponse(repo)
+
+@api_view(['GET'])
+def get_readme(request, owner=None, repo=None):
+    readme = requests.get(
+        API + 'repos/{0}/{1}/readme'.format(owner, repo))
+    return HttpResponse(readme)
+
+@api_view(['GET'])
+def get_contents(request, owner=None, repo=None):
+    get_contents = requests.get(
+        API + 'repos/{0}/{1}/contents'.format(owner, repo))
+    return HttpResponse(get_contents)

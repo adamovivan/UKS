@@ -18,12 +18,12 @@ import { CommitComponent } from './repo/commit/commit.component';
 
 const routes: Routes = [
   {
-    path: 'issues',
-    component: ShowIssuesComponent
-  },
-  {
     path: '',
     component: HomeComponent
+  },
+  {
+    path: 'issues',
+    component: ShowIssuesComponent
   },
   {
     path: 'issue/:id',

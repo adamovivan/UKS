@@ -58,7 +58,7 @@ export class HeaderComponent implements OnInit {
             });
           },
           error => {
-            alert("Please register");
+            alert("Please register!");
             this.router.navigate(['signUp']);
           }
           
