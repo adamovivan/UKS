@@ -28,6 +28,8 @@ import { CommentHistoryDialogComponent } from './issue/comment-history-dialog/co
 import { HomeComponent } from './main pages/home/home.component';
 import { RepoShowComponent } from './repo/repo-show/repo-show.component';
 import { ShowIssueRepoComponent } from './issue/show-issue-repo/show-issue-repo.component';
+import { SignUpComponent } from './main pages/sign-up/sign-up.component';
+import { CommitComponent } from './repo/commit/commit.component';
 
 
 @NgModule({
@@ -48,7 +50,9 @@ import { ShowIssueRepoComponent } from './issue/show-issue-repo/show-issue-repo.
     CommentHistoryDialogComponent,
     HomeComponent,
     RepoShowComponent,
-    ShowIssueRepoComponent
+    ShowIssueRepoComponent,
+    SignUpComponent,
+    CommitComponent
   ],
   imports: [
     BrowserModule,
