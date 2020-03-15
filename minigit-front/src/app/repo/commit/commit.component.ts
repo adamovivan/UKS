@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { RepoService } from 'src/app/services/repo-service';
+import { RepositoryService } from 'src/app/services/repository.service';
 
 @Component({
   selector: 'app-commit',
@@ -18,7 +18,7 @@ export class CommitComponent implements OnInit {
   percent: number = 0;
 
   constructor(
-    private service: RepoService,
+    private service: RepositoryService,
     private formBuilder:FormBuilder,
     private router:Router,
     private activatedRoute: ActivatedRoute) { }

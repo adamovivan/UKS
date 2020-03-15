@@ -12,6 +12,7 @@ import { MilestonesUpdateComponent } from './milestones/milestones-update/milest
 import { HomeComponent } from './main pages/home/home.component';
 import { RepoShowComponent } from './repo/repo-show/repo-show.component';
 import { ShowIssueRepoComponent } from './issue/show-issue-repo/show-issue-repo.component';
+import { SignUpComponent } from './main pages/sign-up/sign-up.component';
 import { CommitComponent } from './repo/commit/commit.component';
 
 
@@ -31,7 +32,11 @@ const routes: Routes = [
   {
     path : 'addIssue',
     component : AddIssueComponent
-  }/*,
+  },
+  {
+    path: 'signUp', 
+    component: SignUpComponent
+   } /*,
   {
     path: 'signIn',
     component: SignInComponent

@@ -3,10 +3,13 @@ from django.urls import path
 from django.conf.urls import url, include
 
 urlpatterns = [
+    path('<owner>/<repo>', repos_views.get_repo),
     path('<owner>/<repo>/contributors', repos_views.get_contributors),
     path('<owner>/<repo>/milestones', repos_views.get_milestones),
     path('<owner>/<repo>/commits', repos_views.get_all_commits),
     path('<owner>/<repo>/issues', repos_views.get_issues),
+    path('<owner>/<repo>/readme', repos_views.get_readme),
+    path('<owner>/<repo>/contents', repos_views.get_contents),
     path('<owner>/<repo>/assignees', repos_views.get_assignees),
     path('<owner>/<repo>/labels/<name>', repos_views.get_label),
     path('<owner>/<repo>/labels', repos_views.get_labels),
