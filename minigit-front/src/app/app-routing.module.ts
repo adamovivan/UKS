@@ -9,18 +9,9 @@ import { MilestonesComponent } from './milestones/milestones/milestones.componen
 import { MilestonesAddComponent } from './milestones/milestones-add/milestones-add.component';
 import { ShowIssueComponent } from './issue/show-issue/show-issue.component';
 import { MilestonesUpdateComponent } from './milestones/milestones-update/milestones-update.component';
-import { HomeComponent } from './main pages/home/home.component';
-import { RepoShowComponent } from './repo/repo-show/repo-show.component';
-import { ShowIssueRepoComponent } from './issue/show-issue-repo/show-issue-repo.component';
-import { SignUpComponent } from './main pages/sign-up/sign-up.component';
-import { CommitComponent } from './repo/commit/commit.component';
 
 
 const routes: Routes = [
-  {
-    path: '',
-    component: HomeComponent
-  },
   {
     path: 'issues',
     component: ShowIssuesComponent
@@ -30,41 +21,21 @@ const routes: Routes = [
     component: ShowIssueComponent
   },
   {
-    path : ':user/:repo/addIssue',
-    component : AddIssueComponent, 
-    canActivate: [AuthGuard]
+    path : 'addIssue',
+    component : AddIssueComponent
   },
-  {
-    path: 'signUp', 
-    component: SignUpComponent
-   } /*,
   {
     path: 'signIn',
     component: SignInComponent
-  }*/,
+  },
   {
     path: 'profile',
     component: ProfileComponent,
     canActivate: [AuthGuard]
   },
   {
-    path: ':owner/:repo/repo',
-    component: RepoShowComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: ':owner/:repo/commit',
-    component: CommitComponent,
-    canActivate: [AuthGuard]
-  },
-  {
     path: ':owner/:repo/milestones',
     component: MilestonesComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: ':owner/:repo/issue',
-    component: ShowIssueRepoComponent,
     canActivate: [AuthGuard]
   },
   {

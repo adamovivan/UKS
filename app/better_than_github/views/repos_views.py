@@ -20,14 +20,9 @@ def get_contributors(request, owner=None, repo=None):
 
 @api_view(['GET'])
 def get_issues(request, owner=None, repo=None):
-    repo1 = "https://github.com/" + owner + "/" + repo
-    try:
-        projectG = Project.objects.get(git_repo=repo1)
-    except Project.DoesNotExist:
-        projectG = None
-    issues = Issue.objects.filter(project=projectG)
-    data = serializers.serialize("json", issues)
-    return HttpResponse(data)
+    issues = requests.get(
+        API + 'repos/{0}/{1}/issues'.format(owner, repo))
+    return HttpResponse(issues)
 
 @api_view(['GET'])
 def get_milestones(request, owner=None, repo=None):
@@ -63,33 +58,3 @@ def get_all_repo(request, owner=None):
     print("get all repo")
     repos =requests.get(API + 'users/{0}/repos'.format(owner))
     return HttpResponse(repos)
-
-@api_view(['GET'])
-def get_all_commits(request, owner=None, repo=None):
-    commit = requests.get(
-        API + 'repos/{0}/{1}/commits'.format(owner, repo))
-    return HttpResponse(commit)
-
-@api_view(['GET'])
-def get_repo(request, owner=None, repo=None):
-    repo = requests.get(
-        API + 'repos/{0}/{1}'.format(owner, repo))
-    return HttpResponse(repo)
-
-@api_view(['GET'])
-def get_readme(request, owner=None, repo=None):
-    readme = requests.get(
-        API + 'repos/{0}/{1}/readme'.format(owner, repo))
-    return HttpResponse(readme)
-
-@api_view(['GET'])
-def get_contents(request, owner=None, repo=None):
-    get_contents = requests.get(
-        API + 'repos/{0}/{1}/contents'.format(owner, repo))
-    return HttpResponse(get_contents)
-
-@api_view(['POST'])
-def get_content(request, owner=None, repo=None):
-    get_content = requests.get(
-        API + 'repos/{0}/{1}/contents/{2}'.format(owner, repo, request.data['path']))
-    return HttpResponse(get_content)

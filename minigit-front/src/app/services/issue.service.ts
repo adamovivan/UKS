@@ -17,10 +17,6 @@ export class IssueService {
   }
   constructor(private http:HttpClient) { }
 
-  getIssues(owner, repo){
-    return this.http.get(SERVER_URL+ 'repos/'.concat(owner).concat('/'.concat(repo).concat('/issues')));
-  }
-
   getLabels(){
     return this.http.get(SERVER_URL + 'repos/issues/labels');
   }
@@ -29,8 +25,8 @@ export class IssueService {
     return this.http.get(SERVER_URL + 'users');
   }
 
-  createIssue(issue, user, repo):Observable<string>{
-    return this.http.post(SERVER_URL + 'repos/'.concat(user).concat('/').concat(repo).concat('/issues/create'), issue, {headers: this.headers, responseType: 'text'});
+  createIssue(issue, user, repo):Observable<any>{
+    return this.http.post<any>(SERVER_URL + 'repos/'.concat(user).concat('/').concat(repo).concat('/issues/create'), issue, {headers: this.headers});
   }
 
   getCreateIssues(user){
