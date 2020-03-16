@@ -15,22 +15,22 @@ export class RepositoryService {
   }
 
   getRepo(owner,repo):Observable<any>{
-    return this.http.get(SERVER_URL + 'repos/' + owner + '/' + repo) ;
+    return this.http.get(SERVER_URL + 'repos/repos/' + owner + '/' + repo) ;
   }
 
   getCommits(owner,repo){
-    return this.http.get(SERVER_URL + 'repos/' + owner + '/' + repo + '/commits');
+    return this.http.get(SERVER_URL + 'repos/repos/' + owner + '/' + repo + '/commits');
   }
 
   getReadme(owner,repo){
-    return this.http.get(SERVER_URL + 'repos/' + owner + '/' + repo + '/readme');
+    return this.http.get(SERVER_URL + 'repos/repos/' + owner + '/' + repo + '/readme');
   }
 
   getContents(owner,repo){
-    return this.http.get(SERVER_URL + 'repos/' + owner + '/' + repo + '/contents');
+    return this.http.get(SERVER_URL + 'repos/repos/' + owner + '/' + repo + '/contents');
   }
 
   postContent(owner,repo,path){
-    return this.http.post(SERVER_URL + 'repos/' + owner + '/' + repo + '/content' , {"path":path});
+    return this.http.post(SERVER_URL + 'repos/repos/' + owner + '/' + repo + '/content' , {"path":path});
   }
 }

@@ -23,6 +23,9 @@ class Project(models.Model):
     title = models.CharField(max_length=200)
     git_repo = models.CharField(max_length=200)
 
+    def natural_key(self):
+        return self.title, self.git_repo
+
 class Milestone(models.Model):
     title = models.CharField(max_length=200)
     description = models.CharField(max_length=500)

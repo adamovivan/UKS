@@ -26,7 +26,7 @@ const routes: Routes = [
     component: ShowIssuesComponent
   },
   {
-    path: 'issue/:id',
+    path: ':owner/:repo/issue/:id',
     component: ShowIssueComponent
   },
   {

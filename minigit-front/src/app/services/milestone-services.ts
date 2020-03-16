@@ -17,7 +17,7 @@ export class MilestoneService {
   }
 
   getMilestones(owner,repo){
-    return this.http.get(SERVER_URL + 'repos/'+owner+'/'+repo+'/milestones');
+    return this.http.get(SERVER_URL + 'repos/repos/'+owner+'/'+repo+'/milestones');
   }
   
   addMilestones(owner,repo, data): Observable<string>{

@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { SERVER_URL} from '../app.constant';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { CommentDto } from '../dto/comment.dto';
 import { CommentEditDto } from '../dto/comment-edit.dto';
 
@@ -18,7 +17,7 @@ export class IssueService {
   constructor(private http:HttpClient) { }
 
   getIssues(owner, repo){
-    return this.http.get(SERVER_URL+ 'repos/'.concat(owner).concat('/'.concat(repo).concat('/issues')));
+    return this.http.get(SERVER_URL+ 'repos/repos/'.concat(owner).concat('/'.concat(repo).concat('/issues')));
   }
 
   getLabels(){
@@ -38,7 +37,7 @@ export class IssueService {
   }
 
   getIssue(id){
-    return this.http.get(SERVER_URL + 'repos/issue/'.concat(id));
+    return this.http.get(SERVER_URL + 'repos/issue-id/'.concat(id));
   }
 
   getIssueComments(issueId){
