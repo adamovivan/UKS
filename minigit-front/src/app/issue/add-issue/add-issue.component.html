@@ -26,7 +26,9 @@
                                     <mat-option *ngFor="let l of labels" [value]="l.fields.name">{{l.fields.name}}</mat-option>
                              </mat-select> </div>
                             <br>
-                            <div> <label> Milestone: </label> <mat-select formControlName="milestone" class="form-control float-right" style="width: 80%;"><mat-option> </mat-option></mat-select>  </div>
+                            <div> <label> Milestone: </label> <mat-select formControlName="milestone" class="form-control float-right" style="width: 80%;">
+                                <mat-option *ngFor="let m of milestones" [value]="m.fields.title"> {{m.fields.title }}</mat-option>
+                            </mat-select>  </div>
                             <br>
                             <button type="submit" class="btn btn-success float-right"> Submit new issue </button>
                         </form>

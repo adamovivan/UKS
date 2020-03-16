@@ -36,6 +36,8 @@ def get_issue(request, id):
 
     return HttpResponse(data)
 
+
+
 @api_view(['GET'])
 def get_mycreate_issues(request, owner=None):
     issues = Issue.objects.filter(creator=owner)
@@ -155,9 +157,9 @@ def create_issue(request, owner=None, repo=None):
 
         new_issue.save()
 
-        return HttpResponse("OK", status=HTTP_201_CREATED)
+        return HttpResponse("Successfully created the issue!", status=HTTP_201_CREATED)
     except:
-        return HttpResponse(status=HTTP_400_BAD_REQUEST)
+        return HttpResponse("Unsuccessfully created the issue!", status=HTTP_400_BAD_REQUEST)
 
 
 

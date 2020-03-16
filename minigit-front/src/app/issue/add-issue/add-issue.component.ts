@@ -5,7 +5,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { TouchSequence } from 'selenium-webdriver';
 import { AuthService } from 'src/app/services/auth.service';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MilestoneService } from 'src/app/services/milestone-services';
 
 @Component({
   selector: 'app-add-issue',
@@ -16,9 +17,12 @@ export class AddIssueComponent implements OnInit {
 
   labels;
   users;
+  milestones;
   currentUser;
+  owner;
+  repo;
   issueForm: FormGroup;
-  constructor(private issueService : IssueService, private formBuilder: FormBuilder, private authService: AuthService, private router: Router) { 
+  constructor(private issueService : IssueService, private formBuilder: FormBuilder,private milestoneService: MilestoneService, private authService: AuthService, private router: Router, private route: ActivatedRoute) { 
     this.issueForm = this.formBuilder.group({
       'title' : [''],
       'assignees' : [], 
@@ -29,6 +33,10 @@ export class AddIssueComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.repo = params.get("repo");
+      this.owner = params.get("user")
+    })
     this.issueService.getLabels().subscribe(
       data => {
         this.labels = data;
@@ -40,27 +48,24 @@ export class AddIssueComponent implements OnInit {
        // alert(JSON.stringify(this.users));
       }
     )
+    this.milestoneService.getMilestones(this.owner, this.repo).subscribe(
+      data => {
+        this.milestones = data;
+      }
+    )
   }
 
   createIssue(){
     alert(JSON.stringify(this.issueForm.value));
-    var repo = 'upp_nc';
-    repo = 'SEP'
   //  alert(JSON.stringify(this.currentUser));
     
-    this.issueService.createIssue(this.issueForm.value, this.currentUser.alias, repo).subscribe(
+    this.issueService.createIssue(this.issueForm.value, this.currentUser.alias, this.repo).subscribe(
       data => {
-        alert("Success create issue");
         alert(data);
         //redirektujemo na stranicu za prikaz issue-a
+        this.router.navigate([this.owner + '/' + this.repo + '/issue'])
       }, error => {
-        
-        if (error.status == 201) {
-          alert("Success create issue");
-          this.router.navigate(['issues']);
-        }else {
-          alert("Unsuccess create issue");
-        }
+        alert(error.message);
       }
     )
     }
