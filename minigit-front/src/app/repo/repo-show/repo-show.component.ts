@@ -62,8 +62,11 @@ export class RepoShowComponent implements OnInit {
       });
   }
 
-  content(){
-    alert("usao")
+  podaci(path){
+    this.service.postContent(this.owner,this.repo,path).subscribe(
+      data => {
+             this.contents = data
+    });
   }
 
 }

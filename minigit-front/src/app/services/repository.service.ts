@@ -29,4 +29,8 @@ export class RepositoryService {
   getContents(owner,repo){
     return this.http.get(SERVER_URL + 'repos/' + owner + '/' + repo + '/contents');
   }
+
+  postContent(owner,repo,path){
+    return this.http.post(SERVER_URL + 'repos/' + owner + '/' + repo + '/content' , {"path":path});
+  }
 }

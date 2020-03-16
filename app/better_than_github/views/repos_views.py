@@ -87,3 +87,9 @@ def get_contents(request, owner=None, repo=None):
     get_contents = requests.get(
         API + 'repos/{0}/{1}/contents'.format(owner, repo))
     return HttpResponse(get_contents)
+
+@api_view(['POST'])
+def get_content(request, owner=None, repo=None):
+    get_content = requests.get(
+        API + 'repos/{0}/{1}/contents/{2}'.format(owner, repo, request.data['path']))
+    return HttpResponse(get_content)

@@ -4,43 +4,7 @@
    <div class="repository-content ">
        <!-- Drop down meni gde treba samo ubaciti trenutno branchove -->
       <div class="file-navigation">
-         <details class="details-reset details-overlay branch-select-menu " id="branch-select-menu">
-            <summary class="btn btn-sm css-truncate" data-hotkey="w" title="Switch branches or tags" aria-haspopup="menu" role="button">
-               <i>Branch:</i>
-               <span class="css-truncate-target" data-menu-button="">master</span>
-               <span class="dropdown-caret"></span>
-            </summary>
-            <!--details-menu class="SelectMenu SelectMenu--hasFilter" src="/adamovivan/UKS/refs/master?source_action=show&amp;source_controller=commits" preload="" role="menu">
-               <div class="SelectMenu-modal">
-                  <header class="SelectMenu-header">
-                     <span class="SelectMenu-title">Switch branches</span>
-                  </header>
-                  tab-container class="d-flex flex-column js-branches-tags-tabs" style="min-height: 0;">
-                     <div class="SelectMenu-tabs" role="tablist">
-                        <button class="SelectMenu-tab" type="button" data-filter-placeholder="Find or create a branch…" role="tab" aria-selected="true" tabindex="0">Branches</button>
-                     </div>
-                     <div class="SelectMenu-list" role="tabpanel" id="ref-list-branches">
-                        <div data-filter-list="">
-                             tagovi za brencove..... 
-                           <a class="SelectMenu-item" href="https://github.com/adamovivan/UKS/commits/master" role="menuitemradio" aria-checked="true" rel="nofollow">
-                              <svg class="octicon octicon-check SelectMenu-icon SelectMenu-icon--check" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true">
-                                 <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
-                              </svg>
-                              <span class="flex-1 break-word" data-menu-button-text="" data-filter-item-text="">master</span>
-                              <span class="Label Label--gray flex-self-start">default</span>
-                           </a>
-                           <a class="SelectMenu-item" href="https://github.com/adamovivan/UKS/commits/angular-app-dockerization" role="menuitemradio" aria-checked="false" rel="nofollow">
-                              <svg class="octicon octicon-check SelectMenu-icon SelectMenu-icon--check" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true">
-                                 <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
-                              </svg>
-                              <span class="break-word" data-menu-button-text="" data-filter-item-text="">angular-app-dockerization</span>
-                           </a>
-                        </div>
-                     </div>
-                  </tab-container
-               </div>
-            </details-menu-->
-         </details>
+        <!-- Branching -->
       </div>
       <div  *ngFor="let commit of commits; let i = index"  class="commits-listing commits-listing-padded js-navigation-container js-active-navigation-container" data-navigation-scroll="page">
 

@@ -72,6 +72,13 @@
              <div class="js-socket-channel js-updatable-content" data-channel="repo:219169546:post-receive:43926383" data-url="/user/repo/show_partial?partial=tree%2Frecently_touched_branches_list">
              </div>
           </div>
+          
+          <!--#################################################################################-->
+          <div class="file-navigation in-mid-page d-flex flex-items-start">
+            
+         </div>
+          <!--#################################################################################-->
+          
           <div class="Box mb-3 Box--condensed">
              <div class="Box-header Box-header--blue position-relative " style="margin-bottom:-1px;">
                 <h2 class="sr-only">Latest commit</h2>
@@ -124,7 +131,10 @@
                         <img width="16" height="16" class="spinner" alt="" src="https://github.githubassets.com/images/spinners/octocat-spinner-32.gif">
                       </td>
                      <td class="content">
-                     <span class="css-truncate css-truncate-target"><a style="color: blue;" class="btn-link mr-2" (click)="content()">{{content.name}}</a><a class="js-navigation-open " href="/{{repository.full_name}}/repo" (click)="content()"></a></span>
+                     <span class="css-truncate css-truncate-target">
+                        <a *ngIf="content.type == 'file'" style="color: blue;" class="btn-link mr-2" href="{{content.html_url}}">{{content.name}}</a>
+                        <a *ngIf="content.type == 'dir'" style="color: blue;" class="btn-link mr-2" (click)="podaci(content.path)">{{content.name}}</a>
+                     </span>
                      </td>
                   </tr>
                     
