@@ -25,11 +25,6 @@ import { EditCommentDialogComponent } from './issue/edit-comment-dialog/edit-com
 import { CommonService } from './services/common.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CommentHistoryDialogComponent } from './issue/comment-history-dialog/comment-history-dialog.component';
-import { HomeComponent } from './main pages/home/home.component';
-import { RepoShowComponent } from './repo/repo-show/repo-show.component';
-import { ShowIssueRepoComponent } from './issue/show-issue-repo/show-issue-repo.component';
-import { SignUpComponent } from './main pages/sign-up/sign-up.component';
-import { CommitComponent } from './repo/commit/commit.component';
 
 
 @NgModule({
@@ -47,12 +42,7 @@ import { CommitComponent } from './repo/commit/commit.component';
     MilestonesAddComponent,
     MilestonesUpdateComponent,
     EditCommentDialogComponent,
-    CommentHistoryDialogComponent,
-    HomeComponent,
-    RepoShowComponent,
-    ShowIssueRepoComponent,
-    SignUpComponent,
-    CommitComponent
+    CommentHistoryDialogComponent
   ],
   imports: [
     BrowserModule,

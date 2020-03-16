@@ -17,11 +17,6 @@ export class MilestonesComponent implements OnInit {
   open: number = 0;
   closed: number = 0;
   percent: number = 0;
-  closeClick = false;
-  openClick = true;
-  openMilestones= [];
-  closeMilestones = [];
-  
 
   constructor(
     private service:MilestoneService,
@@ -42,31 +37,16 @@ export class MilestonesComponent implements OnInit {
                     this.milestones.forEach(element => {
                       
                       if(element.fields.state == "OPEN"){
-                        this.openMilestones.push(element);
+                        this.open = this.open+1;
+                        console.log(this.open);
                       }
                       else{
-                        this.closeMilestones.push(element);
+                        this.closed = this.closed+1;
                       }
                         
                     });
-                    this.milestones = this.openMilestones;
-
           });
-          
       });
-  }
-
-
-  clickOpen(){
-    this.openClick = true;
-    this.closeClick = false;
-    this.milestones = this.openMilestones;
-  }
-
-  clickClose(){
-    this.openClick = false;
-    this.closeClick = true;
-    this.milestones = this.closeMilestones;
   }
 
   newMilestone(){
