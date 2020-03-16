@@ -31,18 +31,18 @@ def get_issueGITHUB(request, owner=None, repo=None, number=None):
 
 @api_view(['GET'])
 def get_issue(request, id):
+    print("ADJALSJDLASDJLK")
     issue = Issue.objects.get(pk=id)
     data = serializers.serialize("json", [issue])[1:-1]
 
     return HttpResponse(data)
 
 
-
 @api_view(['GET'])
 def get_mycreate_issues(request, owner=None):
     issues = Issue.objects.filter(creator=owner)
 
-    data=serializers.serialize("json", issues)
+    data=serializers.serialize("json", issues, use_natural_foreign_keys=True)
     return HttpResponse(data)
 
 
