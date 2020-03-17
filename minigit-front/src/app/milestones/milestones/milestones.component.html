@@ -24,18 +24,18 @@
            <div class="table-list-header">
               <div class="table-list-filters">
                  <div class="table-list-header-toggle states float-left">
-                    <a class="btn-link selected" href="/adamovivan/UKS/milestones?state=open">
+                    <a class="btn-link selected" (click)="clickOpen()" [ngClass]="{ 'btn-link selected' : openClick==true , 'btn-link': openClick==false }">
                        <svg class="octicon octicon-milestone" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
                           <path fill-rule="evenodd" d="M8 2H6V0h2v2zm4 5H2c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h10l2 2-2 2zM8 4H6v2h2V4zM6 16h2V8H6v8z"></path>
                        </svg>
-                       {{open}}
+                       {{openMilestones.length}}
                        Open
                     </a>
-                    <a class="btn-link " href="/adamovivan/UKS/milestones?state=closed">
+                    <a class="btn-link " (click)="clickClose()" [ngClass]="{ 'btn-link selected' : closeClick==true , 'btn-link': closeClick==false }">
                        <svg class="octicon octicon-check" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true">
                           <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
                        </svg>
-                       {{closed}}
+                       {{closeMilestones.length}}
                        Closed
                     </a>
                  </div>

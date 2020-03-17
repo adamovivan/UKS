@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils.timezone import now
+import json
+import datetime
 
 STATES = (
     ('OPEN', 'Open'),
@@ -20,6 +22,9 @@ class Label(models.Model):
 class Project(models.Model):
     title = models.CharField(max_length=200)
     git_repo = models.CharField(max_length=200)
+
+    def natural_key(self):
+        return self.title, self.git_repo
 
 class Milestone(models.Model):
     title = models.CharField(max_length=200)

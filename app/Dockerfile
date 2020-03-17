@@ -11,7 +11,7 @@ RUN pip install -r requirements.txt
 ADD . /code
 
 RUN ["chmod", "+x", "wait_for_postgres.sh"]
-RUN ["chmod", "+x", "start.sh"]
+#RUN ["chmod", "+x", "start.sh"]
 
 # Server, just for Docker image, not for compose
 #EXPOSE 8000

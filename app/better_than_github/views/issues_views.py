@@ -6,7 +6,8 @@ import requests
 from django.views.decorators.csrf import csrf_exempt
 from ..models import *
 from django.core import serializers
-from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST
+from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_200_OK
+import json
 
 API = 'https://api.github.com/'
 
@@ -30,16 +31,18 @@ def get_issueGITHUB(request, owner=None, repo=None, number=None):
 
 @api_view(['GET'])
 def get_issue(request, id):
+    print("ADJALSJDLASDJLK")
     issue = Issue.objects.get(pk=id)
     data = serializers.serialize("json", [issue])[1:-1]
 
     return HttpResponse(data)
 
+
 @api_view(['GET'])
 def get_mycreate_issues(request, owner=None):
     issues = Issue.objects.filter(creator=owner)
 
-    data=serializers.serialize("json", issues)
+    data=serializers.serialize("json", issues, use_natural_foreign_keys=True)
     return HttpResponse(data)
 
 
@@ -60,6 +63,57 @@ def getLabeles(request):
     labels = Label.objects.all()
     data = serializers.serialize("json", labels)
     return HttpResponse(data, content_type="json")
+
+@api_view(['GET'])
+def get_state_changes(request, id):
+    changes = StateChange.objects.filter(issue=id)
+    return HttpResponse(serializers.serialize("json", changes), content_type="json")
+
+@api_view(['GET'])
+def get_issue_events(request, id):
+    changes = StateChange.objects.filter(issue=id)
+    comments = Comment.objects.filter(issue=id)
+
+    events = list()
+
+    for change in changes:
+        events.append(change)
+
+    for comment in comments:
+        inserted = False
+        for i in range(len(events)):
+            if comment.timestamp < events[i].timestamp:
+                events.insert(i, comment)
+                inserted = True
+                break
+
+        if not inserted:
+            events.append(comment)
+
+    events_json = []
+    for event in events:
+        events_json.append(json.loads(serializers.serialize("json", [event], use_natural_foreign_keys=True)[1:-1]))
+
+    return HttpResponse(json.dumps(events_json), status=HTTP_200_OK)
+
+@api_view(['PUT'])
+def change_state(request, id, user_alias):
+    issue = Issue.objects.get(pk=id)
+
+    user = User.objects.get(name=user_alias)
+    state_change = StateChange()
+    state_change.user = user
+    if issue.state == STATES[0][0]:
+        issue.state = STATES[1][0]
+        state_change.new_state = STATES[1][0]
+    else:
+        issue.state = STATES[0][0]
+        state_change.new_state = STATES[0][0]
+
+    state_change.issue = issue
+    state_change.save()
+    issue.save()
+    return HttpResponse(serializers.serialize("json", [issue])[1:-1], status=HTTP_200_OK)
 
 @api_view(['POST'])
 def create_issue(request, owner=None, repo=None):
@@ -103,9 +157,9 @@ def create_issue(request, owner=None, repo=None):
 
         new_issue.save()
 
-        return HttpResponse("OK", status=HTTP_201_CREATED)
+        return HttpResponse("Successfully created the issue!", status=HTTP_201_CREATED)
     except:
-        return HttpResponse(status=HTTP_400_BAD_REQUEST)
+        return HttpResponse("Unsuccessfully created the issue!", status=HTTP_400_BAD_REQUEST)
 
 
 

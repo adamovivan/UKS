@@ -1,0 +1,11 @@
+language: python
+python:
+  - "3.7"
+install:
+  - pip install -r app/requirements.txt
+script:
+  - cd app && python manage.py test
+branches:
+  only:
+  - master
+  - development
