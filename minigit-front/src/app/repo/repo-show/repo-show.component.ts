@@ -21,6 +21,7 @@ export class RepoShowComponent implements OnInit {
   readme:any;
   contents:any;
   issues:any;
+  branches:any;
 
   constructor(
     private service: RepositoryService,
@@ -59,6 +60,10 @@ export class RepoShowComponent implements OnInit {
             data => {
                    this.contents = data
           });
+          /*this.service.getBranches(this.owner,this.repo).subscribe(
+            data => {
+                   this.branches = data
+          });*/
       });
   }
 
@@ -68,5 +73,15 @@ export class RepoShowComponent implements OnInit {
              this.contents = data
     });
   }
+
+  /*branch(pk){
+    this.service.getCommitsBranch(this.owner,this.repo,pk).subscribe(
+      data => {
+        this.commits = data
+        this.commits.forEach(element => {
+          this.commitsNumber += 1;
+        });
+    });
+  }*/
 
 }

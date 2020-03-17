@@ -16,6 +16,7 @@ export class CommitComponent implements OnInit {
   open: number = 0;
   closed: number = 0;
   percent: number = 0;
+  branches:any;
 
   constructor(
     private service: RepositoryService,
@@ -29,12 +30,22 @@ export class CommitComponent implements OnInit {
           this.owner = params.get('owner');
           this.repo = params.get('repo');
   
-  
           this.service.getCommits(this.owner,this.repo).subscribe(
             data => {
                    this.commits = data
           });
+          /*this.service.getBranches(this.owner,this.repo).subscribe(
+            data => {
+                   this.branches = data
+          });*/
       });
   }
+
+  /*branch(pk){
+    this.service.getCommitsBranch(this.owner,this.repo,pk).subscribe(
+      data => {
+             this.commits = data
+    });
+  }*/
 
 }

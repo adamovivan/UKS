@@ -22,6 +22,10 @@ export class RepositoryService {
     return this.http.get(SERVER_URL + 'repos/repos/' + owner + '/' + repo + '/commits');
   }
 
+  getCommitsBranch(owner,repo,pk){
+    return this.http.get(SERVER_URL + 'repos/repos/' + owner + '/' + repo + '/commits?sha=' + pk);
+  }
+
   getReadme(owner,repo){
     return this.http.get(SERVER_URL + 'repos/repos/' + owner + '/' + repo + '/readme');
   }
@@ -32,5 +36,9 @@ export class RepositoryService {
 
   postContent(owner,repo,path){
     return this.http.post(SERVER_URL + 'repos/repos/' + owner + '/' + repo + '/content' , {"path":path});
+  }
+
+  getBranches(owner,repo){
+    return this.http.get(SERVER_URL + 'repos/repos/' + owner + '/' + repo + '/branches');
   }
 }
