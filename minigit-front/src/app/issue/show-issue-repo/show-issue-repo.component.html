@@ -2,7 +2,7 @@
   <link crossorigin="anonymous" media="all" integrity="sha512-5Bs4ERl99/u2AUfpOZF2F0cdfNby7+Vd9teUshXUBPo5CjwECR7IAEf+weI/eCk5tF7K1h3O8hd8k0+P/HePeg==" rel="stylesheet" href="https://github.githubassets.com/assets/frameworks-e41b3811197df7fbb60147e939917617.css">
   <link crossorigin="anonymous" media="all" integrity="sha512-FwYpFVuVzDWMuKKB1OvzQkN/OMqH9BH+TbbPuFsu+TxHn58kX+dB37udsPZSBrQaBCX8s1kPyd1k8B8d2/o/qQ==" rel="stylesheet" href="https://github.githubassets.com/assets/github-170629155b95cc358cb8a281d4ebf342.css">
 </head>
-<main id="js-repo-pjax-container" class="mt-5" data-pjax-container="">
+<main *ngIf="milestones" id="js-repo-pjax-container" class="mt-5" data-pjax-container="">
   <div class="container-lg clearfix new-discussion-timeline  p-responsive">
      <div class="d-flex flex-justify-between mb-md-3 flex-column-reverse flex-md-row flex-items-end">
         <div class="d-flex flex-justify-start flex-auto width-full my-4 my-md-0" role="search">
@@ -80,6 +80,11 @@
                     <div class="flex-auto min-width-0 lh-condensed p-2 pr-3 pr-md-2">
                        <a id="issue_13_link" class="link-gray-dark v-align-middle no-underline h4 js-navigation-open" data-hovercard-type="issue" data-hovercard-url="/owner/repo/issues/13/hovercard" href="/{{owner}}/{{repo}}/issue/{{i.pk}}">{{i.fields.title}}</a>
                     </div>
+                    <div class="mt-1 text-small text-gray mr-4">
+                     <span class="opened-by">
+                         Opened at {{i.fields.open_date_time}}
+                     </span>
+                   </div>
                     <a class="d-block d-md-none position-absolute top-0 bottom-0 left-0 right-0" aria-label="Link to Issue." href="/{{owner}}/{{repo}}/issue/{{i.pk}}"></a>
                  </div>
               </div>
