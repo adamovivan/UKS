@@ -70,6 +70,12 @@ def get_all_commits(request, owner=None, repo=None):
         API + 'repos/{0}/{1}/commits'.format(owner, repo))
     return HttpResponse(commit)
 
+#@api_view(['GET'])
+#def get_all_commits(request, owner=None, repo=None, branch=None):
+#    commits = requests.get(
+#       API + 'repos/{0}/{1}/commits/{2}'.format(owner, repo, branch))
+#    return HttpResponse(commits)
+
 @api_view(['GET'])
 def get_repo(request, owner=None, repo=None):
     repo = requests.get(
@@ -87,6 +93,12 @@ def get_contents(request, owner=None, repo=None):
     get_contents = requests.get(
         API + 'repos/{0}/{1}/contents'.format(owner, repo))
     return HttpResponse(get_contents)
+
+@api_view(['GET'])
+def get_branch(request, owner=None, repo=None):
+    get_branch = requests.get(
+        API + 'repos/{0}/{1}/branches'.format(owner, repo))
+    return HttpResponse(get_branch)
 
 @api_view(['POST'])
 def get_content(request, owner=None, repo=None):

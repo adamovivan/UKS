@@ -45,7 +45,7 @@
               <li class="table-list-item milestone pastdue">
                  <div class="table-list-cell milestone-title">
                     <h2 class="milestone-title-link">
-                       <a href="/adamovivan/UKS/milestone/3">{{milestone.fields.title}} <p *ngIf="milestone.fields.state == 'CLOSED'" style="color: red;"> CLOSED </p></a>
+                       <a href="/{{owner}}/{{repo}}/milestones/{{milestone.pk}}">{{milestone.fields.title}} <p *ngIf="milestone.fields.state == 'CLOSED'" style="color: red;"> CLOSED </p></a>
                     </h2>
                     <div class="milestone-meta">
                        <span class="milestone-meta-item">
@@ -103,6 +103,22 @@
               
            </ul>
         </div>
+        <div class="d-flex flex-justify-between mb-md-3 flex-column-reverse flex-md-row flex-items-end">
+         <div class="d-flex flex-justify-start flex-auto width-full my-4 my-md-0" role="search">
+            
+         </div>
+         <div class="ml-3 d-flex flex-justify-between width-full width-md-auto mt-2" data-pjax="">
+            <div class="ml-2 pl-2 d-none d-md-flex">
+               <nav class="subnav-links float-left d-flex no-wrap" aria-label="Issue">
+                 <!-- OVde umesto adamovic uks stavljas pravi owner i repo-->
+                  <a selected_link="repo_issues" class="js-selected-navigation-item subnav-item" href="/{{owner}}/{{repo}}/repo">
+                    
+                    <- Go to repository
+                  </a>
+               </nav>
+            </div>
+         </div>
+      </div>
      </div>
     <div class="col"></div>
 </div>
