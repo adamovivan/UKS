@@ -30,6 +30,7 @@ import { RepoShowComponent } from './repo/repo-show/repo-show.component';
 import { ShowIssueRepoComponent } from './issue/show-issue-repo/show-issue-repo.component';
 import { SignUpComponent } from './main pages/sign-up/sign-up.component';
 import { CommitComponent } from './repo/commit/commit.component';
+import { ShowIssueMilestoneComponent } from './issue/show-issue-milestone/show-issue-milestone.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { CommitComponent } from './repo/commit/commit.component';
     RepoShowComponent,
     ShowIssueRepoComponent,
     SignUpComponent,
-    CommitComponent
+    CommitComponent,
+    ShowIssueMilestoneComponent
   ],
   imports: [
     BrowserModule,
