@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MilestoneService } from 'src/app/services/milestone-services';
+import { CommonService } from 'src/app/services/common.service';
 
 @Component({
   selector: 'app-add-issue',
@@ -22,7 +23,9 @@ export class AddIssueComponent implements OnInit {
   owner;
   repo;
   issueForm: FormGroup;
-  constructor(private issueService : IssueService, private formBuilder: FormBuilder,private milestoneService: MilestoneService, private authService: AuthService, private router: Router, private route: ActivatedRoute) { 
+  constructor(private issueService : IssueService, 
+    private commonService: CommonService,
+    private formBuilder: FormBuilder,private milestoneService: MilestoneService, private authService: AuthService, private router: Router, private route: ActivatedRoute) { 
     this.issueForm = this.formBuilder.group({
       'title' : [''],
       'assignees' : [], 
@@ -56,16 +59,17 @@ export class AddIssueComponent implements OnInit {
   }
 
   createIssue(){
-    alert(JSON.stringify(this.issueForm.value));
+    // alert(JSON.stringify(this.issueForm.value));
   //  alert(JSON.stringify(this.currentUser));
     
     this.issueService.createIssue(this.issueForm.value, this.currentUser.alias, this.repo).subscribe(
       data => {
-        alert(data);
+        this.commonService.showMessage("Issue successfully created")
         //redirektujemo na stranicu za prikaz issue-a
         this.router.navigate([this.owner + '/' + this.repo + '/issue'])
       }, error => {
-        alert(error.message);
+        // alert(error.message);
+        this.commonService.somethingWentWrong();
       }
     )
     }

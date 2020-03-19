@@ -32,7 +32,7 @@ export class IssueService {
     return this.http.post(SERVER_URL + 'repos/'.concat(user).concat('/').concat(repo).concat('/issues/create'), issue, {headers: this.headers, responseType: 'text'});
   }
 
-  getCreateIssues(user){
+  getCreateIssues(user): Observable<any> {
     return this.http.get(SERVER_URL + 'repos/'.concat(user).concat('/issues/mycreate'));
   }
 
