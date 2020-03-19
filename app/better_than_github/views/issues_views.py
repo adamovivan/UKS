@@ -31,7 +31,6 @@ def get_issueGITHUB(request, owner=None, repo=None, number=None):
 
 @api_view(['GET'])
 def get_issue(request, id):
-    print("ADJALSJDLASDJLK")
     issue = Issue.objects.get(pk=id)
     data = serializers.serialize("json", [issue])[1:-1]
 
