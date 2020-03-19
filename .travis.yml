@@ -3,6 +3,7 @@ python:
   - "3.7"
 install:
   - pip install -r app/requirements.txt
+services: postgresql
 script:
   - cd app && python manage.py test
 branches:
