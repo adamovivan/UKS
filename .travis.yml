@@ -17,7 +17,7 @@ before_install:
   - docker-compose --version 
 
 before_script:
-  - docker-compose -f app/docker-compose.yml up --build
+  - docker-compose -d -f app/docker-compose.yml up --build
 
 script:
   - docker exec uks_web python manage.py test
