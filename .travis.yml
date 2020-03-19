@@ -16,8 +16,11 @@ before_install:
   - docker --version 
   - docker-compose --version 
 
-script:
+before_script:
   - docker-compose -f app/docker-compose.yml up --build
+
+script:
+  - docker exec uks_web python manage.py test
 
 after_script:
   - docker-compose down
