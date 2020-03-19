@@ -35,11 +35,11 @@ export class SignUpComponent implements OnInit {
 
     this.userService.registerUser(this.registerForm.value).subscribe(
       data => {
-        alert(data);
+        // alert(data);
         this.router.navigate(['']);
       },
       error => {
-        alert(error.message)
+        // alert(error.message)
       }
       
     )

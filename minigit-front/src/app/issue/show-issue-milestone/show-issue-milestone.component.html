@@ -69,7 +69,7 @@
                     </div>
                     <div class="mt-1 text-small text-gray mr-4">
                      <span class="opened-by">
-                         Opened at {{i.fields.open_date_time}}
+                         Opened at {{i.fields.open_date_time | date: 'medium'}}
                      </span>
                    </div>
                     <a class="d-block d-md-none position-absolute top-0 bottom-0 left-0 right-0" aria-label="Link to Issue." href="/{{owner}}/{{repo}}/issue/{{i.pk}}"></a>
