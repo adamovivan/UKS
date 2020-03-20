@@ -13,14 +13,15 @@ before_install:
   - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
   - chmod +x docker-compose
   - sudo mv docker-compose /usr/local/bin
-  - docker --version 
-  - docker-compose --version 
 
 before_script:
   - docker-compose -f app/docker-compose.yml up -d --build
 
 script:
   - docker exec uks_web python manage.py test
+  - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD 
+  - docker push adamovivan/uks_backend:latest
+  - docker push adamovivan/uks_frontend:latest
 
 after_script:
   - docker-compose down
