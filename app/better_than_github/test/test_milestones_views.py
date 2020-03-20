@@ -31,6 +31,6 @@ class MilestoneViewsTest(TestCase):
         self.assertTrue(response1.status_code == 200)
         repo = "https://github.com/" + owner + "/" + repo
         project = Project.objects.get(git_repo=repo)
-        milestone = Milestone.objects.filter(project=project)
-        self.assertTrue(milestone[0].description == description)
-        self.assertTrue(milestone[0].due_date == date)
+        milestone = Milestone.objects.get(project=project)
+        self.assertTrue(milestone.description == description)
+        self.assertTrue(milestone.due_date == date)
