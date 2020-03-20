@@ -7,102 +7,142 @@
     </div>
     <div class="creator">
         <b>{{issue.fields.creator}}</b><span class="grey-text">
-             opened this issue on {{issue.fields.open_date_time | date: 'mediumDate' }}
+            opened this issue on {{issue.fields.open_date_time | date: 'mediumDate' }}
             </span>
     </div>
     <br>
     <br>
     <mat-divider class="divider"></mat-divider>
     <br>
-    <div *ngFor="let event of issueEvents" class="comments">
-        
-        <div *ngIf="event.model === 'better_than_github.comment'">
-            <span *ngIf="event.edits !== undefined && event.edits.length === 0">
-                <br>
-                <b>{{event.fields.user[1]}} </b> 
-                <span class="grey-text">
-                    commented {{event.fields.timestamp | date: 'short'}}
+    <div class="leftDiv">
+        <div *ngFor="let event of issueEvents" class="comments">
+            
+            <div *ngIf="event.model === 'better_than_github.comment'">
+                <span *ngIf="event.edits !== undefined && event.edits.length === 0">
+                    <br>
+                    <b>{{event.fields.user[1]}} </b> 
+                    <span class="grey-text">
+                        commented {{event.fields.timestamp | date: 'short'}}
+                    </span>
                 </span>
-            </span>
 
-            <span *ngIf="event.edits !== undefined && event.edits.length !== 0">
-                <br>
-                <b>{{event.edits[event.edits.length - 1].fields.user[1]}}</b> 
-                <span class="grey-text">
-                    commented {{event.edits[event.edits.length - 1].fields.timestamp | date: 'short'}}
+                <span *ngIf="event.edits !== undefined && event.edits.length !== 0">
+                    <br>
+                    <b>{{event.edits[event.edits.length - 1].fields.user[1]}}</b> 
+                    <span class="grey-text">
+                        commented {{event.edits[event.edits.length - 1].fields.timestamp | date: 'short'}}
+                    </span>
                 </span>
-            </span>
 
-            <span class="edit-comment" *ngIf="currentUser.alias === event.fields.user[1]">
-                <a class="grey-text" href="javascript:void(0)" (click)="editCommentDialog(event)">Edit</a>
-            </span>
+                <span class="edit-comment" *ngIf="currentUser.alias === event.fields.user[1]">
+                    <a class="grey-text" href="javascript:void(0)" (click)="editCommentDialog(event)">Edit</a>
+                </span>
 
-            <span *ngIf="event.edits !== undefined && event.edits.length !== 0">
-                <a class="grey-text edit-history" href="javascript:void(0)" (click)="showEditHistory(event)">
-                    History
-                </a>
-            </span>
-            <br>
-
-
-            <span *ngIf="event.edits !== undefined && event.edits.length === 0">
-                <mat-form-field class="commentedComment">
-                    <textarea matInput value="{{event.fields.description}}" disabled></textarea>
-                </mat-form-field>
-            </span>
-
-            <span *ngIf="event.edits !== undefined && event.edits.length !== 0">
-                <mat-form-field class="commentedComment">
-                    <textarea matInput value="{{event.edits[event.edits.length - 1].fields.description}}" disabled></textarea>
-                </mat-form-field>
-            </span>
+                <span *ngIf="event.edits !== undefined && event.edits.length !== 0">
+                    <a class="grey-text edit-history" href="javascript:void(0)" (click)="showEditHistory(event)">
+                        History
+                    </a>
+                </span>
+                <br>
 
 
-            <mat-divider class="comments-divider"></mat-divider>
+                <span *ngIf="event.edits !== undefined && event.edits.length === 0">
+                    <mat-form-field class="commentedComment">
+                        <textarea matInput value="{{event.fields.description}}" disabled></textarea>
+                    </mat-form-field>
+                </span>
 
-        </div>
+                <span *ngIf="event.edits !== undefined && event.edits.length !== 0">
+                    <mat-form-field class="commentedComment">
+                        <textarea matInput value="{{event.edits[event.edits.length - 1].fields.description}}" disabled></textarea>
+                    </mat-form-field>
+                </span>
 
-        <div *ngIf="event.model === 'better_than_github.statechange'" class="state-change">
-            <br>
-                 
-                <span >
-                    <div *ngIf="event.fields.new_state === 'OPEN'">
-                        <i class="material-icons reopened">
-                            fiber_manual_record
-                            </i>
-                            <span class="state-text">
 
-                             <b>{{event.fields.user[1]}} </b><span class="grey-text">reopened 
-                            {{event.fields.timestamp | date: 'short'}}</span>
-                        </span>
-                    </div>
-                    <div *ngIf="event.fields.new_state === 'CLOSED'">
-                        <i class="material-icons closed">
-                            cancel
-                            </i> 
-                            <span class="state-text">
-                            <b>{{event.fields.user[1]}} </b><span class="grey-text">closed 
-                            {{event.fields.timestamp | date: 'short'}}
-                        </span>
-                            </span>
-                    </div>
+                <mat-divider class="comments-divider"></mat-divider>
+
+            </div>
+
+            <div *ngIf="event.model === 'better_than_github.statechange'" class="state-change">
+                <br>
                     
-                </span>
-            <br>
-            <mat-divider class="state-divider"></mat-divider>
-        </div>
+                    <span >
+                        <div *ngIf="event.fields.new_state === 'OPEN'">
+                            <i class="material-icons reopened">
+                                fiber_manual_record
+                                </i>
+                                <span class="state-text">
 
+                                <b>{{event.fields.user[1]}} </b><span class="grey-text">reopened 
+                                {{event.fields.timestamp | date: 'short'}}</span>
+                            </span>
+                        </div>
+                        <div *ngIf="event.fields.new_state === 'CLOSED'">
+                            <i class="material-icons closed">
+                                cancel
+                                </i> 
+                                <span class="state-text">
+                                <b>{{event.fields.user[1]}} </b><span class="grey-text">closed 
+                                {{event.fields.timestamp | date: 'short'}}
+                            </span>
+                                </span>
+                        </div>
+                        
+                    </span>
+                <br>
+                <mat-divider class="state-divider"></mat-divider>
+            </div>
+
+        </div>
+        <div class="newCommentDiv">
+            <mat-form-field class="newComment">
+                <input matInput placeholder="Comment ..." [(ngModel)]="commentText" >
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-raised-button (click)="toggleIssueState()" class="open-closeBtn">
+                {{openCloseBtnName}}
+            </button>
+            <button mat-raised-button (click)="submitComment()" class="commentBtn" >Comment</button>
+        </div>
     </div>
-    <div class="newCommentDiv">
-        <mat-form-field class="newComment">
-            <input matInput placeholder="Comment ..." [(ngModel)]="commentText" >
-        </mat-form-field>
-    </div>
-    <div>
-        <button mat-raised-button (click)="toggleIssueState()" class="open-closeBtn">
-            {{openCloseBtnName}}
-        </button>
-        <button mat-raised-button (click)="submitComment()" class="commentBtn" >Comment</button>
+    <div class="rightDiv">
+        <summary role="button" style="list-style: none;" aria-haspopup="menu">
+            <div style="width: 40%;">
+                <div style="float: left;"><span class="infoLabel">Assignees</span></div>                                                                                                                                
+                <div style="float: right;"><svg class="octicon octicon-gear" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M14 8.77v-1.6l-1.94-.64-.45-1.09.88-1.84-1.13-1.13-1.81.91-1.09-.45-.69-1.92h-1.6l-.63 1.94-1.11.45-1.84-.88-1.13 1.13.91 1.81-.45 1.09L0 7.23v1.59l1.94.64.45 1.09-.88 1.84 1.13 1.13 1.81-.91 1.09.45.69 1.92h1.59l.63-1.94 1.11-.45 1.84.88 1.13-1.13-.92-1.81.47-1.09L14 8.75v.02zM7 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path></svg></div>
+            </div><br>
+        </summary>
+        <span class="noInfo" *ngIf="assignees==null">None yet</span>
+        <div *ngFor="let assignee of assignees" class="issueInfo">
+            <b>{{ assignee.fields.name }}</b>
+        </div><br>
+        <mat-divider class="smallDivider"></mat-divider><br>
+        <summary role="button" style="list-style: none;">
+            <div style="width: 40%;">
+                <div style="float: left;"><span class="infoLabel">Labels</span></div>                                                                                                                                
+                <div style="float: right;"><svg class="octicon octicon-gear" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M14 8.77v-1.6l-1.94-.64-.45-1.09.88-1.84-1.13-1.13-1.81.91-1.09-.45-.69-1.92h-1.6l-.63 1.94-1.11.45-1.84-.88-1.13 1.13.91 1.81-.45 1.09L0 7.23v1.59l1.94.64.45 1.09-.88 1.84 1.13 1.13 1.81-.91 1.09.45.69 1.92h1.59l.63-1.94 1.11-.45 1.84.88 1.13-1.13-.92-1.81.47-1.09L14 8.75v.02zM7 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path></svg></div>
+            </div><br>
+        </summary>
+        <span class="noInfo" *ngIf="labels==null">None yet</span>
+        <div *ngFor="let label of labels" class="issueInfo">
+            <div class="labelInfo" [style.background-color]="label.fields.color">
+                <span>
+                    <b>{{ label.fields.name }}</b>
+                </span>
+            </div>
+        </div><br>
+        <mat-divider class="smallDivider"></mat-divider><br>
+        <summary role="button" style="list-style: none;">
+            <div style="width: 40%;">
+                <div style="float: left;"><span class="infoLabel">Milestone</span></div>                                                                                                                                
+                <div style="float: right;"><svg class="octicon octicon-gear" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M14 8.77v-1.6l-1.94-.64-.45-1.09.88-1.84-1.13-1.13-1.81.91-1.09-.45-.69-1.92h-1.6l-.63 1.94-1.11.45-1.84-.88-1.13 1.13.91 1.81-.45 1.09L0 7.23v1.59l1.94.64.45 1.09-.88 1.84 1.13 1.13 1.81-.91 1.09.45.69 1.92h1.59l.63-1.94 1.11-.45 1.84.88 1.13-1.13-.92-1.81.47-1.09L14 8.75v.02zM7 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path></svg></div>
+            </div><br>
+        </summary>
+        <span class="noInfo" *ngIf="milestone==null">No milestone</span>
+        <span class="issueInfo" *ngIf="milestone!=null">
+            <b>{{ milestone.fields.title }}</b>
+        </span>
     </div>
 </div>
 <br>

@@ -34,7 +34,6 @@ export class MilestonesAddComponent implements OnInit {
         params => {
             this.owner = params.get('owner');
             this.repo = params.get('repo');
-    
         });
   }
 

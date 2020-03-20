@@ -24,6 +24,10 @@ export class ShowIssueComponent implements OnInit {
   currentUser;
   comments: any = [];
   commentDisabled = false;
+  assignees: any;
+  labels: any;
+  labelColor: any;
+  milestone: any;
 
   issueEvents: any = [];
 
@@ -53,11 +57,32 @@ export class ShowIssueComponent implements OnInit {
           this.commentDisabled = true;
         }
         
-        
+        this.getAssignees(this.issue.fields.assignees);
+        this.getLabels(this.issue.fields.labels)
+        this.getMilestone(this.issue.fields.milestone)
+
         // this.getIssueComments();
         this.getIssueEvents();
       });
     });
+  }
+
+  getAssignees(assigneesIds) {
+    this.issueService.getAssignees(assigneesIds).subscribe(res => {
+      this.assignees = res;
+    })
+  }
+
+  getLabels(labelsIds) {
+    this.issueService.getIssueLabels(labelsIds).subscribe(res => {
+      this.labels = res;
+    })
+  }
+
+  getMilestone(milestoneId) {
+    this.issueService.getIssueMilestone(milestoneId).subscribe(res => {
+      this.milestone = res;
+    })
   }
 
   getCommentChanges(){

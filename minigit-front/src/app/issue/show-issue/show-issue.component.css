@@ -3,6 +3,16 @@
     margin-left: 10pc;
 }
 
+.rightDiv {
+    float: left;
+    width: 35%;
+}
+
+.leftDiv {
+    float: left;
+    width: 65%;
+}
+
 .state {
     display: inline-block;
     text-align: center;
@@ -37,6 +47,10 @@
 
 .divider {
     width: 60pc;
+}
+
+.smallDivider {
+    width: 10pc;
 }
 
 .grey-text{
@@ -92,4 +106,34 @@ textarea:disabled {
     color: white;
     background-color: green;
     margin-left: 1pc;
+}
+
+.infoLabel {
+    color: #586069;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 1.5;
+}
+
+.noInfo {
+    color: #586069;
+    font-size: 12px;
+    box-sizing: border-box;
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 1.5;
+}
+
+.issueInfo {
+    font-size: 12px;
+    color:black;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    box-sizing: border-box;
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 1.5;
+}
+
+.labelInfo {
+    width: 10pc;
+    margin-bottom: 5px;
+    padding-left: 5px;
 }

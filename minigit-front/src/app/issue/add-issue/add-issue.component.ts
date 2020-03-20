@@ -61,8 +61,8 @@ export class AddIssueComponent implements OnInit {
   createIssue(){
     // alert(JSON.stringify(this.issueForm.value));
   //  alert(JSON.stringify(this.currentUser));
-    
-    this.issueService.createIssue(this.issueForm.value, this.currentUser.alias, this.repo).subscribe(
+    this.issueForm.value['creator'] = this.currentUser.alias;
+    this.issueService.createIssue(this.issueForm.value, this.owner, this.repo).subscribe(
       data => {
         this.commonService.showMessage("Issue successfully created")
         //redirektujemo na stranicu za prikaz issue-a

@@ -28,8 +28,8 @@ export class IssueService {
     return this.http.get(SERVER_URL + 'users');
   }
 
-  createIssue(issue, user, repo):Observable<string>{
-    return this.http.post(SERVER_URL + 'repos/'.concat(user).concat('/').concat(repo).concat('/issues/create'), issue, {headers: this.headers, responseType: 'text'});
+  createIssue(issue, owner, repo):Observable<string>{
+    return this.http.post(SERVER_URL + 'repos/'.concat(owner).concat('/').concat(repo).concat('/issues/create'), issue, {headers: this.headers, responseType: 'text'});
   }
 
   getCreateIssues(user): Observable<any> {
@@ -66,5 +66,17 @@ export class IssueService {
 
   getIssueEvents(issueId){
     return this.http.get(SERVER_URL + 'repos/issue-events/'.concat(issueId));
+  }
+
+  getAssignees(assigneesIds) {
+    return this.http.post(SERVER_URL + 'repos/issue-assignees', assigneesIds);
+  }
+
+  getIssueLabels(labelsIds) {
+    return this.http.post(SERVER_URL + 'repos/issue-labels', labelsIds);
+  }
+
+  getIssueMilestone(milestoneId) {
+    return this.http.post(SERVER_URL + 'repos/issue-milestone', milestoneId);
   }
 }
