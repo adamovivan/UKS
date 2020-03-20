@@ -20,8 +20,10 @@ before_script:
 script:
   - docker exec uks_web python manage.py test
   - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD 
-  - docker push adamovivan/uks_backend:latest
-  - docker push adamovivan/uks_frontend:latest
+  - docker tag uks_backend:latest adamovivan/uks_backend
+  - docker push adamovivan/uks_backend
+  - docker tag uks_frontend:latest adamovivan/uks_frontend
+  - docker push adamovivan/uks_frontend
 
 after_script:
   - docker-compose down
