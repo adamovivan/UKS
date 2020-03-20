@@ -28,7 +28,7 @@ class MilestoneViewsTest(TestCase):
                                      json.dumps({"title":title, "description":description, "due_date":date}),
                                      content_type="application/json")
 
-        self.assertTrue(response1.status_code == 201)
+        self.assertTrue(response1.status_code == 200)
         repo = "https://github.com/" + owner + "/" + repo
         project = Project.objects.get(git_repo=repo)
         milestone = Milestone.objects.filter(project=project)
