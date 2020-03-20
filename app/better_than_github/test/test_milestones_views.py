@@ -32,6 +32,6 @@ class MilestoneViewsTest(TestCase):
         repo = "https://github.com/" + owner + "/" + repo
         project = Project.objects.get(git_repo=repo)
         milestone = Milestone.objects.filter(project=project)
-        self.assertTrue(len(milestone) >= 1)
+        self.assertTrue(len(milestone) == 1)
         self.assertTrue(milestone[0].description == description)
         self.assertTrue(milestone[0].due_date == date)
