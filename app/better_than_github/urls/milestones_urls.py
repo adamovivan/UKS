@@ -6,5 +6,5 @@ urlpatterns = [
     path('milestones/update/<id>', milestones_views.update_milestone),
     path('milestones/close/<id>', milestones_views.close_milestone),
     path('milestones/delete/<id>', milestones_views.delete_milestone),
-    path('<owner>/<repo>/milestones/create', milestones_views.create_milestone)
+    path('<owner>/<repo>/milestones/create', milestones_views.create_milestone, name='create_milestone')
 ]
