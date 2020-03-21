@@ -3,6 +3,9 @@ from better_than_github.views import issue_comment_views
 from django.urls import path
 
 urlpatterns = [
+    path('issue-assignees', issues_views.get_assignees),
+    path('issue-labels', issues_views.get_labels),
+    path('issue-milestone', issues_views.get_milestone),
     path('issue-id/<id>', issues_views.get_issue),
     path('issue-events/<id>', issues_views.get_issue_events),
     path('<owner>/<repo>/issues/create', issues_views.create_issue),
@@ -17,6 +20,6 @@ urlpatterns = [
     path('comment/changes/<id>', issue_comment_views.get_comment_changes),
     path('comment/edit', issue_comment_views.edit_comment),
     path('issue/change/state/<id>/<user_alias>', issues_views.change_state),
-    path('issue/state/changes/<id>', issues_views.get_state_changes)
+    path('issue/state/changes/<id>', issues_views.get_state_changes),
 
 ]

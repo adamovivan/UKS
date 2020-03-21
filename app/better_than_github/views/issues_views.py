@@ -11,6 +11,31 @@ import json
 
 API = 'https://api.github.com/'
 
+@api_view(['POST'])
+def get_assignees(request):
+    assignees = []
+    for i in request.data:
+        assignees.append(User.objects.get(pk=i))
+
+    data = serializers.serialize("json", assignees)
+    return HttpResponse(data, content_type="json")
+
+@api_view(['POST'])
+def get_labels(request):
+    labels = []
+    for i in request.data:
+        labels.append(Label.objects.get(pk=i))
+
+    data = serializers.serialize("json", labels)
+    return HttpResponse(data, content_type="json")
+
+@api_view(['POST'])
+def get_milestone(request):
+    milestone = Milestone.objects.get(pk=request.data)
+
+    data = serializers.serialize("json", [milestone])[1:-1]
+    return HttpResponse(data, content_type="json")
+
 @api_view(['GET'])
 def get_comments_in_issue(request, owner=None, repo=None, number=None):
     comments = requests.get(
@@ -118,7 +143,7 @@ def change_state(request, id, user_alias):
 def create_issue(request, owner=None, repo=None):
     data = request.data
     print("title issue ", data)
-
+    
     try:
         repo1 = "https://github.com/" + owner + "/" + repo
         project = Project.objects.get(git_repo=repo1)
@@ -126,7 +151,7 @@ def create_issue(request, owner=None, repo=None):
 
         new_issue = Issue.objects.create(project=project)
 
-        creator = User.objects.get(name=owner)
+        creator = User.objects.get(name=data["creator"])
         new_issue.creator = creator.name
 
         new_issue.title = data["title"]
