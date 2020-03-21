@@ -48,7 +48,6 @@ export class AddIssueComponent implements OnInit {
     this.issueService.getUsers().subscribe(
       data => {
         this.users = data;
-       // alert(JSON.stringify(this.users));
       }
     )
     this.milestoneService.getMilestones(this.owner, this.repo).subscribe(

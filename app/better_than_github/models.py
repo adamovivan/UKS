@@ -65,6 +65,7 @@ class ResponsibilityChange(Event):
         on_delete=models.SET_NULL,
         null=True,
         related_name='responsible_user')
+    description = models.CharField(max_length=50, default='')
 
 class MilestoneChange(Event):
     milestone = models.ForeignKey(Milestone, on_delete=models.CASCADE)

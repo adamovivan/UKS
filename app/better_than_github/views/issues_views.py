@@ -20,6 +20,41 @@ def get_assignees(request):
     data = serializers.serialize("json", assignees)
     return HttpResponse(data, content_type="json")
 
+@api_view(['DELETE'])
+def delete_assignee(request):
+    issue = Issue.objects.get(pk=request.data["issueId"])
+    assignee = User.objects.get(name=request.data["assignee"])
+    issue.assignees.remove(assignee)
+
+    user = User.objects.get(name=request.data["user"])
+    responsibility_change = ResponsibilityChange()
+    responsibility_change.responsible_user = assignee
+    responsibility_change.user = user
+    responsibility_change.description = 'removed'
+    responsibility_change.issue = issue
+    responsibility_change.save()
+
+    data = serializers.serialize("json", [assignee])[1:-1]
+    return HttpResponse(data, content_type="json")
+
+@api_view(['POST'])
+def add_assignees(request):
+    issue = Issue.objects.get(pk=request.data["issueId"])
+    for i in request.data["assignees"]:
+        assignee = User.objects.get(name=i)
+        issue.assignees.add(assignee)
+        user = User.objects.get(name=request.data["user"])
+        responsibility_change = ResponsibilityChange()
+        responsibility_change.responsible_user = assignee
+        responsibility_change.user = user
+        responsibility_change.description = 'added'
+        responsibility_change.issue = issue
+        responsibility_change.save()
+    issue.save()
+    
+    data = serializers.serialize("json", [issue])[1:-1]
+    return HttpResponse(data, content_type="json")
+
 @api_view(['POST'])
 def get_labels(request):
     labels = []
@@ -97,6 +132,7 @@ def get_state_changes(request, id):
 def get_issue_events(request, id):
     changes = StateChange.objects.filter(issue=id)
     comments = Comment.objects.filter(issue=id)
+    assignees = ResponsibilityChange.objects.filter(issue=id)
 
     events = list()
 
@@ -113,6 +149,9 @@ def get_issue_events(request, id):
 
         if not inserted:
             events.append(comment)
+
+    for assignee in assignees:
+        events.append(assignee)
 
     events_json = []
     for event in events:

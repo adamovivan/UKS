@@ -1,0 +1,18 @@
+<div style="width: 300px;">
+    <div mat-dialog-title>
+        <h4>Change assignee</h4>
+    </div>
+    <div mat-dialog-content>
+        <mat-form-field>
+            <mat-select class="form-control float-right" multiple [(ngModel)]="newAssignees"> 
+                <mat-option *ngFor="let u of usersForDialog" [value]="u.fields.name">
+                    {{u.fields.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close mat-dialog-close="false">Close</button>
+        <button mat-button mat-dialog-close mat-dialog-close="true" (click)="saveAssignee()">Save</button>
+    </div>
+</div>
