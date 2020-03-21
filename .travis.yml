@@ -27,6 +27,5 @@ after_script:
 
 branches:
   only:
-  - github-milestone-test
   - master
   - development

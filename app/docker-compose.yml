@@ -11,8 +11,8 @@ services:
     environment:
       POSTGRES_HOST_AUTH_METHOD: trust
     container_name: uks_db
-    ports:
-      - 5432:5432
+    #ports:
+    #  - 5432:5432
 
 ## ELK stack for logging
 #  es:
