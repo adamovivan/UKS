@@ -12,8 +12,8 @@ services:
       POSTGRES_HOST_AUTH_METHOD: trust
     container_name: uks_db
 
-#        ports:
-#          - "8001:5432"
+        ports:
+          - "8001:5432"
 
 ## ELK stack for logging
 #  es:
@@ -91,14 +91,14 @@ services:
       - "8000:8000"
 
 # Angular application
-  frontend:
-    container_name: uks_front
-    image: uks_frontend
-    build: ./../minigit-front
-    expose:
-      - 4200
-    ports:
-      - 4200:4200
+#  frontend:
+#    container_name: uks_front
+#    image: uks_frontend
+#    build: ./../minigit-front
+#    expose:
+#      - 4200
+#    ports:
+#      - 4200:4200
 
 ## Nginx as a web server and reverse proxy
 #  nginx:
@@ -108,7 +108,7 @@ services:
 #      - "8000:8000"
 #    volumes:
 #      - ./config/nginx:/etc/nginx/conf.d
-#      - ./static:/code/app/static #must be same as web!
+##      - ./static:/code/app/static #must be same as web!
 #    depends_on:
 #      - web
 #
@@ -122,26 +122,26 @@ services:
 ## TICK stack for metrics and grafana for visualisation
 #  influxdb:
 #    container_name: uks_influxdb
-#    image: influxdb:1.0.2
+#    image: influxdb:1.5.4
 #    ports:
-#      - "8083:8083"
-#      - "8086:8086"
+#      - 8083:8083
+#      - 8086:8086
 #    volumes:
 #      - ./influxdb:/var/lib/influxdb
 #    restart: always
 #
 #  grafana:
 #    container_name: uks_grafana
-#    image: grafana/grafana:4.3.2
+#    image: grafana/grafana:6.7.1
 #    ports:
-#      - "3000:3000"
+#      - 3000:3000
 #    links:
 #      - influxdb
 #    restart: always
 #
 #  telegraf:
 #    container_name: uks_telegraf
-#    image: telegraf:1.3.3
+#    image: telegraf:1.13.4
 #    volumes:
 #      - ./config/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf
 #      - /var/run/docker.sock:/var/run/docker.sock
