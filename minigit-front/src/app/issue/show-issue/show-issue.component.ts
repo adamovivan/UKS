@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IssueService } from 'src/app/services/issue.service';
 import { CommentDto } from 'src/app/dto/comment.dto';
 import { AuthService } from 'src/app/services/auth.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material/dialog';
 import { EditCommentDialogComponent } from '../edit-comment-dialog/edit-comment-dialog.component';
 import { CommentHistoryDialogComponent } from '../comment-history-dialog/comment-history-dialog.component';
 import { CommonService } from 'src/app/services/common.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { EditAssigneeDialogComponent } from '../edit-assignee-dialog/edit-assignee-dialog.component';
 
 
 @Component({
@@ -98,14 +100,12 @@ export class ShowIssueComponent implements OnInit {
       console.log(res);
       this.issueEvents = res;
 
-      
-      for(let event of this.issueEvents){
+      for(let event of this.issueEvents) {
         if(event.model === 'better_than_github.comment'){
           this.issueService.getCommentChanges(event.pk).subscribe(res => {
             event["edits"] = res;
           });
         }
-        
       }
     });
   }
@@ -180,4 +180,29 @@ export class ShowIssueComponent implements OnInit {
     });
   }
 
+  openAssigneeDialog() {
+    let dialogRef = this.dialog.open(
+      EditAssigneeDialogComponent,
+      {data: {assignees: this.assignees, issueId: this.issueId, currentUser: this.currentUser}}
+    );
+    
+    dialogRef.afterClosed().subscribe(result => {
+      this.issueService.getIssue(this.issueId).subscribe(res => {
+        this.issue = res;
+        this.getAssignees(this.issue.fields.assignees);
+        this.getIssueEvents();
+      });
+    })
+  }
+
+  deleteAssignee(assignee) {
+    this.issueService.deleteAssignee(this.issueId, assignee, this.currentUser.alias).subscribe(res => {
+      this.issueService.getIssue(this.issueId).subscribe(res => {
+        this.issue = res;
+        this.getAssignees(this.issue.fields.assignees);
+        this.getIssueEvents();
+      });
+    })
+
+  }
 }

@@ -62,7 +62,7 @@
 }
 
 .comments-divider {
-    width: 58pc;
+    width: 40pc;
 }
 
 .commentedComment{
@@ -82,7 +82,11 @@
 }
 
 .state-divider {
-    width: 54pc;
+    width: 36pc;
+}
+
+.responsibility-divider {
+    width: 40pc;
 }
 
 .state-text{

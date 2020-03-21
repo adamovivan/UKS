@@ -16,7 +16,6 @@
     <br>
     <div class="leftDiv">
         <div *ngFor="let event of issueEvents" class="comments">
-            
             <div *ngIf="event.model === 'better_than_github.comment'">
                 <span *ngIf="event.edits !== undefined && event.edits.length === 0">
                     <br>
@@ -65,7 +64,6 @@
 
             <div *ngIf="event.model === 'better_than_github.statechange'" class="state-change">
                 <br>
-                    
                     <span >
                         <div *ngIf="event.fields.new_state === 'OPEN'">
                             <i class="material-icons reopened">
@@ -92,6 +90,18 @@
                 <br>
                 <mat-divider class="state-divider"></mat-divider>
             </div>
+            <div *ngIf="event.model === 'better_than_github.responsibilitychange'" class="responsibility-change"><br>
+                <div>
+                    <b>{{ event.fields.user[1] }}</b>
+                    <span class="grey-text"> {{ event.fields.description }} </span>
+                    <b>{{ event.fields.responsible_user[1] }} </b>
+                    <span class="grey-text">
+                    <span *ngIf="event.fields.description === 'added'"> to </span>
+                    <span *ngIf="event.fields.description === 'removed'"> from </span>
+                    assignees. {{ event.fields.timestamp | date: 'short' }}</span>
+                </div>
+                <mat-divider class="responsibility-divider"></mat-divider>
+            </div>
 
         </div>
         <div class="newCommentDiv">
@@ -107,23 +117,30 @@
         </div>
     </div>
     <div class="rightDiv">
-        <summary role="button" style="list-style: none;" aria-haspopup="menu">
-            <div style="width: 40%;">
-                <div style="float: left;"><span class="infoLabel">Assignees</span></div>                                                                                                                                
-                <div style="float: right;"><svg class="octicon octicon-gear" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M14 8.77v-1.6l-1.94-.64-.45-1.09.88-1.84-1.13-1.13-1.81.91-1.09-.45-.69-1.92h-1.6l-.63 1.94-1.11.45-1.84-.88-1.13 1.13.91 1.81-.45 1.09L0 7.23v1.59l1.94.64.45 1.09-.88 1.84 1.13 1.13 1.81-.91 1.09.45.69 1.92h1.59l.63-1.94 1.11-.45 1.84.88 1.13-1.13-.92-1.81.47-1.09L14 8.75v.02zM7 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path></svg></div>
-            </div><br>
-        </summary>
+        <div style="width: 42%;">
+            <div style="float: left;"><span class="infoLabel">Assignees</span></div>   
+            <div style="float: right;">
+                <button mat-icon-button aria-label="Change" (click)="openAssigneeDialog()">
+                    <mat-icon>settings</mat-icon>
+                </button>
+            </div>
+        </div><br><br>
         <span class="noInfo" *ngIf="assignees==null">None yet</span>
         <div *ngFor="let assignee of assignees" class="issueInfo">
             <b>{{ assignee.fields.name }}</b>
+            <button mat-icon-button aria-label="delete" (click)="deleteAssignee(assignee.fields.name)">
+                <mat-icon>close</mat-icon>
+            </button>
         </div><br>
         <mat-divider class="smallDivider"></mat-divider><br>
-        <summary role="button" style="list-style: none;">
-            <div style="width: 40%;">
-                <div style="float: left;"><span class="infoLabel">Labels</span></div>                                                                                                                                
-                <div style="float: right;"><svg class="octicon octicon-gear" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M14 8.77v-1.6l-1.94-.64-.45-1.09.88-1.84-1.13-1.13-1.81.91-1.09-.45-.69-1.92h-1.6l-.63 1.94-1.11.45-1.84-.88-1.13 1.13.91 1.81-.45 1.09L0 7.23v1.59l1.94.64.45 1.09-.88 1.84 1.13 1.13 1.81-.91 1.09.45.69 1.92h1.59l.63-1.94 1.11-.45 1.84.88 1.13-1.13-.92-1.81.47-1.09L14 8.75v.02zM7 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path></svg></div>
-            </div><br>
-        </summary>
+        <div style="width: 42%;">
+            <div style="float: left;"><span class="infoLabel">Labels</span></div>   
+            <div style="float: right;">
+                <button mat-icon-button aria-label="Change">
+                    <mat-icon>settings</mat-icon>
+                </button>
+            </div>
+        </div><br><br>
         <span class="noInfo" *ngIf="labels==null">None yet</span>
         <div *ngFor="let label of labels" class="issueInfo">
             <div class="labelInfo" [style.background-color]="label.fields.color">
@@ -133,12 +150,14 @@
             </div>
         </div><br>
         <mat-divider class="smallDivider"></mat-divider><br>
-        <summary role="button" style="list-style: none;">
-            <div style="width: 40%;">
-                <div style="float: left;"><span class="infoLabel">Milestone</span></div>                                                                                                                                
-                <div style="float: right;"><svg class="octicon octicon-gear" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M14 8.77v-1.6l-1.94-.64-.45-1.09.88-1.84-1.13-1.13-1.81.91-1.09-.45-.69-1.92h-1.6l-.63 1.94-1.11.45-1.84-.88-1.13 1.13.91 1.81-.45 1.09L0 7.23v1.59l1.94.64.45 1.09-.88 1.84 1.13 1.13 1.81-.91 1.09.45.69 1.92h1.59l.63-1.94 1.11-.45 1.84.88 1.13-1.13-.92-1.81.47-1.09L14 8.75v.02zM7 11c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3z"></path></svg></div>
-            </div><br>
-        </summary>
+        <div style="width: 42%;">
+            <div style="float: left;"><span class="infoLabel">Milestone</span></div>   
+            <div style="float: right;">
+                <button mat-icon-button aria-label="Change">
+                    <mat-icon>settings</mat-icon>
+                </button>
+            </div>
+        </div><br><br>
         <span class="noInfo" *ngIf="milestone==null">No milestone</span>
         <span class="issueInfo" *ngIf="milestone!=null">
             <b>{{ milestone.fields.title }}</b>

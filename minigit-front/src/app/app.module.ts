@@ -19,6 +19,7 @@ import { ShowIssueComponent } from './issue/show-issue/show-issue.component';
 import {MatInputModule} from '@angular/material/input';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon'; 
 import {MatDialogModule} from '@angular/material/dialog';
 import { MilestonesUpdateComponent } from './milestones/milestones-update/milestones-update.component';
 import { EditCommentDialogComponent } from './issue/edit-comment-dialog/edit-comment-dialog.component';
@@ -31,6 +32,7 @@ import { ShowIssueRepoComponent } from './issue/show-issue-repo/show-issue-repo.
 import { SignUpComponent } from './main pages/sign-up/sign-up.component';
 import { CommitComponent } from './repo/commit/commit.component';
 import { ShowIssueMilestoneComponent } from './issue/show-issue-milestone/show-issue-milestone.component';
+import { EditAssigneeDialogComponent } from './issue/edit-assignee-dialog/edit-assignee-dialog.component';
 
 
 @NgModule({
@@ -54,9 +56,11 @@ import { ShowIssueMilestoneComponent } from './issue/show-issue-milestone/show-i
     ShowIssueRepoComponent,
     SignUpComponent,
     CommitComponent,
-    ShowIssueMilestoneComponent
+    ShowIssueMilestoneComponent,
+    EditAssigneeDialogComponent
   ],
   imports: [
+    MatIconModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -69,11 +73,12 @@ import { ShowIssueMilestoneComponent } from './issue/show-issue-milestone/show-i
     MatDividerModule,
     MatButtonModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
   entryComponents: [
     EditCommentDialogComponent,
-    CommentHistoryDialogComponent
+    CommentHistoryDialogComponent,
+    EditAssigneeDialogComponent
   ],
   providers: [
     {provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}},

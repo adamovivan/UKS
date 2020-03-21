@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SERVER_URL} from '../app.constant';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CommentDto } from '../dto/comment.dto';
 import { CommentEditDto } from '../dto/comment-edit.dto';
@@ -78,5 +78,28 @@ export class IssueService {
 
   getIssueMilestone(milestoneId) {
     return this.http.post(SERVER_URL + 'repos/issue-milestone', milestoneId);
+  }
+
+  deleteAssignee(issueId, assignee, user) {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        issueId: issueId,
+        assignee: assignee,
+        user: user
+      },
+    };
+    return this.http.delete(SERVER_URL + 'repos/issue-assignees/delete', options);
+  }
+
+  addAssignees(issueId, assignees, user) {
+    let data = {
+      issueId: issueId,
+      assignees: assignees,
+      user: user
+    }
+    return this.http.post(SERVER_URL + 'repos/issue-assignees/add', data);
   }
 }
