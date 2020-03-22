@@ -84,8 +84,8 @@ services:
       - db
 #      - es
 #      - kibana
-    links:
-      - redis
+#    links:
+#      - redis
 #    ports:
 #      - 8000:8000
 
@@ -112,11 +112,11 @@ services:
       - web
 
 # redis as a Django cache store
-  redis:
-    image: redis
-    container_name: uks_redis
-    expose:
-      - 6379
+#  redis:
+#    image: redis
+#    container_name: uks_redis
+#    expose:
+#      - 6379
 
 ## TICK stack for metrics and grafana for visualisation
   influxdb:
