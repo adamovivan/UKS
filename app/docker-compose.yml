@@ -15,55 +15,55 @@ services:
       - 5432:5432
 
 ## ELK stack for logging
-  es:
-    labels:
-      com.example.service: "es"
-      com.example.description: "For searching and indexing data"
-    image: elasticsearch:7.6.0
-    container_name: uks_es
-    volumes:
-      - ./esdata:/usr/share/elasticsearch/data
-    ports:
-      - 9200:9200
-      - 9300:9300
-    environment:
-      - discovery.type=single-node
-
-#      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-
-  kibana:
-    labels:
-      com.example.service: "kibana"
-      com.example.description: "Data visualisation and for log aggregation"
-    image: kibana:7.6.0
-    container_name: uks_kibana
-    volumes:
-      - $PWD/config/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
-    ports:
-      - 5601:5601
-    environment:
-      - ELASTICSEARCH_HOSTS=http://es:9200
-#        ELASTICSEARCH_URL: http://es:9200
-    depends_on:
-      - es
-
-  logstash:
-    labels:
-      com.example.service: "logstash"
-      com.example.description: "For logging data"
-    image: logstash:7.6.0
-    container_name: uks_logstash
-    volumes:
-      - $PWD/config/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-      - $PWD/config/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
-    depends_on:
-      - es
-    environment:
+#  es:
+#    labels:
+#      com.example.service: "es"
+#      com.example.description: "For searching and indexing data"
+#    image: elasticsearch:7.6.0
+#    container_name: uks_es
+#    volumes:
+#      - ./esdata:/usr/share/elasticsearch/data
+#    ports:
+#      - 9200:9200
+#      - 9300:9300
+#    environment:
+#      - discovery.type=single-node
+#
+##      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+#
+#  kibana:
+#    labels:
+#      com.example.service: "kibana"
+#      com.example.description: "Data visualisation and for log aggregation"
+#    image: kibana:7.6.0
+#    container_name: uks_kibana
+#    volumes:
+#      - $PWD/config/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+#    ports:
+#      - 5601:5601
+#    environment:
 #      - ELASTICSEARCH_HOSTS=http://es:9200
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    ports:
-      - 5044:5044
-      - 9201:9200
+##        ELASTICSEARCH_URL: http://es:9200
+#    depends_on:
+#      - es
+#
+#  logstash:
+#    labels:
+#      com.example.service: "logstash"
+#      com.example.description: "For logging data"
+#    image: logstash:7.6.0
+#    container_name: uks_logstash
+#    volumes:
+#      - $PWD/config/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+#      - $PWD/config/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+#    depends_on:
+#      - es
+#    environment:
+##      - ELASTICSEARCH_HOSTS=http://es:9200
+#      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+#    ports:
+#      - 5044:5044
+#      - 9201:9200
 
 # Django application
   web:
@@ -82,8 +82,8 @@ services:
       driver: "json-file"
     depends_on:
       - db
-      - es
-      - kibana
+#      - es
+#      - kibana
 #    links:
 #      - redis
     ports:
@@ -99,24 +99,24 @@ services:
     ports:
       - 4200:4200
 
-## Nginx as a web server and reverse proxy
+# Nginx as a web server and reverse proxy
 #  nginx:
 #    image: nginx
 #    container_name: uks_nginx
 #    ports:
-#      - "8000:8000"
+#      - 8000:8000
 #    volumes:
 #      - ./config/nginx:/etc/nginx/conf.d
 ##      - ./static:/code/app/static #must be same as web!
 #    depends_on:
 #      - web
 
-## redis as a Django cache store
+# redis as a Django cache store
 #  redis:
 #    image: redis
 #    container_name: uks_redis
 #    expose:
-#      - '6379'
+#      - 6379
 
 ## TICK stack for metrics and grafana for visualisation
   influxdb:
