@@ -55,6 +55,43 @@ def add_assignees(request):
     data = serializers.serialize("json", [issue])[1:-1]
     return HttpResponse(data, content_type="json")
 
+@api_view(['DELETE'])
+def delete_label(request):
+    issue = Issue.objects.get(pk=request.data["issueId"])
+    label = Label.objects.get(name=request.data["label"])
+    issue.labels.remove(label)
+
+    user = User.objects.get(name=request.data["user"])
+    label_change = LabelChange()
+    label_change.label = label
+    label_change.label_name = label.name
+    label_change.user = user
+    label_change.description = 'removed'
+    label_change.issue = issue
+    label_change.save()
+
+    data = serializers.serialize("json", [label])[1:-1]
+    return HttpResponse(data, content_type="json")
+
+@api_view(['POST'])
+def add_labels(request):
+    issue = Issue.objects.get(pk=request.data["issueId"])
+    for i in request.data["labels"]:
+        label = Label.objects.get(name=i)
+        issue.labels.add(label)
+        user = User.objects.get(name=request.data["user"])
+        label_change = LabelChange()
+        label_change.label = label
+        label_change.label_name = label.name
+        label_change.user = user
+        label_change.description = 'added'
+        label_change.issue = issue
+        label_change.save()
+    issue.save()
+
+    data = serializers.serialize("json", [issue])[1:-1]
+    return HttpResponse(data, content_type="json")
+
 @api_view(['POST'])
 def get_labels(request):
     labels = []
@@ -133,6 +170,7 @@ def get_issue_events(request, id):
     changes = StateChange.objects.filter(issue=id)
     comments = Comment.objects.filter(issue=id)
     assignees = ResponsibilityChange.objects.filter(issue=id)
+    labels = LabelChange.objects.filter(issue=id)
 
     events = list()
 
@@ -152,6 +190,9 @@ def get_issue_events(request, id):
 
     for assignee in assignees:
         events.append(assignee)
+
+    for label in labels:
+        events.append(label)
 
     events_json = []
     for event in events:

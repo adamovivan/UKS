@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { IssueService } from 'src/app/services/issue.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-edit-assignee-dialog',
@@ -19,8 +19,7 @@ export class EditAssigneeDialogComponent implements OnInit {
 
   constructor(
     private issueService: IssueService,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    private route: ActivatedRoute) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     this.assignees = this.data["assignees"];

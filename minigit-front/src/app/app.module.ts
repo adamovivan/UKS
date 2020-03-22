@@ -33,6 +33,7 @@ import { SignUpComponent } from './main pages/sign-up/sign-up.component';
 import { CommitComponent } from './repo/commit/commit.component';
 import { ShowIssueMilestoneComponent } from './issue/show-issue-milestone/show-issue-milestone.component';
 import { EditAssigneeDialogComponent } from './issue/edit-assignee-dialog/edit-assignee-dialog.component';
+import { EditLabelDialogComponent } from './issue/edit-label-dialog/edit-label-dialog.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { EditAssigneeDialogComponent } from './issue/edit-assignee-dialog/edit-a
     SignUpComponent,
     CommitComponent,
     ShowIssueMilestoneComponent,
-    EditAssigneeDialogComponent
+    EditAssigneeDialogComponent,
+    EditLabelDialogComponent
   ],
   imports: [
     MatIconModule,

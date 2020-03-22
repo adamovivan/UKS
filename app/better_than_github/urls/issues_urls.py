@@ -6,6 +6,8 @@ urlpatterns = [
     path('issue-assignees/delete', issues_views.delete_assignee),
     path('issue-assignees/add', issues_views.add_assignees),
     path('issue-assignees', issues_views.get_assignees),
+    path('issue-labels/delete', issues_views.delete_label),
+    path('issue-labels/add', issues_views.add_labels),
     path('issue-labels', issues_views.get_labels),
     path('issue-milestone', issues_views.get_milestone),
     path('issue-id/<id>', issues_views.get_issue),
