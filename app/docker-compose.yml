@@ -21,8 +21,8 @@ services:
 #      com.example.description: "For searching and indexing data"
 #    image: elasticsearch:7.6.0
 #    container_name: uks_es
-#    volumes:
-#      - ./esdata:/usr/share/elasticsearch/data
+##    volumes:
+##      - ./esdata:/usr/share/elasticsearch/data
 #    ports:
 #      - 9200:9200
 #      - 9300:9300
@@ -84,10 +84,10 @@ services:
       - db
 #      - es
 #      - kibana
-#    links:
-#      - redis
-    ports:
-      - 8000:8000
+    links:
+      - redis
+#    ports:
+#      - 8000:8000
 
 # Angular application
   frontend:
@@ -100,23 +100,23 @@ services:
       - 4200:4200
 
 # Nginx as a web server and reverse proxy
-#  nginx:
-#    image: nginx
-#    container_name: uks_nginx
-#    ports:
-#      - 8000:8000
-#    volumes:
-#      - ./config/nginx:/etc/nginx/conf.d
-##      - ./static:/code/app/static #must be same as web!
-#    depends_on:
-#      - web
+  nginx:
+    image: nginx
+    container_name: uks_nginx
+    ports:
+      - 8000:8000
+    volumes:
+      - ./config/nginx:/etc/nginx/conf.d
+#      - ./static:/code/app/static #must be same as web!
+    depends_on:
+      - web
 
 # redis as a Django cache store
-#  redis:
-#    image: redis
-#    container_name: uks_redis
-#    expose:
-#      - 6379
+  redis:
+    image: redis
+    container_name: uks_redis
+    expose:
+      - 6379
 
 ## TICK stack for metrics and grafana for visualisation
   influxdb:
