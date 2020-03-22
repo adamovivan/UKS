@@ -165,7 +165,6 @@ def create_issue(request, owner=None, repo=None):
                 print(user)
                 new_issue.assignees.add(user)
 
-
         #izvucemo labele na osnovu naziva
         labels = data["labels"]
         labels_list = []
