@@ -21,8 +21,8 @@ services:
       com.example.description: "For searching and indexing data"
     image: elasticsearch:7.6.0
     container_name: uks_es
-#    volumes:
-#      - ./esdata:/usr/share/elasticsearch/data
+    volumes:
+      - ./esdata:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
       - 9300:9300
@@ -110,7 +110,7 @@ services:
 ##      - ./static:/code/app/static #must be same as web!
 #    depends_on:
 #      - web
-#
+
 ## redis as a Django cache store
 #  redis:
 #    image: redis
