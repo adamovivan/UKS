@@ -102,4 +102,27 @@ export class IssueService {
     }
     return this.http.post(SERVER_URL + 'repos/issue-assignees/add', data);
   }
+
+  deleteLabel(issueId, label, user) {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        issueId: issueId,
+        label: label,
+        user: user
+      },
+    };
+    return this.http.delete(SERVER_URL + 'repos/issue-labels/delete', options);
+  }
+
+  addLabels(issueId, labels, user) {
+    let data = {
+      issueId: issueId,
+      labels: labels,
+      user: user
+    }
+    return this.http.post(SERVER_URL + 'repos/issue-labels/add', data);
+  }
 }

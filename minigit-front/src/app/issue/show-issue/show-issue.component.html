@@ -102,6 +102,16 @@
                 </div>
                 <mat-divider class="responsibility-divider"></mat-divider>
             </div>
+            <div *ngIf="event.model === 'better_than_github.labelchange'" class="label-change"><br>
+                <div>
+                    <b>{{ event.fields.user[1] }}</b>
+                    <span class="grey-text"> {{ event.fields.description }} </span>
+                    <b>{{ event.fields.label_name }} </b>
+                    <span class="grey-text">
+                    label. {{ event.fields.timestamp | date: 'short' }}</span>
+                </div>
+                <mat-divider class="label-divider"></mat-divider>
+            </div>
 
         </div>
         <div class="newCommentDiv">
@@ -136,18 +146,17 @@
         <div style="width: 42%;">
             <div style="float: left;"><span class="infoLabel">Labels</span></div>   
             <div style="float: right;">
-                <button mat-icon-button aria-label="Change">
+                <button mat-icon-button aria-label="Change" (click)="openLabelDialog()">
                     <mat-icon>settings</mat-icon>
                 </button>
             </div>
         </div><br><br>
         <span class="noInfo" *ngIf="labels==null">None yet</span>
         <div *ngFor="let label of labels" class="issueInfo">
-            <div class="labelInfo" [style.background-color]="label.fields.color">
-                <span>
-                    <b>{{ label.fields.name }}</b>
-                </span>
-            </div>
+            <span [style.color]="label.fields.color"><b>{{ label.fields.name }}</b></span>
+            <button mat-icon-button aria-label="delete" (click)="deleteLabel(label.fields.name)">
+                <mat-icon>close</mat-icon>
+            </button>
         </div><br>
         <mat-divider class="smallDivider"></mat-divider><br>
         <div style="width: 42%;">

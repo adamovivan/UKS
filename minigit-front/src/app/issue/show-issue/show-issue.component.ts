@@ -9,6 +9,7 @@ import { CommentHistoryDialogComponent } from '../comment-history-dialog/comment
 import { CommonService } from 'src/app/services/common.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditAssigneeDialogComponent } from '../edit-assignee-dialog/edit-assignee-dialog.component';
+import { EditLabelDialogComponent } from '../edit-label-dialog/edit-label-dialog.component';
 
 
 @Component({
@@ -200,6 +201,32 @@ export class ShowIssueComponent implements OnInit {
       this.issueService.getIssue(this.issueId).subscribe(res => {
         this.issue = res;
         this.getAssignees(this.issue.fields.assignees);
+        this.getIssueEvents();
+      });
+    })
+
+  }
+
+  openLabelDialog() {
+    let dialogRef = this.dialog.open(
+      EditLabelDialogComponent,
+      {data: {labels: this.labels, issueId: this.issueId, currentUser: this.currentUser}}
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.issueService.getIssue(this.issueId).subscribe(res => {
+        this.issue = res;
+        this.getLabels(this.issue.fields.labels);
+        this.getIssueEvents();
+      });
+    })
+  }
+
+  deleteLabel(label) {
+    this.issueService.deleteLabel(this.issueId, label, this.currentUser.alias).subscribe(res => {
+      this.issueService.getIssue(this.issueId).subscribe(res => {
+        this.issue = res;
+        this.getLabels(this.issue.fields.labels);
         this.getIssueEvents();
       });
     })
