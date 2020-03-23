@@ -78,6 +78,8 @@ class LabelChange(Event):
 
 class MilestoneChange(Event):
     milestone = models.ForeignKey(Milestone, on_delete=models.CASCADE)
+    description = models.CharField(max_length=50, default='')
+    milestone_title = models.CharField(max_length=50, default='')
 
 class CodeChange(Event):
     url = models.URLField(max_length=200)

@@ -112,7 +112,16 @@
                 </div>
                 <mat-divider class="label-divider"></mat-divider>
             </div>
-
+            <div *ngIf="event.model === 'better_than_github.milestonechange'" class="milestone-change"><br>
+                <div>
+                    <b>{{ event.fields.user[1] }}</b>
+                    <span class="grey-text"> {{ event.fields.description }} </span>
+                    <b>{{ event.fields.milestone_title }} </b>
+                    <span class="grey-text">
+                    milestone. {{ event.fields.timestamp | date: 'short' }}</span>
+                </div>
+                <mat-divider class="milestone-divider"></mat-divider>
+            </div>
         </div>
         <div class="newCommentDiv">
             <mat-form-field class="newComment">
@@ -162,15 +171,19 @@
         <div style="width: 42%;">
             <div style="float: left;"><span class="infoLabel">Milestone</span></div>   
             <div style="float: right;">
-                <button mat-icon-button aria-label="Change">
+                <button mat-icon-button aria-label="Change" (click)="openMilestoneDialog()">
                     <mat-icon>settings</mat-icon>
                 </button>
             </div>
         </div><br><br>
-        <span class="noInfo" *ngIf="milestone==null">No milestone</span>
-        <span class="issueInfo" *ngIf="milestone!=null">
+        <span class="noInfo" *ngIf="milestone == null">No milestone</span>
+        <div class="issueInfo" *ngIf="milestone != null">
             <b>{{ milestone.fields.title }}</b>
-        </span>
+            <button mat-icon-button aria-label="delete" (click)="deleteMilestone(milestone.fields.title)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <mat-divider class="smallDivider"></mat-divider><br>
     </div>
 </div>
 <br>
