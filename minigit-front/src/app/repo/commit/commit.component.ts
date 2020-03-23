@@ -34,10 +34,10 @@ export class CommitComponent implements OnInit {
             data => {
                    this.commits = data
           });
-          /*this.service.getBranches(this.owner,this.repo).subscribe(
+          this.service.getBranches(this.owner,this.repo).subscribe(
             data => {
                    this.branches = data
-          });*/
+          });
       });
   }
 

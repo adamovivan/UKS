@@ -6,8 +6,8 @@
        <!-- Example split danger button -->
        <!--select class="browser-default custom-select" (change)="branch($event.target.value)" style="width: 20vw; color: red;"-->
        <select class="browser-default custom-select" style="width: 20vw; color: red;">
-         <option selected>Branch : master</option>
-         <!--option *ngFor="let branch of branches; let i = index" value="1" value="{{branch.name}}">{{branch.name}}</option-->
+         <!--option selected>Branch : master</option-->
+         <option *ngFor="let branch of branches; let i = index" value="1" value="{{branch.name}}">{{branch.name}}</option>
        </select>
       <div  *ngFor="let commit of commits; let i = index"  class="commits-listing commits-listing-padded js-navigation-container js-active-navigation-container" data-navigation-scroll="page">
 
