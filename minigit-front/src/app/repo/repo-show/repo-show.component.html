@@ -4,7 +4,7 @@
     <link crossorigin="anonymous" media="all" integrity="sha512-FwYpFVuVzDWMuKKB1OvzQkN/OMqH9BH+TbbPuFsu+TxHn58kX+dB37udsPZSBrQaBCX8s1kPyd1k8B8d2/o/qQ==" rel="stylesheet" href="https://github.githubassets.com/assets/github-170629155b95cc358cb8a281d4ebf342.css">
 </head> 
 
-<main *ngIf="repository && commits && readme && contents " id="js-repo-pjax-container" data-pjax-container="">
+<main *ngIf="commits && contents && issues" id="js-repo-pjax-container" data-pjax-container="">
     <div class="pagehead repohead hx_repohead readability-menu bg-gray-light pb-0 pt-3">
        <div class="d-flex container-lg mb-4 px-3">
           <div class="flex-auto min-width-0 width-fit mr-3">
@@ -74,10 +74,11 @@
           </div>
           
           <!--#################################################################################-->
-          <select class="browser-default custom-select mb-2" style="width: 20vw;">
-            <option selected>Branch: master</option>
-            <!--option *ngFor="let branch of branches; let i = index" value="1" (change)="branch(branch.name)">{{branch.name}}</option-->
-          </select>
+          <select class="browser-default custom-select" (change)="branch($event.target.value)" style="width: 20vw; color: red;">
+            <!--select class="browser-default custom-select" style="width: 20vw; color: red;"-->
+              <option selected value="master">Branch : master</option>
+              <option *ngFor="let branch of branches; let i = index" value="1" value="{{branch.name}}">{{branch.name}}</option>
+            </select>
           <!--#################################################################################-->
           
           <div class="Box mb-3 Box--condensed">

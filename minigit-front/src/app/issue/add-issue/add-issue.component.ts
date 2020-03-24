@@ -58,7 +58,7 @@ export class AddIssueComponent implements OnInit {
   }
 
   createIssue(){
-    // alert(JSON.stringify(this.issueForm.value));
+  //  alert(JSON.stringify(this.issueForm.value));
   //  alert(JSON.stringify(this.currentUser));
     this.issueForm.value['creator'] = this.currentUser.alias;
     this.issueService.createIssue(this.issueForm.value, this.owner, this.repo).subscribe(

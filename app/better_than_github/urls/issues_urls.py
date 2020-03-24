@@ -12,7 +12,7 @@ urlpatterns = [
     path('issue-milestone', issues_views.get_milestone),
     path('issue-id/<id>', issues_views.get_issue),
     path('issue-events/<id>', issues_views.get_issue_events),
-    path('<owner>/<repo>/issues/create', issues_views.create_issue),
+    path('<owner>/<repo>/issues/create', issues_views.create_issue, name="create_issue"),
     path('issues/labels', issues_views.getLabeles),
     path('<owner>/issues/mycreate', issues_views.get_mycreate_issues),
     path('<owner>/<repo>/issues/<number>/comments', issues_views.get_comments_in_issue),

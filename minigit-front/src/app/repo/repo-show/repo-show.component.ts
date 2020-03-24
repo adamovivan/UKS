@@ -35,35 +35,29 @@ export class RepoShowComponent implements OnInit {
       params => {
           this.owner = params.get('owner');
           this.repo = params.get('repo');
+
           this.issueService.getIssues(this.owner, this.repo).subscribe(
             data => this.issues = data
           )
-  
-          this.service.getRepo(this.owner,this.repo).subscribe(
+
+          this.service.getBranches(this.owner,this.repo).subscribe(
             data => {
-                   this.repository = data
+                   this.branches = data
           });
-          this.service.getCommits(this.owner,this.repo).subscribe(
+
+          this.service.getCommitsBranch(this.owner,this.repo,"master").subscribe(
             data => {
                    this.commits = data
                    this.commits.forEach(element => {
                      this.commitsNumber += 1;
                    });
           });
-          
-          this.service.getReadme(this.owner,this.repo).subscribe(
-            data => {
-                   this.readme = data
-          });
 
-          this.service.getContents(this.owner,this.repo).subscribe(
+          this.service.getContentsBranch(this.owner,this.repo,"master").subscribe(
             data => {
                    this.contents = data
           });
-          /*this.service.getBranches(this.owner,this.repo).subscribe(
-            data => {
-                   this.branches = data
-          });*/
+          
       });
   }
 
@@ -74,7 +68,7 @@ export class RepoShowComponent implements OnInit {
     });
   }
 
-  /*branch(pk){
+  branch(pk){
     this.service.getCommitsBranch(this.owner,this.repo,pk).subscribe(
       data => {
         this.commits = data
@@ -82,6 +76,10 @@ export class RepoShowComponent implements OnInit {
           this.commitsNumber += 1;
         });
     });
-  }*/
+    this.service.getContentsBranch(this.owner,this.repo,pk).subscribe(
+      data => {
+             this.contents = data
+    });
+  }
 
 }
