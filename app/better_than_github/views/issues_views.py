@@ -259,6 +259,8 @@ def create_issue(request, owner=None, repo=None):
             new_issue.milestone= Milestone.objects.get(title=milestone)
 
         new_issue.save()
+        print(new_issue.pk)
+        print(new_issue.title)
 
         return HttpResponse("Successfully created the issue!", status=HTTP_201_CREATED)
     except:
