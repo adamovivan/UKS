@@ -22,6 +22,7 @@ class Label(models.Model):
 class Project(models.Model):
     title = models.CharField(max_length=200)
     git_repo = models.CharField(max_length=200)
+    users = models.ManyToManyField(User)
 
     def natural_key(self):
         return self.title, self.git_repo

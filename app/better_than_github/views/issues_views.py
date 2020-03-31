@@ -202,31 +202,36 @@ def get_issue_events(request, id):
 
 @api_view(['PUT'])
 def change_state(request, id, user_alias):
-    issue = Issue.objects.get(pk=id)
+    try:
+        issue = Issue.objects.get(pk=id)
 
-    user = User.objects.get(name=user_alias)
-    state_change = StateChange()
-    state_change.user = user
-    if issue.state == STATES[0][0]:
-        issue.state = STATES[1][0]
-        milestone = Milestone.objects.get(pk=issue.milestone.pk)
-        milestone.open_issues -= 1
-        milestone.closed_issues += 1
-        milestone.save()
-        state_change.new_state = STATES[1][0]
-    else:
-        issue.state = STATES[0][0]
-        milestone = Milestone.objects.get(pk=issue.milestone.pk)
-        milestone.open_issues += 1
-        milestone.closed_issues -= 1
-        milestone.save()
-        state_change.new_state = STATES[0][0]
+        user = User.objects.get(name=user_alias)
+        state_change = StateChange()
+        state_change.user = user
+        if issue.state == STATES[0][0]:
+            issue.state = STATES[1][0]
+            if issue.milestone:
+                milestone = Milestone.objects.get(pk=issue.milestone.pk)
+                milestone.open_issues -= 1
+                milestone.closed_issues += 1
+                milestone.save()
+            state_change.new_state = STATES[1][0]
+        else:
+            issue.state = STATES[0][0]
+            if issue.milestone:
+                milestone = Milestone.objects.get(pk=issue.milestone.pk)
+                milestone.open_issues += 1
+                milestone.closed_issues -= 1
+                milestone.save()
+            state_change.new_state = STATES[0][0]
 
-    state_change.issue = issue
-    state_change.save()
-    issue.save()
-    return HttpResponse(serializers.serialize("json", [issue])[1:-1], status=HTTP_200_OK)
-
+        state_change.issue = issue
+        state_change.save()
+        issue.save()
+        return HttpResponse(serializers.serialize("json", [issue])[1:-1], status=HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        return HttpResponse("failed state change!", status=HTTP_400_BAD_REQUEST)
 @api_view(['POST'])
 def create_issue(request, owner=None, repo=None):
     data = request.data
