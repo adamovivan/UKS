@@ -23,7 +23,8 @@ def get_user(request, username=None):
 def get_repositories(request, username=None):
     # vracamo sve repozitorijume za prosledjenog korisnika
     url_repo = "https://github.com/{0}".format(username)
-    projects = Project.objects.filter(git_repo__startswith=url_repo)
+    user = User.objects.get(name=username)
+    projects = Project.objects.filter(users__in = [user])
     data = serializers.serialize("json", projects)
     return HttpResponse(data)
 
@@ -41,8 +42,34 @@ def login(request):
     # samo cemo da proverimo da user sa unetim usernemom postoji kod nas u app
     data = request.data
     print("LOGIN ", data["username"])
-    find_user = User.objects.filter(name=data["username"])
+    find_user = User.objects.get(name=data["username"])
     if find_user:
+        try:
+            data_repo: Response = requests.request("GET", API+'users/{0}/repos?type=all'.format(data["username"])) #preuzmemo sve repozitorijume od korisnika i ubacimo ih u bazu
+         #   attr = vars(data_repo)
+            #print(', '.join("%s: %s" % item for item in attr.items()))
+            data = data_repo.json()
+            for repo in data:
+             #   print(repo)
+                print(repo["name"])
+                find_project_list = Project.objects.filter(git_repo=repo["html_url"])
+                #print
+
+                if find_project_list:
+                    find_project = find_project_list[0]
+                    print("postoji u bazi")
+                    find_project.users.add(find_user)
+                    find_project.save()
+                else:
+                    print("novi projekat")
+                    project = Project.objects.create(title=repo["name"], git_repo=repo["html_url"])
+                    project.users.add(find_user)
+                    project.save()
+
+        except Exception as e:
+            print("GRESKA KOD DOBAVLJANJA REPO-A")
+            print(e)
+
         return HttpResponse("ok", status=HTTP_200_OK)
     else:
         return HttpResponse("Please register!", status=HTTP_400_BAD_REQUEST)
@@ -67,20 +94,6 @@ def register(request):
         user.name = data["username"]
         user.email = data["email"]
         user.save()
-        try:
-            data_repo: Response = requests.request("GET", API+'users/{0}/repos'.format(data["username"])) #preuzmemo sve repozitorijume od korisnika i ubacimo ih u bazu
-         #   attr = vars(data_repo)
-            #print(', '.join("%s: %s" % item for item in attr.items()))
-            data = data_repo.json()
-            for repo in data:
-             #   print(repo)
-                print(repo["name"])
-                project = Project.objects.create(title=repo["name"], git_repo=repo["html_url"])
-                project.save()
-
-        except Exception as e:
-            print("GRESKA KOD DOBAVLJANJA REPO-A")
-            print(e)
 
         return HttpResponse("Successfully registered user!", status=HTTP_201_CREATED)
     except:

@@ -32,10 +32,11 @@ export class HomeComponent implements OnInit {
 
 
   //ovde ce se proslediti do kog repa a ownera imas gore i samo u urlu to uvezes ... za sad zakucano 
-  repo(title){
+  repo(git_repo){
       //window.location.href = SERVER_URL_FRONT + this.owner + "/" + this.repo + "/milestones" primer;
       // alert(title);
-      window.location.href = SERVER_URL_FRONT + this.currentUser.alias + "/" + title + "/repo";
+      var s = git_repo.split("/")
+      window.location.href = SERVER_URL_FRONT + s[3] + "/" + s[4] + "/repo";
   }
 
 }
