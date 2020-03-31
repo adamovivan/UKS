@@ -209,9 +209,17 @@ def change_state(request, id, user_alias):
     state_change.user = user
     if issue.state == STATES[0][0]:
         issue.state = STATES[1][0]
+        milestone = Milestone.objects.get(pk=issue.milestone.pk)
+        milestone.open_issues -= 1
+        milestone.closed_issues += 1
+        milestone.save()
         state_change.new_state = STATES[1][0]
     else:
         issue.state = STATES[0][0]
+        milestone = Milestone.objects.get(pk=issue.milestone.pk)
+        milestone.open_issues += 1
+        milestone.closed_issues -= 1
+        milestone.save()
         state_change.new_state = STATES[0][0]
 
     state_change.issue = issue
@@ -256,7 +264,10 @@ def create_issue(request, owner=None, repo=None):
 
         milestone = data['milestone']
         if milestone != '':
-            new_issue.milestone= Milestone.objects.get(title=milestone)
+            milestone = Milestone.objects.get(title=milestone)
+            milestone.open_issues += 1
+            milestone.save()
+            new_issue.milestone = milestone
 
         new_issue.save()
         print(new_issue.pk)

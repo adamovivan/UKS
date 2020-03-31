@@ -67,11 +67,11 @@
                  </div>
                  <div class="table-list-cell milestone-progress">
                     <span *ngIf="milestone.fields.open_issues != 0 || milestone.fields.closed_issues != 0" class="progress-bar progress-bar-small"><span class="progress" [ngStyle]="{'width': (100/(milestone.fields.open_issues+milestone.fields.closed_issues))*milestone.fields.closed_issues + '%'}">&nbsp;</span></span>
-                    <span *ngIf="milestone.fields.open_issues == 0 || milestone.fields.closed_issues == 0" class="progress-bar progress-bar-small"><span class="progress" [ngStyle]="{'width': 0 + '%'}">&nbsp;</span></span>
+                    <span *ngIf="milestone.fields.open_issues == 0 && milestone.fields.closed_issues == 0" class="progress-bar progress-bar-small"><span class="progress" [ngStyle]="{'width': 0 + '%'}">&nbsp;</span></span>
                     <div class="stats">
                        <div class="stat">
                           <span *ngIf="milestone.fields.open_issues != 0 || milestone.fields.closed_issues != 0"  class="progress-percent">{{(100/(milestone.fields.open_issues+milestone.fields.closed_issues))*milestone.fields.closed_issues}} %</span>
-                          <span *ngIf="milestone.fields.open_issues == 0 || milestone.fields.closed_issues == 0"  class="progress-percent">0% </span>
+                          <span *ngIf="milestone.fields.open_issues == 0 && milestone.fields.closed_issues == 0"  class="progress-percent">0% </span>
                           <span class="stat-label">complete</span>
                        </div>
                        <div class="stat">
@@ -89,7 +89,8 @@
                     </div>
                     <div class="f5 mt-2 text-gray-dark">
                        <a style="color: blue;" class="btn-link mr-2" (click)="update(milestone.pk)">Edit</a>
-                       <a style="color: blue;" class="btn-link mr-2" (click)="close(milestone.pk)">Close</a>
+                       <a *ngIf="milestone.fields.state == 'OPEN'" style="color: blue;" class="btn-link mr-2" (click)="close(milestone.pk)">Close</a>
+                       <a *ngIf="milestone.fields.state == 'CLOSED'" style="color: green;" class="btn-link mr-2" (click)="openM(milestone.pk)">Open</a>
                        <a style="color: red;" class="btn-link mr-2" (click)="delete(milestone.pk)">Delete</a>
                     </div>
                  </div>

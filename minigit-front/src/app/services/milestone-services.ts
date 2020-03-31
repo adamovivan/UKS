@@ -28,6 +28,10 @@ export class MilestoneService {
     return this.http.patch(SERVER_URL + 'repos/milestones/close/' + id,{},{responseType:'text'});
   }
 
+  openMilestones(id): Observable<string>{
+    return this.http.patch(SERVER_URL + 'repos/milestones/open/' + id,{},{responseType:'text'});
+  }
+
   deleteMilestones(id): Observable<string>{
     return this.http.delete(SERVER_URL + 'repos/milestones/delete/' + id,{responseType:'text'});
   }

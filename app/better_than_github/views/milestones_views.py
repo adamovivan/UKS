@@ -52,6 +52,14 @@ def close_milestone(request, id=None):
     except :
         return HttpResponse("Milestone is not closed", status=HTTP_400_BAD_REQUEST)
 
+@api_view(['PATCH'])
+def open_milestone(request, id=None):
+    try:
+        Milestone.objects.filter(pk=id).update(state=STATES[0][0])
+        return HttpResponse("Milestone is open")
+    except :
+        return HttpResponse("Milestone is not open", status=HTTP_400_BAD_REQUEST)
+
 @api_view(['DELETE'])
 def delete_milestone(request, id=None):
     try:
