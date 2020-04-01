@@ -247,23 +247,36 @@ def sort_events(event_list, events):
 
 @api_view(['PUT'])
 def change_state(request, id, user_alias):
-    issue = Issue.objects.get(pk=id)
+    try:
+        issue = Issue.objects.get(pk=id)
 
-    user = User.objects.get(name=user_alias)
-    state_change = StateChange()
-    state_change.user = user
-    if issue.state == STATES[0][0]:
-        issue.state = STATES[1][0]
-        state_change.new_state = STATES[1][0]
-    else:
-        issue.state = STATES[0][0]
-        state_change.new_state = STATES[0][0]
+        user = User.objects.get(name=user_alias)
+        state_change = StateChange()
+        state_change.user = user
+        if issue.state == STATES[0][0]:
+            issue.state = STATES[1][0]
+            if issue.milestone:
+                milestone = Milestone.objects.get(pk=issue.milestone.pk)
+                milestone.open_issues -= 1
+                milestone.closed_issues += 1
+                milestone.save()
+            state_change.new_state = STATES[1][0]
+        else:
+            issue.state = STATES[0][0]
+            if issue.milestone:
+                milestone = Milestone.objects.get(pk=issue.milestone.pk)
+                milestone.open_issues += 1
+                milestone.closed_issues -= 1
+                milestone.save()
+            state_change.new_state = STATES[0][0]
 
-    state_change.issue = issue
-    state_change.save()
-    issue.save()
-    return HttpResponse(serializers.serialize("json", [issue])[1:-1], status=HTTP_200_OK)
-
+        state_change.issue = issue
+        state_change.save()
+        issue.save()
+        return HttpResponse(serializers.serialize("json", [issue])[1:-1], status=HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        return HttpResponse("failed state change!", status=HTTP_400_BAD_REQUEST)
 @api_view(['POST'])
 def create_issue(request, owner=None, repo=None):
     data = request.data
@@ -290,7 +303,6 @@ def create_issue(request, owner=None, repo=None):
                 print(user)
                 new_issue.assignees.add(user)
 
-
         #izvucemo labele na osnovu naziva
         labels = data["labels"]
         labels_list = []
@@ -302,9 +314,14 @@ def create_issue(request, owner=None, repo=None):
 
         milestone = data['milestone']
         if milestone != '':
-            new_issue.milestone= Milestone.objects.get(title=milestone)
+            milestone = Milestone.objects.get(title=milestone)
+            milestone.open_issues += 1
+            milestone.save()
+            new_issue.milestone = milestone
 
         new_issue.save()
+        print(new_issue.pk)
+        print(new_issue.title)
 
         return HttpResponse("Successfully created the issue!", status=HTTP_201_CREATED)
     except:

@@ -30,22 +30,22 @@ export class CommitComponent implements OnInit {
           this.owner = params.get('owner');
           this.repo = params.get('repo');
   
-          this.service.getCommits(this.owner,this.repo).subscribe(
+          this.service.getCommitsBranch(this.owner,this.repo,"master").subscribe(
             data => {
                    this.commits = data
           });
-          /*this.service.getBranches(this.owner,this.repo).subscribe(
+          this.service.getBranches(this.owner,this.repo).subscribe(
             data => {
                    this.branches = data
-          });*/
+          });
       });
   }
 
-  /*branch(pk){
+  branch(pk){
     this.service.getCommitsBranch(this.owner,this.repo,pk).subscribe(
       data => {
              this.commits = data
     });
-  }*/
+  }
 
 }

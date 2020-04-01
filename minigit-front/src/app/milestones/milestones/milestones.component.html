@@ -12,13 +12,7 @@
            <div class="subnav">
               <a style="color: white;" class="btn btn-primary float-right" (click)="newMilestone()">New milestone</a>
               <nav class="subnav-links float-left d-flex no-wrap" aria-label="Issue">
-                 
-                 <a selected_link="repo_milestones" class="js-selected-navigation-item selected subnav-item" aria-current="page" data-selected-links="repo_milestones /adamovivan/UKS/milestones" href="/adamovivan/UKS/milestones">
-                    <svg class="octicon octicon-milestone" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
-                       <path fill-rule="evenodd" d="M8 2H6V0h2v2zm4 5H2c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h10l2 2-2 2zM8 4H6v2h2V4zM6 16h2V8H6v8z"></path>
-                    </svg>
-                    Milestones
-                 </a>
+      
               </nav>
            </div>
            <div class="table-list-header">
@@ -73,11 +67,11 @@
                  </div>
                  <div class="table-list-cell milestone-progress">
                     <span *ngIf="milestone.fields.open_issues != 0 || milestone.fields.closed_issues != 0" class="progress-bar progress-bar-small"><span class="progress" [ngStyle]="{'width': (100/(milestone.fields.open_issues+milestone.fields.closed_issues))*milestone.fields.closed_issues + '%'}">&nbsp;</span></span>
-                    <span *ngIf="milestone.fields.open_issues == 0 || milestone.fields.closed_issues == 0" class="progress-bar progress-bar-small"><span class="progress" [ngStyle]="{'width': 0 + '%'}">&nbsp;</span></span>
+                    <span *ngIf="milestone.fields.open_issues == 0 && milestone.fields.closed_issues == 0" class="progress-bar progress-bar-small"><span class="progress" [ngStyle]="{'width': 0 + '%'}">&nbsp;</span></span>
                     <div class="stats">
                        <div class="stat">
                           <span *ngIf="milestone.fields.open_issues != 0 || milestone.fields.closed_issues != 0"  class="progress-percent">{{(100/(milestone.fields.open_issues+milestone.fields.closed_issues))*milestone.fields.closed_issues}} %</span>
-                          <span *ngIf="milestone.fields.open_issues == 0 || milestone.fields.closed_issues == 0"  class="progress-percent">0% </span>
+                          <span *ngIf="milestone.fields.open_issues == 0 && milestone.fields.closed_issues == 0"  class="progress-percent">0% </span>
                           <span class="stat-label">complete</span>
                        </div>
                        <div class="stat">
@@ -95,7 +89,8 @@
                     </div>
                     <div class="f5 mt-2 text-gray-dark">
                        <a style="color: blue;" class="btn-link mr-2" (click)="update(milestone.pk)">Edit</a>
-                       <a style="color: blue;" class="btn-link mr-2" (click)="close(milestone.pk)">Close</a>
+                       <a *ngIf="milestone.fields.state == 'OPEN'" style="color: blue;" class="btn-link mr-2" (click)="close(milestone.pk)">Close</a>
+                       <a *ngIf="milestone.fields.state == 'CLOSED'" style="color: green;" class="btn-link mr-2" (click)="openM(milestone.pk)">Open</a>
                        <a style="color: red;" class="btn-link mr-2" (click)="delete(milestone.pk)">Delete</a>
                     </div>
                  </div>

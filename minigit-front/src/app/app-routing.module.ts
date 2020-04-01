@@ -38,11 +38,7 @@ const routes: Routes = [
   {
     path: 'signUp', 
     component: SignUpComponent
-   } /*,
-  {
-    path: 'signIn',
-    component: SignInComponent
-  }*/,
+   },
   {
     path: 'profile',
     component: ProfileComponent,
@@ -64,23 +60,23 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: ':owner/:repo/milestones/:id',
-    component: ShowIssueMilestoneComponent,
-    canActivate: [AuthGuard]
-  },
-  {
-    path: ':owner/:repo/issue',
-    component: ShowIssueRepoComponent,
-    canActivate: [AuthGuard]
-  },
-  {
     path: ':owner/:repo/milestones/create',
     component: MilestonesAddComponent,
     canActivate: [AuthGuard]
   },
   {
+    path: ':owner/:repo/milestones/:id',
+    component: ShowIssueMilestoneComponent,
+    canActivate: [AuthGuard]
+  },
+  {
     path: ':owner/:repo/milestones/update/:id',
     component: MilestonesUpdateComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: ':owner/:repo/issue',
+    component: ShowIssueRepoComponent,
     canActivate: [AuthGuard]
   }
 ];
