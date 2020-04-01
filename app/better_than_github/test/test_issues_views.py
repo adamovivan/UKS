@@ -2,6 +2,7 @@
 import json
 from django.test import TestCase, Client
 from ..models import *
+from datetime import datetime
 
 
 class IssuesViewsTest(TestCase):
@@ -27,6 +28,7 @@ class IssuesViewsTest(TestCase):
         issue.title = "issue 1 title"
         issue.state = STATES[0][0]
         issue.labels.add(label)
+        issue.open_date_time = datetime.now()
 
         issue.save()
 
