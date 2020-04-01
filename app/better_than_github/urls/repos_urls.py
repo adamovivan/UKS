@@ -7,7 +7,6 @@ urlpatterns = [
     path('repos/<owner>/<repo>/contributors', repos_views.get_contributors),
     path('repos/<owner>/<repo>/milestones', repos_views.get_milestones),
     path('repos/<owner>/<repo>/commits', repos_views.get_all_commits),
-#    path('repos/<owner>/<repo>/commits/<branch>', repos_views.get_all_commits),
     path('repos/<owner>/<repo>/issues', repos_views.get_issues),
     path('repos/<owner>/<repo>/readme', repos_views.get_readme),
     path('repos/<owner>/<repo>/contents', repos_views.get_contents),

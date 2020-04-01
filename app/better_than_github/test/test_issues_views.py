@@ -1,8 +1,8 @@
 # from unittest import TestCase
-import json
 from django.test import TestCase, Client
 from ..models import *
 from datetime import datetime
+import json
 
 
 class IssuesViewsTest(TestCase):
@@ -33,18 +33,18 @@ class IssuesViewsTest(TestCase):
         issue.save()
 
     def test_add_comment(self):
-        issue_id = "1"
+        issue_id = "2"
         comment_1_description = "Test comment 1"
         comment_2_description = "Test comment 2"
         user = "test_user"
 
         response1 = self.client.post('/repos/comment',
-                                    json.dumps({"issueId": issue_id, "text": comment_1_description, "user": user}),
-                                    content_type="application/json")
+                                     json.dumps({"issueId": issue_id, "text": comment_1_description, "user": user}),
+                                     content_type="application/json")
 
         response2 = self.client.post('/repos/comment',
-                                    json.dumps({"issueId": issue_id, "text": comment_2_description, "user": user}),
-                                    content_type="application/json")
+                                     json.dumps({"issueId": issue_id, "text": comment_2_description, "user": user}),
+                                     content_type="application/json")
 
         self.assertTrue(response1.status_code == 201)
         self.assertTrue(response2.status_code == 201)

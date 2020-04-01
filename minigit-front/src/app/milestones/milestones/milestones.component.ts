@@ -82,6 +82,15 @@ export class MilestonesComponent implements OnInit {
       });
   }
 
+  openM(pk:any){
+    this.service.openMilestones(pk).subscribe(
+      data => {
+        window.location.reload();
+    },
+    (err) => {
+      });
+  }
+
   delete(pk:any){
     this.service.deleteMilestones(pk).subscribe(
       data => {
