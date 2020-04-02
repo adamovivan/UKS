@@ -11,6 +11,12 @@ import json
 
 API = 'https://api.github.com/'
 
+@api_view(['GET'])
+def get_project_milestones(request, id=None):
+    milestones = Milestone.objects.filter(project=id)
+
+    return HttpResponse(serializers.serialize("json", milestones), content_type="json")
+
 @api_view(['POST'])
 def get_assignees(request):
     assignees = []
@@ -108,6 +114,44 @@ def get_milestone(request):
     data = serializers.serialize("json", [milestone])[1:-1]
     return HttpResponse(data, content_type="json")
 
+@api_view(['DELETE'])
+def delete_milestone(request):
+    issue = Issue.objects.get(pk=request.data["issueId"])
+    milestone = Milestone.objects.get(title=request.data["milestone"])
+    issue.milestone = None
+    issue.save()
+
+    user = User.objects.get(name=request.data["user"])
+    milestone_change = MilestoneChange()
+    milestone_change.milestone = milestone
+    milestone_change.user = user
+    milestone_change.description = 'removed'
+    milestone_change.issue = issue
+    milestone_change.milestone_title = milestone.title
+    milestone_change.save()
+
+    data = serializers.serialize("json", [milestone])[1:-1]
+    return HttpResponse(data, content_type="json")
+
+@api_view(['POST'])
+def add_milestone(request):
+    issue = Issue.objects.get(pk=request.data["issueId"])
+    milestone = Milestone.objects.get(title=request.data["milestone"])
+    issue.milestone = milestone
+    user = User.objects.get(name=request.data["user"])
+
+    milestone_change = MilestoneChange()
+    milestone_change.milestone = milestone
+    milestone_change.user = user
+    milestone_change.milestone_title = milestone.title
+    milestone_change.description = 'added'
+    milestone_change.issue = issue
+    milestone_change.save()
+
+    issue.save()
+    data = serializers.serialize("json", [issue])[1:-1]
+    return HttpResponse(data, content_type="json")
+
 @api_view(['GET'])
 def get_comments_in_issue(request, owner=None, repo=None, number=None):
     comments = requests.get(
@@ -171,34 +215,35 @@ def get_issue_events(request, id):
     comments = Comment.objects.filter(issue=id)
     assignees = ResponsibilityChange.objects.filter(issue=id)
     labels = LabelChange.objects.filter(issue=id)
+    milestones = MilestoneChange.objects.filter(issue=id)
 
     events = list()
 
     for change in changes:
         events.append(change)
 
-    for comment in comments:
-        inserted = False
-        for i in range(len(events)):
-            if comment.timestamp < events[i].timestamp:
-                events.insert(i, comment)
-                inserted = True
-                break
-
-        if not inserted:
-            events.append(comment)
-
-    for assignee in assignees:
-        events.append(assignee)
-
-    for label in labels:
-        events.append(label)
+    sort_events(comments, events)
+    sort_events(assignees, events)
+    sort_events(labels, events)
+    sort_events(milestones, events)
 
     events_json = []
     for event in events:
         events_json.append(json.loads(serializers.serialize("json", [event], use_natural_foreign_keys=True)[1:-1]))
 
     return HttpResponse(json.dumps(events_json), status=HTTP_200_OK)
+
+def sort_events(event_list, events):
+    for single_event in event_list:
+        inserted = False
+        for i in range(len(events)):
+            if single_event.timestamp < events[i].timestamp:
+                events.insert(i, single_event)
+                inserted = True
+                break
+
+        if not inserted:
+            events.append(single_event)
 
 @api_view(['PUT'])
 def change_state(request, id, user_alias):

@@ -16,6 +16,10 @@ export class IssueService {
   }
   constructor(private http:HttpClient) { }
 
+  getProjectMilestones(projectId){
+    return this.http.get(SERVER_URL + 'repos/issue/project/' + projectId + '/milestones');
+  }
+
   getIssues(owner, repo){
     return this.http.get(SERVER_URL+ 'repos/repos/'.concat(owner).concat('/'.concat(repo).concat('/issues')));
   }
@@ -124,5 +128,29 @@ export class IssueService {
       user: user
     }
     return this.http.post(SERVER_URL + 'repos/issue-labels/add', data);
+  }
+
+
+  deleteMilestone(issueId, milestone, user) {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: {
+        issueId: issueId,
+        milestone: milestone,
+        user: user
+      },
+    };
+    return this.http.delete(SERVER_URL + 'repos/issue-milestone/delete', options);
+  }
+
+  addMilestone(issueId, milestone, user) {
+    let data = {
+      issueId: issueId,
+      milestone: milestone,
+      user: user
+    }
+    return this.http.post(SERVER_URL + 'repos/issue-milestone/add', data);
   }
 }

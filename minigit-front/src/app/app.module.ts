@@ -34,6 +34,7 @@ import { CommitComponent } from './repo/commit/commit.component';
 import { ShowIssueMilestoneComponent } from './issue/show-issue-milestone/show-issue-milestone.component';
 import { EditAssigneeDialogComponent } from './issue/edit-assignee-dialog/edit-assignee-dialog.component';
 import { EditLabelDialogComponent } from './issue/edit-label-dialog/edit-label-dialog.component';
+import { EditMilestoneDialogComponent } from './issue/edit-milestone-dialog/edit-milestone-dialog.component';
 
 
 @NgModule({
@@ -59,7 +60,8 @@ import { EditLabelDialogComponent } from './issue/edit-label-dialog/edit-label-d
     CommitComponent,
     ShowIssueMilestoneComponent,
     EditAssigneeDialogComponent,
-    EditLabelDialogComponent
+    EditLabelDialogComponent,
+    EditMilestoneDialogComponent
   ],
   imports: [
     MatIconModule,

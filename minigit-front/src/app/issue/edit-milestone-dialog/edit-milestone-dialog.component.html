@@ -1,0 +1,18 @@
+<div style="width: 300px;">
+    <div mat-dialog-title>
+        <h4>Change milestone</h4>
+    </div>
+    <div mat-dialog-content>
+        <mat-form-field>
+            <mat-select class="form-control float-right" [(ngModel)]="newMilestone"> 
+                <mat-option *ngFor="let m of milestonesForDialog" [value]="m.fields.title">
+                    {{ m.fields.title }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+        <button mat-button mat-dialog-close mat-dialog-close="false">Close</button>
+        <button mat-button mat-dialog-close mat-dialog-close="true" (click)="saveMilestone()">Save</button>
+    </div>
+</div>

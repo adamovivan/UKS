@@ -10,6 +10,7 @@ import { CommonService } from 'src/app/services/common.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { EditAssigneeDialogComponent } from '../edit-assignee-dialog/edit-assignee-dialog.component';
 import { EditLabelDialogComponent } from '../edit-label-dialog/edit-label-dialog.component';
+import { EditMilestoneDialogComponent } from '../edit-milestone-dialog/edit-milestone-dialog.component';
 
 
 @Component({
@@ -83,9 +84,11 @@ export class ShowIssueComponent implements OnInit {
   }
 
   getMilestone(milestoneId) {
-    this.issueService.getIssueMilestone(milestoneId).subscribe(res => {
-      this.milestone = res;
-    })
+    if (milestoneId != null) {
+      this.issueService.getIssueMilestone(milestoneId).subscribe(res => {
+        this.milestone = res;
+      })
+    }
   }
 
   getCommentChanges(){
@@ -230,6 +233,38 @@ export class ShowIssueComponent implements OnInit {
         this.getIssueEvents();
       });
     })
+  }
 
+
+  openMilestoneDialog() {
+    let dialogRef = this.dialog.open(
+      EditMilestoneDialogComponent,
+      {data: {milestone: this.milestone, 
+              issueId: this.issueId, 
+              currentUser: this.currentUser,
+              projectId: this.issue.fields.project}}
+    );
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.issueService.getIssue(this.issueId).subscribe(res => {
+        this.issue = res;
+        this.getMilestone(this.issue.fields.milestone);
+        this.getIssueEvents();
+      });
+    })
+  }
+
+  deleteMilestone(milestone) {
+    this.issueService.deleteMilestone(this.issueId, milestone, this.currentUser.alias).subscribe(res => {
+      this.issueService.getIssue(this.issueId).subscribe(res => {
+        this.issue = res;
+        if (this.issue.fields.milestone == null) {
+          this.milestone = null;
+        } else {
+          this.getMilestone(this.issue.fields.milestone);
+        }
+        this.getIssueEvents();
+      });
+    })
   }
 }

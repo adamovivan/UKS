@@ -1,6 +1,7 @@
 # from unittest import TestCase
 from django.test import TestCase, Client
 from ..models import *
+from datetime import datetime
 import json
 
 
@@ -27,6 +28,7 @@ class IssuesViewsTest(TestCase):
         issue.title = "issue 1 title"
         issue.state = STATES[0][0]
         issue.labels.add(label)
+        issue.open_date_time = datetime.now()
 
         issue.save()
 
