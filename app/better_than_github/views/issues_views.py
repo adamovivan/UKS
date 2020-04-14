@@ -8,7 +8,12 @@ from ..models import *
 from django.core import serializers
 from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_200_OK
 import json
+import app.settings as settings
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 
+
+CACHE_TTL = getattr(settings, 'CACHE_TTL', settings.CACHE_TTL)
 API = 'https://api.github.com/'
 
 @api_view(['GET'])
@@ -200,9 +205,15 @@ def get_comments_in_repo(request, owner=None, repo=None):
 
 @api_view(['GET'])
 def getLabeles(request):
-    labels = Label.objects.all()
-    data = serializers.serialize("json", labels)
-    return HttpResponse(data, content_type="json")
+    if 'labels' in cache:
+        data = cache.get('labels')
+        return HttpResponse(data, content_type="json")
+    else:
+        labels = Label.objects.all()
+        data = serializers.serialize("json", labels)
+        cache.set('labels', data, timeout=CACHE_TTL)
+        return HttpResponse(data, content_type="json")
+
 
 @api_view(['GET'])
 def get_state_changes(request, id):
