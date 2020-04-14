@@ -21,15 +21,13 @@ services:
 #      com.example.description: "For searching and indexing data"
 #    image: elasticsearch:7.6.0
 #    container_name: uks_es
-##    volumes:
-##      - ./esdata:/usr/share/elasticsearch/data
+#    volumes:
+#      - ./esdata:/usr/share/elasticsearch/data
 #    ports:
 #      - 9200:9200
 #      - 9300:9300
 #    environment:
 #      - discovery.type=single-node
-#
-##      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
 #
 #  kibana:
 #    labels:
@@ -42,8 +40,7 @@ services:
 #    ports:
 #      - 5601:5601
 #    environment:
-#      - ELASTICSEARCH_HOSTS=http://es:9200
-##        ELASTICSEARCH_URL: http://es:9200
+#      - ELASTICSEARCH_HOSTS=http://uks_es:9200
 #    depends_on:
 #      - es
 #
@@ -59,7 +56,6 @@ services:
 #    depends_on:
 #      - es
 #    environment:
-##      - ELASTICSEARCH_HOSTS=http://es:9200
 #      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
 #    ports:
 #      - 5044:5044
@@ -84,10 +80,8 @@ services:
       - db
 #      - es
 #      - kibana
-#    links:
-#      - redis
-#    ports:
-#      - 8000:8000
+    links:
+      - redis
 
 # Angular application
   frontend:
@@ -107,16 +101,15 @@ services:
       - 8000:8000
     volumes:
       - ./config/nginx:/etc/nginx/conf.d
-#      - ./static:/code/app/static #must be same as web!
     depends_on:
       - web
 
 # redis as a Django cache store
-#  redis:
-#    image: redis
-#    container_name: uks_redis
-#    expose:
-#      - 6379
+  redis:
+    image: redis
+    container_name: uks_redis
+    expose:
+      - 6379
 
 ## TICK stack for metrics and grafana for visualisation
   influxdb:
