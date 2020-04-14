@@ -1,0 +1,164 @@
+<head>
+    <link crossorigin="anonymous" media="all" integrity="sha512-5Bs4ERl99/u2AUfpOZF2F0cdfNby7+Vd9teUshXUBPo5CjwECR7IAEf+weI/eCk5tF7K1h3O8hd8k0+P/HePeg==" rel="stylesheet" href="https://github.githubassets.com/assets/frameworks-e41b3811197df7fbb60147e939917617.css">
+  
+    <link crossorigin="anonymous" media="all" integrity="sha512-FwYpFVuVzDWMuKKB1OvzQkN/OMqH9BH+TbbPuFsu+TxHn58kX+dB37udsPZSBrQaBCX8s1kPyd1k8B8d2/o/qQ==" rel="stylesheet" href="https://github.githubassets.com/assets/github-170629155b95cc358cb8a281d4ebf342.css">
+</head> 
+
+<main *ngIf="commits && contents && issues" id="js-repo-pjax-container" data-pjax-container="">
+    <div class="pagehead repohead hx_repohead readability-menu bg-gray-light pb-0 pt-3">
+       <div class="d-flex container-lg mb-4 px-3">
+          <div class="flex-auto min-width-0 width-fit mr-3">
+             <h1 class="public  d-flex flex-wrap flex-items-center break-word float-none ">
+                <svg class="octicon octicon-repo" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true">
+                   <path fill-rule="evenodd" d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"></path>
+                </svg>
+                <span class="author ml-1 flex-self-stretch" itemprop="author">
+                <a class="url fn" rel="author" data-hovercard-type="user" data-hovercard-url="/users/adamovivan/hovercard" data-octo-click="hovercard-link-click" data-octo-dimensions="link_type:self" href="/{{owner}}">{{owner}}</a>
+                </span>
+                <span class="path-divider flex-self-stretch">/</span>
+                <strong itemprop="name" class="mr-2 flex-self-stretch">
+                <a data-pjax="#js-repo-pjax-container" href="/{{owner}}/{{repo}}">{{repo}}</a>
+                </strong>
+             </h1>
+          </div>
+       </div>
+       <nav class="hx_reponav reponav js-repo-nav js-sidenav-container-pjax clearfix container-lg px-3" itemscope="" itemtype="http://schema.org/BreadcrumbList" aria-label="Repository" data-pjax="#js-repo-pjax-container">
+          <span itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+             <a class="js-selected-navigation-item selected reponav-item" itemprop="url" data-hotkey="g c" aria-current="page" data-selected-links="repo_source repo_downloads repo_commits repo_releases repo_tags repo_branches repo_packages /adamovivan/SEP" href="/{{owner}}/{{repo}}">
+                <div class="d-inline">
+                   <svg class="octicon octicon-code" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M9.5 3L8 4.5 11.5 8 8 11.5 9.5 13 14 8 9.5 3zm-5 0L0 8l4.5 5L6 11.5 2.5 8 6 4.5 4.5 3z"></path>
+                   </svg>
+                </div>
+                <span itemprop="name">Code</span>
+                <meta itemprop="position" content="1">
+             </a>
+          </span>
+          <span itemscope="" itemtype="http://schema.org/ListItem" itemprop="itemListElement">
+            <!-- OVde UMESTO OVOG CLA CLA TREBA UBACITI OWNER / REPO -->
+             <a itemprop="url" data-hotkey="g i" class="js-selected-navigation-item reponav-item" href="/{{owner}}/{{repo}}/issue">
+                <div class="d-inline">
+                   <svg class="octicon octicon-issue-opened" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
+                      <path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 011.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path>
+                   </svg>
+                </div>
+                <span itemprop="name">Issues</span>
+                <span class="Counter">{{issues.length}}</span>
+                <meta itemprop="position" content="2">
+             </a>
+          </span>
+       </nav>
+    </div>
+    <div class="container-lg clearfix new-discussion-timeline  px-3">
+       <div class="repository-content ">
+          <div class="overall-summary border-bottom-0 mb-0 rounded-bottom-0">
+             <ul class="numbers-summary">
+                <li class="commits">
+                   <!-- OVDE POVEZATI PRAVI REPO I USera i ide gas braco :D -->
+                   <a data-pjax="" href="/{{owner}}/{{repo}}/commit">
+                      <svg class="octicon octicon-history" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
+                         <path fill-rule="evenodd" d="M8 13H6V6h5v2H8v5zM7 1C4.81 1 2.87 2.02 1.59 3.59L0 2v4h4L2.5 4.5C3.55 3.17 5.17 2.3 7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 011.3 8c0-.34.03-.67.09-1H.08C.03 7.33 0 7.66 0 8c0 3.86 3.14 7 7 7s7-3.14 7-7-3.14-7-7-7z"></path>
+                      </svg>
+                      <span class="num text-emphasized">
+                      {{commitsNumber}}
+                      </span>
+                      commits
+                   </a>
+                </li>
+                
+             </ul>
+          </div>
+          <div class="mt-2">
+             <div class="js-socket-channel js-updatable-content" data-channel="repo:219169546:post-receive:43926383" data-url="/user/repo/show_partial?partial=tree%2Frecently_touched_branches_list">
+             </div>
+          </div>
+          
+          <!--#################################################################################-->
+          <select class="browser-default custom-select" (change)="branch($event.target.value)" style="width: 20vw; color: red;">
+            <!--select class="browser-default custom-select" style="width: 20vw; color: red;"-->
+              <option selected value="master">Branch : master</option>
+              <option *ngFor="let branch of branches; let i = index" value="1" value="{{branch.name}}">{{branch.name}}</option>
+            </select>
+          <!--#################################################################################-->
+          
+          <div class="Box mb-3 Box--condensed">
+             <div class="Box-header Box-header--blue position-relative " style="margin-bottom:-1px;">
+                <h2 class="sr-only">Latest commit</h2>
+                <div class="commit-tease js-details-container Details d-flex rounded-top-1 flex-auto" data-issue-and-pr-hovercards-enabled="">
+                   <div class="AvatarStack flex-self-start ">
+                      <div class="AvatarStack-body">
+                        <img height="20" width="20" alt="@DejanPredojevic" src="{{commits[0].author.avatar_url}}">
+                      </div>
+                   </div>
+                   <div class="flex-auto f6 mr-3">
+                      <p class="commit-author tooltipped tooltipped-s user-mention" style="display: inline;">{{commits[0].commit.author.name}}</p>
+                      <a data-pjax="true" title="sitne izmene" class="message text-inherit" href="{{commits[0].html_url}}"> {{commits[0].commit.message}}</a>
+                   </div>
+                   <div class="no-wrap d-flex flex-self-start flex-items-baseline">
+                      <span class="mr-2 flex-self-center">
+                      </span>
+                      <span class="mr-1">Latest commit</span>
+                      <a class="commit-tease-sha mr-1" href="{{commits[0].html_url}}" data-pjax="">
+                     at {{commits[0].commit.author.date}}
+                      </a>
+                   </div>
+                </div>
+             </div>
+             <h2 id="files" class="sr-only">Files</h2>
+             <a class="d-none js-permalink-shortcut" data-hotkey="y" href="/adamovivan/SEP/tree/c43e6d14f3ede184f68d08778c7d641f899e673b">Permalink</a>
+             <table class="files js-navigation-container js-active-navigation-container " data-pjax="">
+                <thead>
+                  <tr>
+                    <th><span class="sr-only">Type</span></th>
+                    <th><span class="sr-only">Name</span></th>
+                    <th><span class="sr-only">Latest commit message</span></th>
+                    <th><span class="sr-only">Commit time</span></th>
+                  </tr>
+                </thead>
+          
+          
+                <tbody>
+                  <tr class="warning include-fragment-error">
+                    <td class="icon"><svg class="octicon octicon-alert" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path></svg></td>
+                    <td class="content" colspan="3">Failed to load latest commit information.</td>
+                  </tr>
+          
+                  <tr *ngFor="let content of contents; let i = index" class="js-navigation-item">
+                     <td *ngIf="content.type == 'file'" class="icon">
+                     <svg aria-label="file" class="octicon octicon-file" viewBox="0 0 12 16" version="1.1" width="12" height="16" role="img"><path fill-rule="evenodd" d="M6 5H2V4h4v1zM2 8h7V7H2v1zm0 2h7V9H2v1zm0 2h7v-1H2v1zm10-7.5V14c0 .55-.45 1-1 1H1c-.55 0-1-.45-1-1V2c0-.55.45-1 1-1h7.5L12 4.5zM11 5L8 2H1v12h10V5z"></path></svg>
+                     <img width="16" height="16" class="spinner" alt="" src="https://github.githubassets.com/images/spinners/octocat-spinner-32.gif">
+                     </td>
+                     <td *ngIf="content.type == 'dir'" class="icon">
+                        <svg aria-label="directory" class="octicon octicon-file-directory" viewBox="0 0 14 16" version="1.1" width="14" height="16" role="img"><path fill-rule="evenodd" d="M13 4H7V3c0-.66-.31-1-1-1H1c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1V5c0-.55-.45-1-1-1zM6 4H1V3h5v1z"></path></svg>
+                        <img width="16" height="16" class="spinner" alt="" src="https://github.githubassets.com/images/spinners/octocat-spinner-32.gif">
+                      </td>
+                     <td class="content">
+                     <span class="css-truncate css-truncate-target">
+                        <a *ngIf="content.type == 'file'" style="color: blue;" class="btn-link mr-2" href="{{content.html_url}}">{{content.name}}</a>
+                        <a *ngIf="content.type == 'dir'" style="color: blue;" class="btn-link mr-2" (click)="podaci(content.path)">{{content.name}}</a>
+                     </span>
+                     </td>
+                  </tr>
+                    
+                </tbody>
+              </table>
+             <div class="repo-file-upload-tree-target js-document-dropzone js-upload-manifest-tree-view" data-drop-url="/adamovivan/SEP/upload/master">
+                <div class="repo-file-upload-outline">
+                   <div class="repo-file-upload-slate">
+                      <svg width="204" height="52" viewBox="0 0 204 52" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                         <g class="files-lg" fill="#717171">
+                            <path class="file-graph" d="M40,42 L40,12 L42,12 L42,40 L64,40 L64,42 L40,42 L40,42 Z M45,37 L45,16 L49,16 L49,37 L45,37 L45,37 Z M51,37 L51,22 L55,22 L55,37 L51,37 L51,37 Z M68.5,48 L35.5,48 C34.7,48 34,47.3 34,46.5 L34,7.5 C34,6.7 34.7,6 35.5,6 L59,6 L70,17 L70,46.5 C70,47.3 69.3,48 68.5,48 L68.5,48 Z M68,18 L58,8 L36,8 L36,46 L68,46 L68,18 L68,18 Z M57,37 L57,27 L61,27 L61,37 L57,37 L57,37 Z"></path>
+                            <path class="file-zip" d="M17,14 L1,14 C0.4,14 0,14.5 0,15 L0,41 C0,41.5 0.4,42 1,42 L23,42 C23.6,42 24,41.5 24,41 L24,21 L17,14 Z M22,40 L2,40 L2,16 L8,16 L8,18 L10,18 L10,16 L16,16 L22,22 L22,40 Z M8,30.5 C6.8,31.2 6,32.5 6,34 L6,36 L14,36 L14,34 C14,31.8 12.2,30 10,30 L10,28 L8,28 L8,30.5 Z M12,32 L12,34 L8,34 L8,32 L12,32 Z M10,20 L10,18 L12,18 L12,20 L10,20 Z M8,20 L10,20 L10,22 L8,22 L8,20 Z M10,24 L10,22 L12,22 L12,24 L10,24 Z M8,24 L10,24 L10,26 L8,26 L8,24 Z M10,28 L10,26 L12,26 L12,28 L10,28 Z"></path>
+                            <path class="file-generic" d="M168.5,48 L135.5,48 C134.7,48 134,47.3 134,46.5 L134,7.5 C134,6.7 134.7,6 135.5,6 L159,6 L170,17 L170,46.5 C170,47.3 169.3,48 168.5,48 Z M168,18 L158,8 L136,8 L136,46 L168,46 L168,18 Z M140,35 L140,33 L161,33 L161,35 L140,35 Z M140,30 L140,28 L161,28 L161,30 L140,30 Z M140,25 L140,23 L161,23 L161,25 L140,25 Z M140,17 L140,15 L152,15 L152,17 L140,17 Z M140,40 L140,38 L161,38 L161,40 L140,40 Z"></path>
+                            <path class="file-acrobat" d="M181,14 C180.5,14 180,14.5 180,15 L180,41 C180,41.5 180.5,42 181,42 L203,42 C203.5,42 204,41.5 204,41 L204,23 L204,21 L197,14 L181,14 Z M200.8,29.9 C200.3,29.8 199.8,29.7 199.3,29.7 C198.5,29.7 197.7,29.8 196.8,29.9 C196.3,29.8 195.7,29.3 194.8,28.6 C193.9,27.9 193.1,26.3 192.2,23.9 C192.5,22.2 192.6,20.9 192.7,19.9 C192.8,18.9 192.8,18.4 192.7,18.4 C192.8,17.6 192.6,17 192.3,16.6 C192,16.2 191.4,16 191,16 L196,16 L202,22 L202,30.4 C201.6,30.2 201.2,30 200.8,29.9 Z M182,16 L190,16 C189.8,16.1 189.6,16.2 189.4,16.4 C189.2,16.6 189,16.9 188.9,17.4 C188.7,18.2 188.6,19.2 188.7,20.3 C188.8,21.5 189.1,22.7 189.4,23.9 C188.9,25.4 188.2,27.2 187.2,29.3 C186.2,31.4 185.6,32.6 185.4,33 C185.1,33.1 184.7,33.3 184,33.6 C183.3,33.9 182.7,34.4 182,35 L182,16 L182,16 Z M195.1,31 C193.8,31.2 192.6,31.4 191.5,31.7 C190.3,32 189.1,32.4 187.8,32.9 L189,30.4 C189.8,28.7 190.4,27.2 190.8,25.8 L190.8,25.9 C191.7,28.2 192.5,29.6 193.1,30.1 C193.8,30.5 194.5,30.8 195.1,31 L195.1,31 Z M184.1,39.2 C185,38.4 186.2,36.9 187.7,34.4 C188.3,34.1 188.9,33.9 189.3,33.7 L190.1,33.4 C191.1,33.1 192,32.9 193,32.7 C194,32.5 195,32.4 196,32.3 C196.9,32.7 197.9,33.1 198.8,33.3 C199.8,33.6 200.6,33.7 201.3,33.8 C201.5,33.8 201.8,34 202,34 L202,40 L182,40 C182.4,39.9 183.6,39.6 184.1,39.2 Z"></path>
+                            <path class="file-code" d="M111,0 L82,0 C80.9,0 80,0.9 80,2 L80,50 C80,51.1 80.9,52 82,52 L122,52 C123.1,52 124,51.1 124,50 L124,13 L111,0 Z M122,50 L82,50 L82,2 L110,2 L122,14 L122,50 Z M107,18 L116,28 L107,38 L104,35 L111,28 L104,21 L107,18 Z M100,21 L93,28 L100,35 L97,38 L88,28 L97,18 L100,21 Z"></path>
+                         </g>
+                      </svg>
+                      <h2>Drop to upload your files</h2>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+    </div>
+ </main>

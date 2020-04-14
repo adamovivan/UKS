@@ -1,5 +1,5 @@
 <!--ovde cemo imati samo navbar, a sve glavne stranice ce se prikazivati u donjem delu main komponente-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom: 1px solid rgb(209, 208, 208);">
     <a class="navbar-brand" href="#"><img src="../../../assets/git.png" width="30px" height="30px"> </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -7,28 +7,37 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <form class="form-inline my-2 my-lg-0">
+        <!--form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
-        </form>
+        </form-->
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Pull request <span class="sr-only">(current)</span></a>
+            <!--li class="nav-item">
+                <a class="nav-link" *ngIf="currentUser!=null" href="#">Pull request <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Issue</a>
+                <a class="nav-link" *ngIf="currentUser!=null" href="/issues">Milestone</a>
+            </li-->
+            <li class="nav-item" *ngIf="currentUser!=null">
+                <a class="nav-link" *ngIf="currentUser!=null" href="/issues">Issues</a>
             </li>
 
         </ul>
 
         <ul class="nav justify-content-end">
-            <li class="nav-item">
-                <a class="nav-link " href="/signIn">Sign in</a>
+            <li class="nav-item" *ngIf="currentUser==null">
+                <a class="nav-link" href="" (click)="loginWithGithub($event)">Sign in</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="currentUser==null">
                 <a class="nav-link" href="/signUp">Sign up</a>
             </li>
-            
+            <li class="nav-item" *ngIf="currentUser!=null" >
+                <img class="profile-avatar" src="{{currentUser.avatar}}" style="display: inline;" width="50" height="50">
+                <a class="nav-link" href="/profile" style="color: black; display: inline;">{{currentUser.alias}}</a>
+            </li>
+            <li class="nav-item" *ngIf="currentUser!=null">
+                <a class="nav-link mt-1" href="" (click)="signOut()">Sign out</a>
+            </li>
         </ul>
 
     </div>

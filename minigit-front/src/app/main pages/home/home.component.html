@@ -1,0 +1,27 @@
+<h1 *ngIf="currentUser == null" style="margin-top: 35vh; margin-left: 35vw;">Welcome to Better than Github</h1>
+<aside *ngIf="currentUser" class="team-left-column col-12 col-md-4 col-lg-3 bg-white border-right border-bottom hide-md hide-sm" aria-label="Account">
+    <div class="dashboard-sidebar top-0 px-3 px-md-4 px-lg-4 overflow-auto is-placeholder" style="visibility: hidden; display: none; height: 915px;"></div>
+    <div class="dashboard-sidebar js-sticky top-0 px-3 px-md-4 px-lg-4 overflow-auto" data-original-top="0px" style="width: auto; height: 915px; position: static;">
+       <div class="mb-3 Details js-repos-container mt-5" data-repository-hovercards-enabled="" data-pjax-container="" role="navigation" aria-label="Repositories">
+          <div class="js-repos-container" data-pjax-container="">
+             <h2 class="f4 hide-sm hide-md mb-1 f5 d-flex flex-justify-between flex-items-center">
+                Repositories
+             </h2>
+             <ul class="list-style-none" data-filterable-for="dashboard-repos-filter-left" data-filterable-type="substring">
+                <li *ngFor="let r of repos" class="public source no-description">
+                   <div class="width-full text-bold">
+                      <a href="#" (click)="repo(r.fields.git_repo)" class="d-inline-flex flex-items-baseline f5 mb-2 dashboard-underlined-link width-fit" >
+                         <div class="text-gray-light mr-2">
+                            <svg aria-label="Repository" class="octicon octicon-repo flex-shrink-0" viewBox="0 0 12 16" version="1.1" width="12" height="16" role="img">
+                               <path fill-rule="evenodd" d="M4 9H3V8h1v1zm0-3H3v1h1V6zm0-2H3v1h1V4zm0-2H3v1h1V2zm8-1v12c0 .55-.45 1-1 1H6v2l-1.5-1.5L3 16v-2H1c-.55 0-1-.45-1-1V1c0-.55.45-1 1-1h10c.55 0 1 .45 1 1zm-1 10H1v2h2v-1h3v1h5v-2zm0-10H2v9h9V1z"></path>
+                            </svg>
+                         </div>
+                         <span class="flex-shrink-0 css-truncate css-truncate-target" title="{{r.fields.git_repo}}">{{r.fields.git_repo.split("/")[3]}}</span>/<span class="css-truncate css-truncate-target" style="max-width: 260px" title="{{r.fields.git_repo}}">{{r.fields.git_repo.split("/")[4]}}</span>
+                      </a>
+                   </div>
+                </li>
+             </ul>
+          </div>
+       </div>
+    </div>
+ </aside>

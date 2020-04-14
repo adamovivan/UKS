@@ -1,0 +1,151 @@
+.mainDiv {
+    margin-top: 2pc;
+    margin-left: 10pc;
+}
+
+.rightDiv {
+    float: left;
+    width: 35%;
+}
+
+.leftDiv {
+    float: left;
+    width: 65%;
+}
+
+.state {
+    display: inline-block;
+    text-align: center;
+    height: 2pc;
+    width: 5pc;
+    padding-top: 0.4pc;
+}
+
+.edit-comment {
+    margin-left: 1pc;
+}
+
+.creator {
+    /* color: grey; */
+    display: inline-block;
+    margin-left: 1pc;
+    margin-top: 0.4pc;
+}
+
+.edit-history{
+    margin-left: 1pc;
+}
+
+.newComment{
+    margin-top: 5pc;
+    width: 40pc;
+}
+
+.newCommentDiv{
+    height: 10pc;
+}
+
+.divider {
+    width: 60pc;
+}
+
+.smallDivider {
+    width: 10pc;
+}
+
+.grey-text{
+    color: grey
+}
+
+.comments {
+    margin-left: 2pc;
+}
+
+.comments-divider {
+    width: 40pc;
+}
+
+.commentedComment{
+    width: 40pc;
+}
+
+.reopened {
+    color: green
+}
+
+.closed {
+    color: red;
+}
+
+.state-change {
+    margin-left: 4pc;
+}
+
+.state-divider {
+    width: 36pc;
+}
+
+.responsibility-divider {
+    width: 40pc;
+}
+
+.label-divider {
+    width: 40pc;
+}
+
+.milestone-divider {
+    width: 40pc;
+}
+
+.state-text{
+    margin-left: 1pc;
+}
+
+textarea:disabled {
+    resize: none;
+    color: black;
+}
+
+.mat-form-field-appearance-fill .mat-form-field-flex {
+    background-color: white !important;
+}
+
+.open-closeBtn{
+    margin-left: 26.8pc;
+}
+
+.commentBtn{
+    color: white;
+    background-color: green;
+    margin-left: 1pc;
+}
+
+.infoLabel {
+    color: #586069;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 1.5;
+}
+
+.noInfo {
+    color: #586069;
+    font-size: 12px;
+    box-sizing: border-box;
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 1.5;
+}
+
+.issueInfo {
+    font-size: 12px;
+    color:black;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
+    box-sizing: border-box;
+    font-family: Helvetica,Arial,sans-serif;
+    line-height: 1.5;
+}
+
+.labelInfo {
+    width: 10pc;
+    margin-bottom: 5px;
+    padding-left: 5px;
+}

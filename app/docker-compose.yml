@@ -1,14 +1,140 @@
-version: '3'
+version: '3.2'
 
 services:
+
+# Postres as a main storage
   db:
+    restart: always
     image: postgres
-  web:
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/code
+      - ./pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: trust
+    container_name: uks_db
     ports:
-      - "8000:8000"
+      - 5432:5432
+
+## ELK stack for logging
+#  es:
+#    labels:
+#      com.example.service: "es"
+#      com.example.description: "For searching and indexing data"
+#    image: elasticsearch:7.6.0
+#    container_name: uks_es
+#    volumes:
+#      - ./esdata:/usr/share/elasticsearch/data
+#    ports:
+#      - 9200:9200
+#      - 9300:9300
+#    environment:
+#      - discovery.type=single-node
+#
+#  kibana:
+#    labels:
+#      com.example.service: "kibana"
+#      com.example.description: "Data visualisation and for log aggregation"
+#    image: kibana:7.6.0
+#    container_name: uks_kibana
+#    volumes:
+#      - $PWD/config/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+#    ports:
+#      - 5601:5601
+#    environment:
+#      - ELASTICSEARCH_HOSTS=http://uks_es:9200
+#    depends_on:
+#      - es
+#
+#  logstash:
+#    labels:
+#      com.example.service: "logstash"
+#      com.example.description: "For logging data"
+#    image: logstash:7.6.0
+#    container_name: uks_logstash
+#    volumes:
+#      - $PWD/config/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+#      - $PWD/config/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+#    depends_on:
+#      - es
+#    environment:
+#      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+#    ports:
+#      - 5044:5044
+#      - 9201:9200
+
+# Django application
+  web:
+    container_name: uks_web
+    labels:
+      com.example.service: "web"
+      com.example.description: "Use for the main web process"
+    image: uks_backend
+    build: .
+    command: ["./wait_for_postgres.sh"]
+    expose:
+      - 8000
+    volumes:
+      - ./static:/code/app/static #must be same as nginx!
+    logging:
+      driver: "json-file"
     depends_on:
       - db
+#      - es
+#      - kibana
+    links:
+      - redis
+
+# Angular application
+  frontend:
+    container_name: uks_front
+    image: uks_frontend
+    build: ./../minigit-front
+    expose:
+      - 4200
+    ports:
+      - 4200:4200
+
+# Nginx as a web server and reverse proxy
+  nginx:
+    image: nginx
+    container_name: uks_nginx
+    ports:
+      - 8000:8000
+    volumes:
+      - ./config/nginx:/etc/nginx/conf.d
+    depends_on:
+      - web
+
+# redis as a Django cache store
+  redis:
+    image: redis
+    container_name: uks_redis
+    expose:
+      - 6379
+
+## TICK stack for metrics and grafana for visualisation
+  influxdb:
+    container_name: uks_influxdb
+    image: influxdb:1.5.4
+    ports:
+      - 8083:8083
+      - 8086:8086
+    volumes:
+      - ./influxdb:/var/lib/influxdb
+    restart: always
+
+  grafana:
+    container_name: uks_grafana
+    image: grafana/grafana:6.7.1
+    ports:
+      - 3000:3000
+    links:
+      - influxdb
+    restart: always
+
+  telegraf:
+    container_name: uks_telegraf
+    image: telegraf:1.13.4
+    volumes:
+      - ./config/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: always

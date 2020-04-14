@@ -1,0 +1,192 @@
+<div *ngIf="issue != undefined" class="mainDiv">
+    <h2>{{issue.fields.title}}</h2>
+    <div class="state" [ngStyle]="{'background-color': issue.fields.state === 'OPEN' ? 'green' : 'red'}">
+        <b>
+            <span style="color: white;">{{issue.fields.state}}</span>
+        </b>
+    </div>
+    <div class="creator">
+        <b>{{issue.fields.creator}}</b><span class="grey-text">
+            opened this issue on {{issue.fields.open_date_time | date: 'mediumDate' }}
+            </span>
+    </div>
+    <br>
+    <br>
+    <mat-divider class="divider"></mat-divider>
+    <br>
+    <div class="leftDiv">
+        <div *ngFor="let event of issueEvents" class="comments">
+            <div *ngIf="event.model === 'better_than_github.comment'">
+                <span *ngIf="event.edits !== undefined && event.edits.length === 0">
+                    <br>
+                    <b>{{event.fields.user[1]}} </b> 
+                    <span class="grey-text">
+                        commented {{event.fields.timestamp | date: 'short'}}
+                    </span>
+                </span>
+
+                <span *ngIf="event.edits !== undefined && event.edits.length !== 0">
+                    <br>
+                    <b>{{event.edits[event.edits.length - 1].fields.user[1]}}</b> 
+                    <span class="grey-text">
+                        commented {{event.edits[event.edits.length - 1].fields.timestamp | date: 'short'}}
+                    </span>
+                </span>
+
+                <span class="edit-comment" *ngIf="currentUser.alias === event.fields.user[1]">
+                    <a class="grey-text" href="javascript:void(0)" (click)="editCommentDialog(event)">Edit</a>
+                </span>
+
+                <span *ngIf="event.edits !== undefined && event.edits.length !== 0">
+                    <a class="grey-text edit-history" href="javascript:void(0)" (click)="showEditHistory(event)">
+                        History
+                    </a>
+                </span>
+                <br>
+
+
+                <span *ngIf="event.edits !== undefined && event.edits.length === 0">
+                    <mat-form-field class="commentedComment">
+                        <textarea matInput value="{{event.fields.description}}" disabled></textarea>
+                    </mat-form-field>
+                </span>
+
+                <span *ngIf="event.edits !== undefined && event.edits.length !== 0">
+                    <mat-form-field class="commentedComment">
+                        <textarea matInput value="{{event.edits[event.edits.length - 1].fields.description}}" disabled></textarea>
+                    </mat-form-field>
+                </span>
+
+
+                <mat-divider class="comments-divider"></mat-divider>
+
+            </div>
+
+            <div *ngIf="event.model === 'better_than_github.statechange'" class="state-change">
+                <br>
+                    <span >
+                        <div *ngIf="event.fields.new_state === 'OPEN'">
+                            <i class="material-icons reopened">
+                                fiber_manual_record
+                                </i>
+                                <span class="state-text">
+
+                                <b>{{event.fields.user[1]}} </b><span class="grey-text">reopened 
+                                {{event.fields.timestamp | date: 'short'}}</span>
+                            </span>
+                        </div>
+                        <div *ngIf="event.fields.new_state === 'CLOSED'">
+                            <i class="material-icons closed">
+                                cancel
+                                </i> 
+                                <span class="state-text">
+                                <b>{{event.fields.user[1]}} </b><span class="grey-text">closed 
+                                {{event.fields.timestamp | date: 'short'}}
+                            </span>
+                                </span>
+                        </div>
+                        
+                    </span>
+                <br>
+                <mat-divider class="state-divider"></mat-divider>
+            </div>
+            <div *ngIf="event.model === 'better_than_github.responsibilitychange'" class="responsibility-change"><br>
+                <div>
+                    <b>{{ event.fields.user[1] }}</b>
+                    <span class="grey-text"> {{ event.fields.description }} </span>
+                    <b>{{ event.fields.responsible_user[1] }} </b>
+                    <span class="grey-text">
+                    <span *ngIf="event.fields.description === 'added'"> to </span>
+                    <span *ngIf="event.fields.description === 'removed'"> from </span>
+                    assignees. {{ event.fields.timestamp | date: 'short' }}</span>
+                </div>
+                <mat-divider class="responsibility-divider"></mat-divider>
+            </div>
+            <div *ngIf="event.model === 'better_than_github.labelchange'" class="label-change"><br>
+                <div>
+                    <b>{{ event.fields.user[1] }}</b>
+                    <span class="grey-text"> {{ event.fields.description }} </span>
+                    <b>{{ event.fields.label_name }} </b>
+                    <span class="grey-text">
+                    label. {{ event.fields.timestamp | date: 'short' }}</span>
+                </div>
+                <mat-divider class="label-divider"></mat-divider>
+            </div>
+            <div *ngIf="event.model === 'better_than_github.milestonechange'" class="milestone-change"><br>
+                <div>
+                    <b>{{ event.fields.user[1] }}</b>
+                    <span class="grey-text"> {{ event.fields.description }} </span>
+                    <b>{{ event.fields.milestone_title }} </b>
+                    <span class="grey-text">
+                    milestone. {{ event.fields.timestamp | date: 'short' }}</span>
+                </div>
+                <mat-divider class="milestone-divider"></mat-divider>
+            </div>
+        </div>
+        <div class="newCommentDiv">
+            <mat-form-field class="newComment">
+                <input matInput placeholder="Comment ..." [(ngModel)]="commentText" >
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-raised-button (click)="toggleIssueState()" class="open-closeBtn">
+                {{openCloseBtnName}}
+            </button>
+            <button mat-raised-button (click)="submitComment()" class="commentBtn" >Comment</button>
+        </div>
+    </div>
+    <div class="rightDiv">
+        <div style="width: 42%;">
+            <div style="float: left;"><span class="infoLabel">Assignees</span></div>   
+            <div style="float: right;">
+                <button mat-icon-button aria-label="Change" (click)="openAssigneeDialog()">
+                    <mat-icon>settings</mat-icon>
+                </button>
+            </div>
+        </div><br><br>
+        <span class="noInfo" *ngIf="assignees==null">None yet</span>
+        <div *ngFor="let assignee of assignees" class="issueInfo">
+            <b>{{ assignee.fields.name }}</b>
+            <button mat-icon-button aria-label="delete" (click)="deleteAssignee(assignee.fields.name)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div><br>
+        <mat-divider class="smallDivider"></mat-divider><br>
+        <div style="width: 42%;">
+            <div style="float: left;"><span class="infoLabel">Labels</span></div>   
+            <div style="float: right;">
+                <button mat-icon-button aria-label="Change" (click)="openLabelDialog()">
+                    <mat-icon>settings</mat-icon>
+                </button>
+            </div>
+        </div><br><br>
+        <span class="noInfo" *ngIf="labels==null">None yet</span>
+        <div *ngFor="let label of labels" class="issueInfo">
+            <span [style.color]="label.fields.color"><b>{{ label.fields.name }}</b></span>
+            <button mat-icon-button aria-label="delete" (click)="deleteLabel(label.fields.name)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div><br>
+        <mat-divider class="smallDivider"></mat-divider><br>
+        <div style="width: 42%;">
+            <div style="float: left;"><span class="infoLabel">Milestone</span></div>   
+            <div style="float: right;">
+                <button mat-icon-button aria-label="Change" (click)="openMilestoneDialog()">
+                    <mat-icon>settings</mat-icon>
+                </button>
+            </div>
+        </div><br><br>
+        <span class="noInfo" *ngIf="milestone == null">No milestone</span>
+        <div class="issueInfo" *ngIf="milestone != null">
+            <b>{{ milestone.fields.title }}</b>
+            <button mat-icon-button aria-label="delete" (click)="deleteMilestone(milestone.fields.title)">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+        <mat-divider class="smallDivider"></mat-divider><br>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>

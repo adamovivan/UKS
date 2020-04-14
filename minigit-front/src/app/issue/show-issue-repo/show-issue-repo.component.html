@@ -1,0 +1,117 @@
+<head>
+  <link crossorigin="anonymous" media="all" integrity="sha512-5Bs4ERl99/u2AUfpOZF2F0cdfNby7+Vd9teUshXUBPo5CjwECR7IAEf+weI/eCk5tF7K1h3O8hd8k0+P/HePeg==" rel="stylesheet" href="https://github.githubassets.com/assets/frameworks-e41b3811197df7fbb60147e939917617.css">
+  <link crossorigin="anonymous" media="all" integrity="sha512-FwYpFVuVzDWMuKKB1OvzQkN/OMqH9BH+TbbPuFsu+TxHn58kX+dB37udsPZSBrQaBCX8s1kPyd1k8B8d2/o/qQ==" rel="stylesheet" href="https://github.githubassets.com/assets/github-170629155b95cc358cb8a281d4ebf342.css">
+</head>
+<main *ngIf="milestones" id="js-repo-pjax-container" class="mt-5" data-pjax-container="">
+  <div class="container-lg clearfix new-discussion-timeline  p-responsive">
+     
+     <div class="d-flex flex-justify-between mb-md-3 flex-column-reverse flex-md-row flex-items-end">
+        <div class="d-flex flex-justify-start flex-auto width-full my-4 my-md-0" role="search">
+           <div class="ml-2 pl-2 d-none d-md-flex">
+              <nav class="subnav-links float-left d-flex no-wrap" aria-label="Issue">
+                <!-- OVde umesto adamovic uks stavljas pravi owner i repo-->
+                 <a selected_link="repo_issues" class="js-selected-navigation-item subnav-item" href="/{{owner}}/{{repo}}/milestones">
+                    <svg class="octicon octicon-milestone" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
+                       <path fill-rule="evenodd" d="M8 2H6V0h2v2zm4 5H2c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h10l2 2-2 2zM8 4H6v2h2V4zM6 16h2V8H6v8z"></path>
+                    </svg>
+                    Milestones
+                    <span class="Counter d-none d-md-inline">
+                    {{milestones.length}}
+                    </span>
+                 </a>
+              </nav>
+           </div>
+        </div>
+        <div class="ml-3 d-flex flex-justify-between width-full width-md-auto" data-pjax="">
+           <span class="d-md-none">
+           </span>
+           <a href="/{{owner}}/{{repo}}/addIssue" class="btn btn-primary" role="button" data-hotkey="c" data-skip-pjax="">
+           <span class="d-none d-md-block">New issue</span>
+           <span class="d-block d-md-none">New</span>
+           </a>
+        </div>
+     </div>
+     <div class="d-block d-lg-none no-wrap">
+     </div>
+     <div class="Box mt-3 Box--responsive">
+        <div class="Box-header d-flex flex-justify-between" id="js-issues-toolbar">
+           <!--div class="mr-3 d-none d-md-block">
+              <input type="checkbox" data-check-all="" aria-label="Select all issues" autocomplete="off">
+           </div-->
+           <div class="table-list-filters flex-auto d-flex min-width-0">
+              <div class="flex-auto d-none d-lg-block no-wrap">
+                 <div class="table-list-header-toggle states flex-auto pl-0">
+                    <a (click)="openIssue()" [ngClass]="{ 'btn-link selected' : clickOpen==true , 'btn-link': clickOpen==false }">
+                       <svg class="octicon octicon-issue-opened" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 011.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path>
+                       </svg>
+                       {{openIssues.length}} Open
+                    </a>
+                    <a (click)="closedIssue()" [ngClass]="{ 'btn-link selected' : clickClose==true , 'btn-link': clickClose==false }">
+                       <svg class="octicon octicon-check" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
+                       </svg>
+                       {{closedIssues.length}} Closed
+                    </a>
+                 </div>
+              </div>
+           </div>
+        </div>
+        <div aria-label="Issues" role="group" data-issue-and-pr-hovercards-enabled="">
+           <div class="js-navigation-container js-active-navigation-container">
+              
+              <div *ngFor="let i of issues" id="issue_13" class="Box-row Box-row--focus-gray p-0 mt-0 js-navigation-item js-issue-row selectable" data-id="563270111">
+                 <div class="d-flex Box-row--drag-hide position-relative">
+                    <!--label class="flex-shrink-0 py-2 pl-3  d-none d-md-block">
+                    <input type="checkbox" data-check-all-item="" class="js-issues-list-check" name="issues[]" value="13" aria-labelledby="issue_13_link" autocomplete="off">
+                    </label-->
+                    <div class="flex-shrink-0 pt-2 pl-3">
+                       <span class="tooltipped tooltipped-e" aria-label="Open issue" *ngIf="i.fields.state==='OPEN'">
+                          <svg  class="octicon octicon-issue-opened open" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
+                             <path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 011.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path>
+                          </svg>
+                       </span>
+                       <span class="tooltipped tooltipped-e" aria-label="Open issue" *ngIf="i.fields.state==='CLOSED'">
+                        <svg  class="octicon octicon-check" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true">
+                           <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
+                        </svg>
+                     </span>
+                    </div>
+                    <!-- Issue title column -->
+                    <div class="flex-auto min-width-0 lh-condensed p-2 pr-3 pr-md-2">
+                       <a id="issue_13_link" class="link-gray-dark v-align-middle no-underline h4 js-navigation-open" data-hovercard-type="issue" data-hovercard-url="/owner/repo/issues/13/hovercard" href="/{{owner}}/{{repo}}/issue/{{i.pk}}">{{i.fields.title}}</a>
+                    </div>
+                    <div class="mt-1 text-small text-gray mr-4">
+                     <span class="opened-by">
+                         Opened at {{i.fields.open_date_time | date: 'medium'}}
+                     </span>
+                   </div>
+                    <a class="d-block d-md-none position-absolute top-0 bottom-0 left-0 right-0" aria-label="Link to Issue." href="/{{owner}}/{{repo}}/issue/{{i.pk}}"></a>
+                 </div>
+              </div>
+              
+           </div>
+        </div>
+     </div>
+     <div class="d-flex flex-justify-between mb-md-3 flex-column-reverse flex-md-row flex-items-end">
+      <div class="d-flex flex-justify-start flex-auto width-full my-4 my-md-0" role="search">
+         
+      </div>
+      <div class="ml-3 d-flex flex-justify-between width-full width-md-auto mt-2" data-pjax="">
+         <div class="ml-2 pl-2 d-none d-md-flex">
+            <nav class="subnav-links float-left d-flex no-wrap" aria-label="Issue">
+              <!-- OVde umesto adamovic uks stavljas pravi owner i repo-->
+               <a selected_link="repo_issues" class="js-selected-navigation-item subnav-item" href="/{{owner}}/{{repo}}/repo">
+                 
+                 <- Go to repository
+               </a>
+            </nav>
+         </div>
+      </div>
+   </div>
+     <div class="paginate-container d-none d-sm-flex flex-sm-justify-center">
+     </div>
+     <div class="paginate-container d-sm-none mb-5">
+     </div>
+  </div>
+</main>

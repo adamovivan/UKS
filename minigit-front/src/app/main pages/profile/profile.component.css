@@ -1,0 +1,100 @@
+.profile-info {
+    margin-left: 20px;
+    float: left;
+}
+
+.profile-dashboard {
+    margin-left: 50px;
+    float: left;
+}
+
+.profile-avatar {
+    border: 1px solid #e1e4e8;
+    border-bottom: 0;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+
+    display: inline-block;
+    overflow: hidden;
+    line-height: 1;
+    vertical-align: middle;
+}
+
+.fullname {
+    font-size: 26px;
+    line-height: 30px;
+}
+
+.username {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 24px;
+    color: 
+    #666;
+}
+
+.bio {
+    font-size: 14px;
+}
+
+.detail {
+    font-size: 14px;
+    padding-left: 22px;
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color:#24292e;
+}
+
+.detail .octicon {
+    margin-left: -22px;
+    float: left;
+    width: 16px;
+    margin-top: 3px;
+    margin-left: -24px;
+    color:#6a737d;
+    text-align: center;
+    vertical-align: text-top;
+    fill: currentColor;
+}
+
+.profile-div {
+    display: inline-block;
+}
+
+.UnderlineNav-body {
+    display: flex;
+}
+
+.UnderlineNav {
+    display: flex;
+    overflow-x: auto;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+    overflow-y: hidden;
+    border-bottom: 1px solid #e1e4e8;                                                                               
+    justify-content: space-between;                                                                                                                                                             
+}  
+
+.UnderlineNav-item:focus, .UnderlineNav-item:hover {
+    color: #24292e;
+    text-decoration: none;
+    border-bottom-color:#d1d5da;
+    transition: .2s ease;
+}
+
+.UnderlineNav-item {
+    padding: 16px 8px;
+    margin-right: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #586069;
+    text-align: center;
+    border: 0;
+    border-bottom-color: currentcolor;
+    border-bottom-style: none;
+    border-bottom-width: 0px;
+    border-bottom: 2px solid transparent;
+    border-bottom-color: transparent;
+}

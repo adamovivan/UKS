@@ -1,0 +1,16 @@
+.commentedComment{
+    width: 40pc;
+}
+
+.comments-divider {
+    width: 40pc;
+}
+
+.comments {
+    margin-left: 2pc;
+}
+
+textarea:disabled {
+    resize: none;
+    color: black;
+}

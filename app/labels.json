@@ -1,0 +1,58 @@
+[
+  {
+    "model" : "better_than_github.label",
+    "pk" : 1,
+    "fields" : {
+      "name" : "bug",
+      "color" : "red"
+    }
+  },
+  {
+    "model" : "better_than_github.label",
+    "pk" : 2,
+    "fields" : {
+      "name" : "documentation",
+      "color" : "blue"
+    }
+  },
+  {
+    "model" : "better_than_github.label",
+    "pk" : 3,
+    "fields" : {
+      "name" : "enhancement",
+      "color" : "lightblue"
+    }
+  },
+  {
+    "model" : "better_than_github.label",
+    "pk" : 4,
+    "fields" : {
+      "name" : "question",
+      "color" : "purple"
+    }
+  },
+  {
+    "model" : "better_than_github.label",
+    "pk" : 5,
+    "fields" : {
+      "name" : "help wanted",
+      "color" : "lightgreen"
+    }
+  },
+  {
+    "model" : "better_than_github.label",
+    "pk" : 6,
+    "fields" : {
+      "name" : "WIP",
+      "color" : "brown"
+    }
+  },
+  {
+    "model" : "better_than_github.label",
+    "pk" : 7,
+    "fields" : {
+      "name" : "duplicate",
+      "color" : "grey"
+    }
+  }
+]

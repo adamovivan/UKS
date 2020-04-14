@@ -1,0 +1,92 @@
+
+<link crossorigin="anonymous" media="all" integrity="sha512-ZUjVod2EvYMDbGqRSyW0rpfgBq3i+gnR/4PfrzLsy5f20oIcRfgFQFVKgi3Ztp917bP1K/kdP5q8+nAlJ3+cFA==" rel="stylesheet" href="https://github.githubassets.com/assets/frameworks-6548d5a1dd84bd83036c6a914b25b4ae.css">
+
+<link crossorigin="anonymous" media="all" integrity="sha512-aWCt/A1qCFFHv/UKBoS9jHRqexpzl4le8rrCfAyIIm8RdnEfFxDyhl0nZwbEgY9MXQrQaCOx6doLeYgiLhkJFw==" rel="stylesheet" href="https://github.githubassets.com/assets/github-6960adfc0d6a085147bff50a0684bd8c.css">
+    
+    
+<!--  sdddddddddddddddddddddddddd -->
+<div class="page-content position-relative container-lg p-responsive">
+    <!--div class="subnav d-flex mb-3 flex-column flex-md-row" data-pjax="">
+         <nav class="subnav-links d-flex d-sm-block" aria-label="Issues">
+             <a class="js-selected-navigation-item selected subnav-item flex-1 text-center" aria-label="Issues created by you"
+             aria-current="page" href="#"> Created </a>
+             <a class="js-selected-navigation-item  subnav-item flex-1 text-center" aria-label="Issues assigned to you"
+             aria-current="page" href="#"> Assigned </a>
+             <a class="js-selected-navigation-item  subnav-item flex-1 text-center" aria-label="Issues mentioning you"
+             aria-current="page" href="#"> Mentioned </a>             
+         </nav>
+
+    </div-->
+
+    <div class="subnav d-flex mb-3 flex-column flex-md-row" data-pjax="">
+        <nav class="subnav-links d-flex d-sm-block" aria-label="Issues">
+            <a class="js-selected-navigation-item selected subnav-item flex-1 text-center" aria-label="Issues created by you" selected_link="dashboard_created" aria-current="page" href="#">Created</a>
+        </nav>
+    </div>
+
+    <div class="Box Box--responsive" data-pjax="">
+        <div class="Box-header d-flex flex-justify-between">
+            <div class="table-list-filters flex-auto d-none d-md-block no-wrap">
+                <div class="table-list-header-toggle states flex-auto pl-0">
+                    <a [ngClass]="{ 'btn-link selected' : clickOpen==true , 'btn-link': clickOpen==false }" (click)="openIssue()">
+                    <svg class="octicon octicon-issue-opened" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 011.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path>
+                    </svg>
+                    {{showIssuesOpen.length}} Open
+                    </a>
+                    <a [ngClass]="{ 'btn-link selected' : clickClose==true , 'btn-link': clickClose==false }" (click)="closedIssue()">
+                    <svg class="octicon octicon-check" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
+                    </svg>
+                    {{showIssuesClosed.length}} Closed
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="js-navigation-container js-active-navigation-container">
+            <div *ngFor="let i of showIssues" class="Box-row Box-row--focus-gray p-0 mt-0 js-navigation-item js-issue-row navigation-focus"> 
+                <div  class="d-flex Box-row--drag-hide position-relative">
+                    <!-- <div class="flex-shrink-0 pt-2 pl-3">
+                        <span class="tooltipped tooltipped-e" aria-label="Open-issue">
+                                <svg class="octicon octicon-issue-opened" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
+                                        <path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 011.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path>
+                                    </svg>
+                        </span>
+                    </div> -->
+                    <div class="flex-shrink-0 pt-2 pl-3">
+                        <span class="tooltipped tooltipped-e" aria-label="Open issue" *ngIf="i.fields.state==='OPEN'">
+                           <svg  class="octicon octicon-issue-opened open" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
+                              <path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 011.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path>
+                           </svg>
+                        </span>
+                        <span class="tooltipped tooltipped-e" aria-label="Open issue" *ngIf="i.fields.state==='CLOSED'">
+                         <svg  class="octicon octicon-check" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true">
+                            <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
+                         </svg>
+                      </span>
+                    <!-- <div  class="flex-auto min-width-0 lh-condensed p-2 pr-3 pr-md-2">
+                        <a class="v-align-middle muted-link h4 pr-1" data-hovercard-type="repository" href="#"> {{i.fields.creator}} </a>
+                        <a class="link-gray-dark v-align-middle no-underline h4 js-navigation-open" type="issue" href="{{i.fields.creator}}/{{i.fields.project[0]}}/issue/{{i.pk}}"> {{i.fields.title}} </a>
+                        <div class="mt-1 text-small text-gray">
+                            <span class="opened-by"></span>
+                            <span class="d-none d-md-inline"></span>
+                        </div>
+                    </div> -->
+                                   </div>
+                                   <div class="flex-auto min-width-0 lh-condensed p-2 pr-3 pr-md-2">
+                                    <a id="issue_13_link" class="link-gray-dark v-align-middle no-underline h4 js-navigation-open" data-hovercard-type="issue" data-hovercard-url="/owner/repo/issues/13/hovercard" href="{{i.fields.creator}}/{{i.fields.project[0]}}/issue/{{i.pk}}">{{i.fields.title}}</a>
+                                 </div>
+                                 <div class="mt-1 text-small text-gray mr-4">
+                                  <span class="opened-by">
+                                      Opened at {{i.fields.open_date_time | date: 'medium'}}
+                                  </span>
+                                </div>
+                                 <a class="d-block d-md-none position-absolute top-0 bottom-0 left-0 right-0" aria-label="Link to Issue." href="{{i.fields.creator}}/{{i.fields.project[0]}}/issue/{{i.pk}}"></a>
+            
+
+            </div>
+        </div>
+    </div>
+   
+    <div class="col"></div>
+</div>

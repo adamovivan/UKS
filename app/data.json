@@ -1,0 +1,50 @@
+[
+  {
+    "model" : "better_than_github.user",
+    "pk" : 1,
+    "fields" : {
+      "name" : "jovanajovanovic",
+      "email" : "jovanaj33@gmail.com"
+    }
+  },
+  {
+    "model" : "better_than_github.user",
+    "pk" : 2,
+    "fields" : {
+      "name" : "adamovivan",
+      "email" : "adamovivan@gmail.com"
+    }
+  },
+  {
+    "model" : "better_than_github.label",
+    "pk" : 1,
+    "fields" : {
+      "name" : "bug",
+      "color" : "red"
+    }
+  },
+  {
+    "model" : "better_than_github.label",
+    "pk" : 2,
+    "fields" : {
+      "name" : "documentation",
+      "color" : "blue"
+    }
+  },
+  {
+    "model" : "better_than_github.project",
+    "pk" : 1,
+    "fields" : {
+      "title" :  "UPP NC",
+      "git_repo" : "https://github.com/jovanajovanovic/upp_nc"
+    }
+  },
+  {
+    "model" : "better_than_github.project",
+    "pk" : 2,
+    "fields" : {
+      "title" :  "SEP",
+      "git_repo" : "https://github.com/adamovivan/SEP"
+    }
+  }
+]

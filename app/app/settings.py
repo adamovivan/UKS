@@ -25,7 +25,7 @@ SECRET_KEY = 'c5(j=tp1ce0j4u4*l)6rwjw84n6nrxe!jf-3z#b)v-b4p4s(sk'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 
 # Application definition
@@ -37,20 +37,44 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'better_than_github'
+    'better_than_github',
+    'corsheaders',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+
+]
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    'http://0.0.0.0:8000'
+]
+CORS_ORIGIN_REGEX_WHITELIST = [
+    'http://0.0.0.0:8000'
+]
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
 ]
 
 ROOT_URLCONF = 'app.urls'
+
 
 TEMPLATES = [
     {
@@ -84,6 +108,7 @@ DATABASES = {
         'NAME': 'postgres',
         'USER': 'postgres',
         'HOST': 'db',
+        # 'HOST': 'localhost',
         'PORT': 5432,
     }
 }
@@ -125,3 +150,70 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = './static'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+  'handlers': {
+      'logstash': {
+          'level': 'DEBUG',
+          'class': 'logstash.TCPLogstashHandler',
+          'host': 'logstash',
+          'port': 5044, # Default port of logstash
+          'version': 1, # Version of logstash event schema. Default value: 0 (for backward compatibility of the library)
+          'message_type': 'django',  # 'type' field in logstash message. Default value: 'logstash'.
+          'fqdn': False, # Fully qualified domain name. Default value: false.
+          'tags': ['django.request'], # list of tags. Default: None.
+      },
+      'console': {
+          'level': 'DEBUG',
+          'class': 'logging.StreamHandler',
+          'formatter': 'verbose'
+      },
+      'file': {
+          'level': 'DEBUG',
+          'class': 'logging.FileHandler',
+          'filename': 'test-logs.log'
+      }
+  },
+  'loggers': {
+      'django': {
+          'handlers': ['logstash'],
+          'level': 'DEBUG',
+      },
+      'django.request': {
+          'handlers': ['logstash'],
+          'level': 'DEBUG',
+      },
+        # '': {
+        #     'level': 'DEBUG',
+        #     'handlers': ['console', 'file'],
+        # },
+  },
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://redis:6379",
+        # "LOCATION": "redis://localhost:6379",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        }
+    }
+}
+
+# Cache time to live is 15 minutes.
+CACHE_TTL = 60 * 15
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"

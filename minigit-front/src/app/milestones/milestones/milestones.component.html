@@ -1,0 +1,119 @@
+
+<link crossorigin="anonymous" media="all" integrity="sha512-ZUjVod2EvYMDbGqRSyW0rpfgBq3i+gnR/4PfrzLsy5f20oIcRfgFQFVKgi3Ztp917bP1K/kdP5q8+nAlJ3+cFA==" rel="stylesheet" href="https://github.githubassets.com/assets/frameworks-6548d5a1dd84bd83036c6a914b25b4ae.css">
+
+<link crossorigin="anonymous" media="all" integrity="sha512-aWCt/A1qCFFHv/UKBoS9jHRqexpzl4le8rrCfAyIIm8RdnEfFxDyhl0nZwbEgY9MXQrQaCOx6doLeYgiLhkJFw==" rel="stylesheet" href="https://github.githubassets.com/assets/github-6960adfc0d6a085147bff50a0684bd8c.css">
+    
+    
+<!--  sdddddddddddddddddddddddddd -->
+<div class="row mt-5">
+    <div class="col"></div>
+    <div class="repository-content col">
+        <div class="js-check-all-container" data-pjax="">
+           <div class="subnav">
+              <a style="color: white;" class="btn btn-primary float-right" (click)="newMilestone()">New milestone</a>
+              <nav class="subnav-links float-left d-flex no-wrap" aria-label="Issue">
+      
+              </nav>
+           </div>
+           <div class="table-list-header">
+              <div class="table-list-filters">
+                 <div class="table-list-header-toggle states float-left">
+                    <a class="btn-link selected" (click)="clickOpen()" [ngClass]="{ 'btn-link selected' : openClick==true , 'btn-link': openClick==false }">
+                       <svg class="octicon octicon-milestone" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M8 2H6V0h2v2zm4 5H2c-.55 0-1-.45-1-1V4c0-.55.45-1 1-1h10l2 2-2 2zM8 4H6v2h2V4zM6 16h2V8H6v8z"></path>
+                       </svg>
+                       {{openMilestones.length}}
+                       Open
+                    </a>
+                    <a class="btn-link " (click)="clickClose()" [ngClass]="{ 'btn-link selected' : closeClick==true , 'btn-link': closeClick==false }">
+                       <svg class="octicon octicon-check" viewBox="0 0 12 16" version="1.1" width="12" height="16" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"></path>
+                       </svg>
+                       {{closeMilestones.length}}
+                       Closed
+                    </a>
+                 </div>
+              </div>
+           </div>
+           <ul *ngFor="let milestone of milestones; let i = index" class="table-list table-list-bordered table-list-milestones js-navigation-container js-active-navigation-container">
+              <li class="table-list-item milestone pastdue">
+                 <div class="table-list-cell milestone-title">
+                    <h2 class="milestone-title-link">
+                       <a href="/{{owner}}/{{repo}}/milestones/{{milestone.pk}}">{{milestone.fields.title}} <p *ngIf="milestone.fields.state == 'CLOSED'" style="color: red;"> CLOSED </p></a>
+                    </h2>
+                    <div class="milestone-meta">
+                       <span class="milestone-meta-item">
+                          <strong class="description-warning" title="February 20, 2020">
+                             <span class="mr-1">
+                                <svg class="octicon octicon-alert" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
+                                   <path fill-rule="evenodd" d="M8.893 1.5c-.183-.31-.52-.5-.887-.5s-.703.19-.886.5L.138 13.499a.98.98 0 000 1.001c.193.31.53.501.886.501h13.964c.367 0 .704-.19.877-.5a1.03 1.03 0 00.01-1.002L8.893 1.5zm.133 11.497H6.987v-2.003h2.039v2.003zm0-3.004H6.987V5.987h2.039v4.006z"></path>
+                                </svg>
+                             </span>
+                             Due on {{milestone.fields.due_date}}
+                          </strong>
+                       </span>
+                       <!--span class="milestone-meta-item">
+                          <svg class="octicon octicon-clock" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true">
+                             <path fill-rule="evenodd" d="M8 8h3v2H7c-.55 0-1-.45-1-1V4h2v4zM7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 011.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7z"></path>
+                          </svg>
+                          Last updated <span title="2020-02-18 13:45:24 +0100">{{milestone.fields.last_update}}</span>
+                       </span-->
+                    </div>
+                    <div class="milestone-description js-details-container Details open">
+                       <div class="milestone-description-html markdown-body">
+                          <p>{{milestone.fields.description}}</p>
+                       </div>
+                    </div>
+                 </div>
+                 <div class="table-list-cell milestone-progress">
+                    <span *ngIf="milestone.fields.open_issues != 0 || milestone.fields.closed_issues != 0" class="progress-bar progress-bar-small"><span class="progress" [ngStyle]="{'width': (100/(milestone.fields.open_issues+milestone.fields.closed_issues))*milestone.fields.closed_issues + '%'}">&nbsp;</span></span>
+                    <span *ngIf="milestone.fields.open_issues == 0 && milestone.fields.closed_issues == 0" class="progress-bar progress-bar-small"><span class="progress" [ngStyle]="{'width': 0 + '%'}">&nbsp;</span></span>
+                    <div class="stats">
+                       <div class="stat">
+                          <span *ngIf="milestone.fields.open_issues != 0 || milestone.fields.closed_issues != 0"  class="progress-percent">{{(100/(milestone.fields.open_issues+milestone.fields.closed_issues))*milestone.fields.closed_issues}} %</span>
+                          <span *ngIf="milestone.fields.open_issues == 0 && milestone.fields.closed_issues == 0"  class="progress-percent">0% </span>
+                          <span class="stat-label">complete</span>
+                       </div>
+                       <div class="stat">
+                          <a href="/adamovivan/UKS/issues?q=is%3Aopen+milestone%3A%22Connect+with+github+api%22">
+                           {{milestone.fields.open_issues}}
+                          <span class="stat-label">open</span>
+                          </a>      
+                       </div>
+                       <div class="stat">
+                          <a href="/adamovivan/UKS/issues?q=is%3Aclosed+milestone%3A%22Connect+with+github+api%22">
+                           {{milestone.fields.closed_issues}}
+                          <span class="stat-label">closed</span>
+                          </a>      
+                       </div>
+                    </div>
+                    <div class="f5 mt-2 text-gray-dark">
+                       <a style="color: blue;" class="btn-link mr-2" (click)="update(milestone.pk)">Edit</a>
+                       <a *ngIf="milestone.fields.state == 'OPEN'" style="color: blue;" class="btn-link mr-2" (click)="close(milestone.pk)">Close</a>
+                       <a *ngIf="milestone.fields.state == 'CLOSED'" style="color: green;" class="btn-link mr-2" (click)="openM(milestone.pk)">Open</a>
+                       <a style="color: red;" class="btn-link mr-2" (click)="delete(milestone.pk)">Delete</a>
+                    </div>
+                 </div>
+              </li>
+              
+           </ul>
+        </div>
+        <div class="d-flex flex-justify-between mb-md-3 flex-column-reverse flex-md-row flex-items-end">
+         <div class="d-flex flex-justify-start flex-auto width-full my-4 my-md-0" role="search">
+            
+         </div>
+         <div class="ml-3 d-flex flex-justify-between width-full width-md-auto mt-2" data-pjax="">
+            <div class="ml-2 pl-2 d-none d-md-flex">
+               <nav class="subnav-links float-left d-flex no-wrap" aria-label="Issue">
+                 <!-- OVde umesto adamovic uks stavljas pravi owner i repo-->
+                  <a selected_link="repo_issues" class="js-selected-navigation-item subnav-item" href="/{{owner}}/{{repo}}/repo">
+                    
+                    <- Go to repository
+                  </a>
+               </nav>
+            </div>
+         </div>
+      </div>
+     </div>
+    <div class="col"></div>
+</div>
